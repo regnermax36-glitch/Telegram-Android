@@ -5517,6 +5517,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             FrameLayout intelligenceBar = new FrameLayout(context) {
                 private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
                 private Paint strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                private RectF rectF = new RectF();
                 {
                     paint.setColor(0x33FFFFFF);
                     strokePaint.setStyle(Paint.Style.STROKE);
@@ -5526,9 +5527,9 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 @Override
                 protected void onDraw(Canvas canvas) {
-                    rect.set(dp(12), dp(8), getMeasuredWidth() - dp(12), getMeasuredHeight() - dp(8));
-                    canvas.drawRoundRect(rect, dp(24), dp(24), paint);
-                    canvas.drawRoundRect(rect, dp(24), dp(24), strokePaint);
+                    rectF.set(dp(12), dp(8), getMeasuredWidth() - dp(12), getMeasuredHeight() - dp(8));
+                    canvas.drawRoundRect(rectF, dp(24), dp(24), paint);
+                    canvas.drawRoundRect(rectF, dp(24), dp(24), strokePaint);
                 }
             };
             intelligenceBar.setWillNotDraw(false);
