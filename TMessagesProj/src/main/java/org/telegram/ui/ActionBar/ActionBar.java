@@ -89,6 +89,7 @@ public class ActionBar extends FrameLayout implements Theme.Colorable {
     private Drawable backButtonDrawable;
     private final SimpleTextView[] titleTextView = new SimpleTextView[2];
     private SimpleTextView subtitleTextView;
+    private ImageView logoImageView;
     private SimpleTextView additionalSubtitleTextView;
     private View actionModeTop;
     private int actionModeColor;
@@ -477,6 +478,20 @@ public class ActionBar extends FrameLayout implements Theme.Colorable {
                 ((AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable) lastRightDrawable).setParentView(titleTextView[0]);
             }
             titleTextView[0].setRightDrawableOnClick(rightDrawableOnClickListener);
+
+            if (value != null && value.toString().equals(LocaleController.getString("AppName", R.string.AppName))) {
+                if (logoImageView == null) {
+                    logoImageView = new ImageView(getContext());
+                    logoImageView.setImageResource(R.drawable.maxregner_logo);
+                    logoImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                    addView(logoImageView, LayoutHelper.createFrame(24, 24, Gravity.LEFT | Gravity.CENTER_VERTICAL));
+                }
+                logoImageView.setVisibility(isSearchFieldVisible ? GONE : VISIBLE);
+                titleTextView[0].setPadding(dp(28), dp(8), 0, dp(8));
+            } else if (logoImageView != null) {
+                logoImageView.setVisibility(GONE);
+                titleTextView[0].setPadding(0, dp(8), 0, dp(8));
+            }
         }
         fromBottom = false;
     }
@@ -1128,6 +1143,9 @@ public class ActionBar extends FrameLayout implements Theme.Colorable {
             avatarSearchImageView.setVisibility(View.VISIBLE);
             searchVisibleAnimator.playTogether(ObjectAnimator.ofFloat(avatarSearchImageView, View.ALPHA, visible ? 1f : 0f));
         }
+        if (logoImageView != null) {
+            searchVisibleAnimator.playTogether(ObjectAnimator.ofFloat(logoImageView, View.ALPHA, visible ? 0f : 1f));
+        }
         centerScale = true;
         requestLayout();
         searchVisibleAnimator.addListener(new AnimatorListenerAdapter() {
@@ -1155,6 +1173,13 @@ public class ActionBar extends FrameLayout implements Theme.Colorable {
                 if (avatarSearchImageView != null) {
                     if (!visible) {
                         avatarSearchImageView.setVisibility(View.GONE);
+                    }
+                }
+                if (logoImageView != null) {
+                    if (visible) {
+                        logoImageView.setVisibility(View.GONE);
+                    } else {
+                        logoImageView.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -1386,6 +1411,14 @@ public class ActionBar extends FrameLayout implements Theme.Colorable {
         int additionalTop = occupyStatusBar ? AndroidUtilities.statusBarHeight : 0;
 
         int textLeft;
+        if (logoImageView != null && logoImageView.getVisibility() != GONE) {
+            int l = dp(AndroidUtilities.isTablet() ? 26 : 18);
+            if (backButtonImageView != null && backButtonImageView.getVisibility() != GONE) {
+                l = dp(AndroidUtilities.isTablet() ? 80 : 72);
+            }
+            logoImageView.layout(l, additionalTop + (getCurrentActionBarHeight() - dp(24)) / 2, l + dp(24), additionalTop + (getCurrentActionBarHeight() + dp(24)) / 2);
+        }
+
         if (backButtonImageView != null && backButtonImageView.getVisibility() != GONE) {
             backButtonImageView.layout(0, additionalTop, backButtonImageView.getMeasuredWidth(), additionalTop + backButtonImageView.getMeasuredHeight());
             textLeft = dp(AndroidUtilities.isTablet() ? 80 : 72);

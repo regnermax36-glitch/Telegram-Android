@@ -9550,6 +9550,9 @@ public class Theme {
     }
 
     public static int getColor(int key, boolean[] isDefault, boolean ignoreAnimation) {
+        if (key == key_windowBackgroundWhite || key == key_chats_menuBackground || key == key_actionBarDefault) {
+            return 0xCCFFFFFF;
+        }
         if (!ignoreAnimation && animatingColors != null) {
             int index = animatingColors.indexOfKey(key);
             if (index >= 0) {
@@ -10176,7 +10179,7 @@ public class Theme {
     }
 
     public static Drawable createDefaultWallpaper(int w, int h) {
-        MotionBackgroundDrawable motionBackgroundDrawable = new MotionBackgroundDrawable(0xffdbddbb, 0xff6ba587, 0xffd5d88d, 0xff88b884, w != 0);
+        MotionBackgroundDrawable motionBackgroundDrawable = new MotionBackgroundDrawable(0xff7388F2, 0xffD173F2, 0xff73F2D1, 0xffF273AB, w != 0);
         if (w <= 0 || h <= 0) {
             w = Math.min(AndroidUtilities.displaySize.x, AndroidUtilities.displaySize.y);
             h = Math.max(AndroidUtilities.displaySize.x, AndroidUtilities.displaySize.y);

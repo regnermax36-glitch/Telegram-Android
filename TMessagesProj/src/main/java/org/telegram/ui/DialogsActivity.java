@@ -5513,6 +5513,35 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             contentView.addView(topPanelLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP, 0, -14, 0, 0));
         }
 
+        if (initialDialogsType == DIALOGS_TYPE_DEFAULT && folderId == 0 && !onlySelect) {
+            FrameLayout intelligenceBar = new FrameLayout(context) {
+                private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                private Paint strokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                private RectF rectF = new RectF();
+                {
+                    paint.setColor(0x33FFFFFF);
+                    strokePaint.setStyle(Paint.Style.STROKE);
+                    strokePaint.setStrokeWidth(dp(1));
+                    strokePaint.setColor(0x4DFFFFFF);
+                }
+
+                @Override
+                protected void onDraw(Canvas canvas) {
+                    rectF.set(dp(12), dp(8), getMeasuredWidth() - dp(12), getMeasuredHeight() - dp(8));
+                    canvas.drawRoundRect(rectF, dp(24), dp(24), paint);
+                    canvas.drawRoundRect(rectF, dp(24), dp(24), strokePaint);
+                }
+            };
+            intelligenceBar.setWillNotDraw(false);
+            TextView textView = new TextView(context);
+            textView.setText("Ambient Intelligence Bar");
+            textView.setTextColor(0xFFFFFFFF);
+            textView.setTextSize(14);
+            textView.setGravity(Gravity.CENTER);
+            intelligenceBar.addView(textView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+            contentView.addView(intelligenceBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 64, Gravity.BOTTOM, 0, 0, 0, 12 + (hasMainTabs ? MAIN_TABS_HEIGHT_WITH_MARGINS : 0)));
+        }
+
         updateStoriesVisibility(false);
 
         updateFloatingButtonVisibility(false);
