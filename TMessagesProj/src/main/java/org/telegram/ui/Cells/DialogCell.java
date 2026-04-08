@@ -159,8 +159,8 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     public ShareDialogCell.RepostStoryDrawable repostStoryDrawable;
     public int avatarStart = 11;
     public int messagePaddingStart = 72;
-    public int heightDefault = 70;
-    public int heightThreeLines = 76;
+    public int heightDefault = 82;
+    public int heightThreeLines = 88;
     public int addHeightForTags = 3;
     public int addForumHeightForTags = 11;
     public TLRPC.TL_forumTopic forumTopic;
@@ -3531,12 +3531,29 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     private GradientDrawable archiveFadeGradientDrawable;
     private int archiveFadeGradientDrawableColor;
 
+    private Paint glassPaint;
+    private Paint glassStrokePaint;
+
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         if (currentDialogId == 0 && customDialog == null) {
             return;
         }
+
+        if (glassPaint == null) {
+            glassPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            glassPaint.setColor(0x1AFFFFFF);
+            glassStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            glassStrokePaint.setStyle(Paint.Style.STROKE);
+            glassStrokePaint.setStrokeWidth(dp(1.2f));
+            glassStrokePaint.setColor(0x4DFFFFFF);
+        }
+
+        rect.set(dp(12), dp(6), getMeasuredWidth() - dp(12), getMeasuredHeight() - dp(6));
+        canvas.drawRoundRect(rect, dp(22), dp(22), glassPaint);
+        canvas.drawRoundRect(rect, dp(22), dp(22), glassStrokePaint);
+
         if (!visibleOnScreen) {
             return;
         }
@@ -4480,7 +4497,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
             canvas.restore();
         }
 
-        if (useSeparator) {
+        if (false && useSeparator) {
             int left;
             if (fullSeparator || currentDialogFolderId != 0 && archiveHidden && !fullSeparator2 || fullSeparator2 && !archiveHidden) {
                 left = 0;
