@@ -6,6 +6,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.util.Property;
 import android.view.HapticFeedbackConstants;
@@ -16,6 +18,14 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 
 public class ZoomControlView extends View {
+
+    private BlurringShader.BlurManager blurManager;
+    private BlurringShader.StoryBlurDrawer blurDrawer;
+
+    public void setBlurManager(BlurringShader.BlurManager blurManager) {
+        this.blurManager = blurManager;
+        this.blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_ACTION_BACKGROUND);
+    }
 
     private Drawable minusDrawable;
     private Drawable plusDrawable;
@@ -230,6 +240,23 @@ public class ZoomControlView extends View {
         int cx = getMeasuredWidth() / 2;
         int cy = getMeasuredHeight() / 2;
         boolean isPortrait = getMeasuredWidth() > getMeasuredHeight();
+
+        if (blurDrawer != null) {
+            AndroidUtilities.rectTmp.set(0, 0, getMeasuredWidth(), getMeasuredHeight());
+            float r = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2f;
+            canvas.save();
+            Path path = new Path();
+            path.addRoundRect(AndroidUtilities.rectTmp, r, r, Path.Direction.CW);
+            canvas.clipPath(path);
+            blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+            canvas.restore();
+
+            Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            borderPaint.setStyle(Paint.Style.STROKE);
+            borderPaint.setStrokeWidth(AndroidUtilities.dpf2(0.5f));
+            borderPaint.setColor(0x20ffffff);
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, borderPaint);
+        }
 
         if (isPortrait) {
             minusCx = AndroidUtilities.dp(16 + 25);

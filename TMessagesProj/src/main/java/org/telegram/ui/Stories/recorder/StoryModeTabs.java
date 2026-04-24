@@ -7,6 +7,7 @@ import static org.telegram.messenger.LocaleController.getString;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -25,6 +26,7 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.BlurringShader;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.ScaleStateListAnimator;
@@ -41,6 +43,13 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
     private final TextView video;
 
     private float invert;
+    private BlurringShader.BlurManager blurManager;
+    private BlurringShader.StoryBlurDrawer blurDrawer;
+
+    public void setBlurManager(BlurringShader.BlurManager blurManager) {
+        this.blurManager = blurManager;
+        this.blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_ACTION_BACKGROUND);
+    }
 
     public StoryModeTabs(Context context) {
         super(context);
@@ -57,7 +66,17 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
                 setRect((int) Math.floor(mode), a);
                 setRect((int) Math.ceil(mode), b);
                 lerp(a, b, mode - (float) Math.floor(mode), c);
-                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.15f));
+                if (blurDrawer != null) {
+                    canvas.save();
+                    Path path = new Path();
+                    path.addRoundRect(c, c.height() / 2f, c.height() / 2f, Path.Direction.CW);
+                    canvas.clipPath(path);
+                    blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+                    canvas.restore();
+                    backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.25f));
+                } else {
+                    backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.15f));
+                }
                 canvas.drawRoundRect(c, c.height() / 2f, c.height() / 2f, backgroundPaint);
 
                 super.dispatchDraw(canvas);
@@ -67,7 +86,8 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         liveLayout = new FrameLayout(context);
         live = new TextView(context);
-        live.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        live.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        live.setLetterSpacing(0.02f);
         live.setTypeface(AndroidUtilities.bold());
         live.setTextColor(0xFFFFFFFF);
         live.setText(getString(R.string.StoryLive));
@@ -78,7 +98,8 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         photoLayout = new FrameLayout(context);
         photo = new TextView(context);
-        photo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        photo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        photo.setLetterSpacing(0.02f);
         photo.setTypeface(AndroidUtilities.bold());
         photo.setTextColor(0xFFFFFFFF);
         photo.setText(getString(R.string.StoryPhoto));
@@ -89,7 +110,8 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         videoLayout = new FrameLayout(context);
         video = new TextView(context);
-        video.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        video.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 13);
+        video.setLetterSpacing(0.02f);
         video.setTypeface(AndroidUtilities.bold());
         video.setTextColor(0xFFFFFFFF);
         video.setText(getString(R.string.StoryVideo));
