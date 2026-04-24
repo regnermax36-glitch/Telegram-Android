@@ -42,6 +42,7 @@ import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.BlurringShader;
 import org.telegram.ui.Components.AnimatedFloat;
 import org.telegram.ui.Components.ButtonBounce;
 import org.telegram.ui.Components.CircularProgressDrawable;
@@ -117,6 +118,13 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final Paint checkPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Matrix redMatrix =         new Matrix();
     private RadialGradient redGradient;
+    private BlurringShader.StoryBlurDrawer blurDrawer;
+    private BlurringShader.BlurManager blurManager;
+
+    public void setBlurManager(BlurringShader.BlurManager blurManager) {
+        this.blurManager = blurManager;
+        this.blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_ACTION_BACKGROUND);
+    }
 
     private final ButtonBounce recordButton =  new ButtonBounce(this);
     private final ButtonBounce flipButton =    new ButtonBounce(this);
@@ -415,7 +423,17 @@ public class RecordControl extends View implements FlashViews.Invertable {
             canvas.save();
         }
         canvas.scale(scale, scale, cx, cy);
-        mainPaint.setAlpha(0xFF);
+        if (blurDrawer != null) {
+            canvas.save();
+            Path path = new Path();
+            path.addRoundRect(AndroidUtilities.rectTmp, rad, rad, Path.Direction.CW);
+            canvas.clipPath(path);
+            blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+            canvas.restore();
+            mainPaint.setAlpha(isVideo > 0 ? 0x80 : 0x40);
+        } else {
+            mainPaint.setAlpha(0xFF);
+        }
         canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
