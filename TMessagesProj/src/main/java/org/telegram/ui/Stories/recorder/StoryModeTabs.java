@@ -57,7 +57,7 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
                 setRect((int) Math.floor(mode), a);
                 setRect((int) Math.ceil(mode), b);
                 lerp(a, b, mode - (float) Math.floor(mode), c);
-                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.15f));
+                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.10f));
                 canvas.drawRoundRect(c, c.height() / 2f, c.height() / 2f, backgroundPaint);
 
                 super.dispatchDraw(canvas);
@@ -71,7 +71,7 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
         live.setTypeface(AndroidUtilities.bold());
         live.setTextColor(0xFFFFFFFF);
         live.setText(getString(R.string.StoryLive));
-        liveLayout.addView(live, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
+        liveLayout.addView(live, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 24, 0, 24, 7));
         layout.addView(liveLayout, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.FILL_VERTICAL, 0, 0, 6.66f, 0));
         liveLayout.setOnClickListener(v -> switchModeInternal(-1));
         ScaleStateListAnimator.apply(liveLayout);
@@ -82,7 +82,7 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
         photo.setTypeface(AndroidUtilities.bold());
         photo.setTextColor(0xFFFFFFFF);
         photo.setText(getString(R.string.StoryPhoto));
-        photoLayout.addView(photo, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
+        photoLayout.addView(photo, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 24, 0, 24, 7));
         layout.addView(photoLayout, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.FILL_VERTICAL, 0, 0, 6.66f, 0));
         photoLayout.setOnClickListener(v -> switchModeInternal(0));
         ScaleStateListAnimator.apply(photoLayout);
@@ -93,7 +93,7 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
         video.setTypeface(AndroidUtilities.bold());
         video.setTextColor(0xFFFFFFFF);
         video.setText(getString(R.string.StoryVideo));
-        videoLayout.addView(video, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
+        videoLayout.addView(video, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 24, 0, 24, 7));
         layout.addView(videoLayout, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.FILL_VERTICAL, 0, 0, 0, 0));
         videoLayout.setOnClickListener(v -> switchModeInternal(1));
         ScaleStateListAnimator.apply(videoLayout);
