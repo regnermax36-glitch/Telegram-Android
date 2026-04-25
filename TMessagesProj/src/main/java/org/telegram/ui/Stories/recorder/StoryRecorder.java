@@ -2960,7 +2960,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         recordControl = new RecordControl(context);
         recordControl.setDelegate(recordControlDelegate);
         recordControl.startAsVideo(mode == MODE_VIDEO);
-        controlContainer.addView(recordControl, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 100, Gravity.BOTTOM | Gravity.FILL_HORIZONTAL));
+        controlContainer.addView(recordControl, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 100, Gravity.BOTTOM | Gravity.FILL_HORIZONTAL, 16, 0, 16, 12));
         flashViews.add(recordControl);
         recordControl.setCollageProgress(collageLayoutView.hasLayout() ? collageLayoutView.getFilledProgress() : 0.0f, true);
 
@@ -3063,7 +3063,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 animateGalleryListView(false);
             }
         });
-        navbarContainer.addView(modeSwitcherView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.TOP | Gravity.FILL_HORIZONTAL));
+        navbarContainer.addView(modeSwitcherView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48, Gravity.TOP | Gravity.FILL_HORIZONTAL, 16, 0, 16, 12));
         flashViews.add(modeSwitcherView);
 
         rotateButton = new FlashViews.ImageViewInvertable(context);
