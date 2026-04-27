@@ -927,18 +927,18 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 }
             });
             if (value < 1 && wasSend) {
-                openCloseAnimator.setDuration(250);
+                openCloseAnimator.setDuration(350);
                 openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
             } else {
                 if (value > 0 || containerView.getTranslationY1() < AndroidUtilities.dp(20)) {
-                    openCloseAnimator.setDuration(300L);
-                    openCloseAnimator.setInterpolator(new FastOutSlowInInterpolator());
+                    openCloseAnimator.setDuration(420L);
+                    openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                 } else if (value < 0 && fastClose) {
-                    openCloseAnimator.setDuration(200L);
+                    openCloseAnimator.setDuration(250L);
                     openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                     fastClose = false;
                 } else {
-                    openCloseAnimator.setDuration(400L);
+                    openCloseAnimator.setDuration(480L);
                     openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                 }
             }
@@ -1470,20 +1470,22 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int horizontalMargin = dp(16);
+            final int verticalMargin = dp(12);
+            final int w = W - insetLeft - insetRight - horizontalMargin * 2;
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
             final int hFromW = (int) Math.ceil(w / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
+            if (hFromW + underControls + verticalMargin * 2 <= H - navbar) {
                 previewW = w;
                 previewH = hFromW;
-                underStatusBar = previewH + underControls > H - navbar - statusbar;
+                underStatusBar = previewH + underControls + verticalMargin * 2 > H - navbar - statusbar;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - verticalMargin * 2;
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
             underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
@@ -1596,19 +1598,21 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int statusbar = insetTop;
             final int underControls = navbarContainer.getMeasuredHeight();
+            final int horizontalMargin = dp(16);
+            final int verticalMargin = dp(12);
 
             final int T = underStatusBar ? 0 : statusbar;
             int l = insetLeft + (W - insetRight - previewW) / 2,
                 r = insetLeft + (W - insetRight + previewW) / 2, t, b;
             if (underStatusBar) {
-                t = T;
-                b = T + previewH + underControls;
+                t = T + verticalMargin;
+                b = T + verticalMargin + previewH + underControls;
             } else {
                 t = T + ((H - T - insetBottom) - previewH - underControls) / 2;
                 if (openType == 1 && fromRect.top + previewH + underControls < H - insetBottom) {
                     t = (int) fromRect.top;
                 } else if (t - T < dp(40)) {
-                    t = T;
+                    t = T + verticalMargin;
                 }
                 b = t + previewH + underControls;
             }
@@ -1728,7 +1732,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         public void updateBackground() {
             if (openType == 0) {
-                setBackground(Theme.createRoundRectDrawable(dp(12), 0xff000000));
+                setBackground(Theme.createRoundRectDrawable(dp(32), 0xff000000));
             } else {
                 setBackground(null);
             }
@@ -1866,7 +1870,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 }
                 topGradientPaint.setAlpha(0xFF);
                 AndroidUtilities.rectTmp.set(0, 0, getWidth(), dp(72 + 12) + top);
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(12), dp(12), topGradientPaint);
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), topGradientPaint);
             }
             return r;
         }
@@ -2202,7 +2206,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -2675,7 +2679,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         backButton.setScaleType(ImageView.ScaleType.CENTER);
         backButton.setImageResource(R.drawable.msg_photo_back);
         backButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-        backButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        backButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         backButton.setOnClickListener(e -> {
             if (awaitingPlayer) {
                 return;
@@ -2730,7 +2734,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         muteButton.setScaleType(ImageView.ScaleType.CENTER);
         muteButton.setImageResource(outputEntry != null && outputEntry.muted ? R.drawable.media_unmute : R.drawable.media_mute);
         muteButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-        muteButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        muteButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         muteButton.setOnClickListener(e -> {
             if (outputEntry == null || awaitingPlayer) {
                 return;
@@ -2759,7 +2763,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         muteButton.setAlpha(0f);
 
         playButton = new PlayPauseButton(context);
-        playButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        playButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         playButton.setVisibility(View.GONE);
         playButton.setAlpha(0f);
         playButton.setOnClickListener(e -> {
@@ -2773,7 +2777,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         actionBarButtons.addView(downloadButton, LayoutHelper.createFrame(46, 56, Gravity.TOP | Gravity.RIGHT));
 
         flashButton = new ToggleButton2(context);
-        flashButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        flashButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         flashButton.setOnClickListener(e -> {
             if (cameraView == null || awaitingPlayer) {
                 return;
@@ -2850,7 +2854,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         actionBarContainer.addView(dualButton, LayoutHelper.createFrame(56, 56, Gravity.TOP | Gravity.RIGHT));
 
         collageButton = new CollageLayoutButton(context);
-        collageButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        collageButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         if (lastCollageLayout == null) {
             lastCollageLayout = CollageLayout.getLayouts().get(6);
         }
@@ -2884,7 +2888,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         actionBarContainer.addView(collageButton, LayoutHelper.createFrame(56, 56, Gravity.TOP | Gravity.RIGHT));
 
         collageRemoveButton = new ToggleButton2(context);
-        collageRemoveButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        collageRemoveButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         collageRemoveButton.setIcon(new CollageLayoutButton.CollageLayoutDrawable(new CollageLayout("../../.."), true), false);
         collageRemoveButton.setVisibility(View.GONE);
         collageRemoveButton.setAlpha(0.0f);
@@ -5567,7 +5571,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         if (animated) {
             editModeAnimator = new AnimatorSet();
             editModeAnimator.playTogether(animators);
-            editModeAnimator.setDuration(320);
+            editModeAnimator.setDuration(420);
             editModeAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
             editModeAnimator.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -7701,7 +7705,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             themeButton = new ImageView(getContext());
             themeButton.setScaleType(ImageView.ScaleType.CENTER);
             themeButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-            themeButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+            themeButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
             themeButton.setOnClickListener(e -> {
                 toggleTheme();
             });
