@@ -50,14 +50,14 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
             private final Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             private void setRect(int mode, RectF rect) {
                 View view = mode <= -1 ? liveLayout : mode >= 1 ? videoLayout : photoLayout;
-                rect.set(view.getLeft(), view.getBottom() - dp(30), view.getRight(), view.getBottom());
+                rect.set(view.getLeft() + dp(4), view.getBottom() - dp(30), view.getRight() - dp(4), view.getBottom() - dp(2));
             }
             @Override
             protected void dispatchDraw(@NonNull Canvas canvas) {
                 setRect((int) Math.floor(mode), a);
                 setRect((int) Math.ceil(mode), b);
                 lerp(a, b, mode - (float) Math.floor(mode), c);
-                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.15f));
+                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.25f));
                 canvas.drawRoundRect(c, c.height() / 2f, c.height() / 2f, backgroundPaint);
 
                 super.dispatchDraw(canvas);

@@ -1125,10 +1125,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 canvas.drawColor(ColorUtils.setAlphaComponent(Color.BLACK, (int) (255 * openProgress * (1f - dismiss))));
             }
             boolean restore = false;
-            final float r = lerp(fromRounding, 0, openProgress);
-            if (openProgress != 1) {
+            final float r = lerp(fromRounding, dp(32), openProgress);
+            if (openType == 0 || openProgress != 1) {
                 if (openType == 0) {
-                    fullRectF.set(0, 0, getWidth(), getHeight());
+                    fullRectF.set((getWidth() - containerView.getMeasuredWidth()) / 2f, (getHeight() - containerView.getMeasuredHeight()) / 2f, (getWidth() + containerView.getMeasuredWidth()) / 2f, (getHeight() + containerView.getMeasuredHeight()) / 2f);
                     fullRectF.offset(containerView.getTranslationX(), containerView.getTranslationY());
                     lerp(fromRect, fullRectF, openProgress, rectF);
 
@@ -1140,7 +1140,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                     final float alpha = Utilities.clamp(openProgress * 3, 1, 0);
                     canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), (int) (0xFF * alpha), Canvas.ALL_SAVE_FLAG);
                     canvas.translate(rectF.left, rectF.top - containerView.getTranslationY() * openProgress);
-                    final float s = Math.max(rectF.width() / getWidth(), rectF.height() / getHeight());
+                    final float s = Math.max(rectF.width() / containerView.getMeasuredWidth(), rectF.height() / containerView.getMeasuredHeight());
                     canvas.scale(s, s);
                     restore = true;
                 } else if (openType == 1) {
@@ -1470,23 +1470,25 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int horizontalMargin = dp(16);
+            final int verticalMargin = dp(12);
+            final int w = W - insetLeft - insetRight - horizontalMargin * 2;
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
             final int hFromW = (int) Math.ceil(w / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
+            if (hFromW + underControls <= H - navbar - verticalMargin * 2) {
                 previewW = w;
                 previewH = hFromW;
-                underStatusBar = previewH + underControls > H - navbar - statusbar;
+                underStatusBar = previewH + underControls > H - navbar - statusbar - verticalMargin * 2;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - verticalMargin * 2;
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
-            underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
+            underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar) - verticalMargin * 2, dp(68), dp(48));
 
             int flags = getSystemUiVisibility();
             if (underStatusBar) {
@@ -1728,7 +1730,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         public void updateBackground() {
             if (openType == 0) {
-                setBackground(Theme.createRoundRectDrawable(dp(12), 0xff000000));
+                setBackground(Theme.createRoundRectDrawable(dp(32), 0xff000000));
             } else {
                 setBackground(null);
             }
@@ -2053,7 +2055,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             public void invalidate() {}
         });
         windowView.addView(flashViews.backgroundView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        windowView.addView(containerView = new ContainerView(context));
+        windowView.addView(containerView = new ContainerView(context), LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         containerView.addView(previewContainer = new FrameLayout(context) {
             @Override
             public boolean onTouchEvent(MotionEvent event) {
@@ -2984,6 +2986,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         controlContainer.addView(cameraHint, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.BOTTOM, 0, 0, 0, 100));
 
         zoomControlView = new ZoomControlView(context);
+        zoomControlView.setScaleX(0.85f);
+        zoomControlView.setScaleY(0.85f);
         zoomControlView.enabledTouch = false;
         zoomControlView.setAlpha(0.0f);
         controlContainer.addView(zoomControlView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 50, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 100 + 8));
