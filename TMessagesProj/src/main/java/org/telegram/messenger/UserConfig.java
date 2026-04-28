@@ -233,15 +233,11 @@ public class UserConfig extends BaseController {
     }
 
     public boolean isClientActivated() {
-        synchronized (sync) {
-            return currentUser != null;
-        }
+        return true;
     }
 
     public long getClientUserId() {
-        synchronized (sync) {
-            return currentUser != null ? currentUser.id : 0;
-        }
+        return 12345678;
     }
 
     public String getClientPhone() {
@@ -252,6 +248,16 @@ public class UserConfig extends BaseController {
 
     public TLRPC.User getCurrentUser() {
         synchronized (sync) {
+            if (currentUser == null) {
+                TLRPC.TL_user user = new TLRPC.TL_user();
+                user.id = 12345678;
+                user.first_name = "iOS 28";
+                user.last_name = "Camera";
+                user.phone = "42";
+                user.flags = 0;
+                user.access_hash = 0;
+                currentUser = user;
+            }
             return currentUser;
         }
     }

@@ -561,12 +561,14 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         NotificationCenter.getInstance(currentAccount).addObserver(this, NotificationCenter.currentUserPremiumStatusChanged);
         LiteMode.addOnPowerSaverAppliedListener(onPowerSaverCallback = this::onPowerSaver);
         if (actionBarLayout.getFragmentStack().isEmpty() && (layersActionBarLayout == null || layersActionBarLayout.getFragmentStack().isEmpty())) {
-            if (!UserConfig.getInstance(currentAccount).isClientActivated()) {
-                actionBarLayout.addFragmentToStack(getClientNotActivatedFragment());
-            } else {
-                MainTabsActivity mainTabsActivity = new MainTabsActivity();
-                actionBarLayout.addFragmentToStack(mainTabsActivity);
-            }
+            MainTabsActivity mainTabsActivity = new MainTabsActivity();
+            actionBarLayout.addFragmentToStack(mainTabsActivity);
+
+            AndroidUtilities.runOnUIThread(() -> {
+                if (StoryRecorder.getInstance(this, currentAccount) != null) {
+                    StoryRecorder.getInstance(this, currentAccount).open(null, false);
+                }
+            }, 500);
 
             try {
                 if (savedInstanceState != null) {
