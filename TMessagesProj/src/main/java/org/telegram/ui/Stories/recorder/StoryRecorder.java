@@ -555,10 +555,6 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         if (isShown) {
             return;
         }
-        if (MessagesController.getInstance(currentAccount).isFrozen()) {
-            AccountFrozenAlert.show(currentAccount);
-            return;
-        }
 
         isReposting = false;
         prepareClosing = false;
@@ -573,13 +569,6 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         }
 
         collageLayoutView.setCameraThumb(getCameraThumb());
-
-        if (botId == 0) {
-            StoriesController.StoryLimit storyLimit = MessagesController.getInstance(currentAccount).getStoriesController().checkStoryLimit();
-            if (storyLimit != null && storyLimit.active(currentAccount)) {
-                showLimitReachedSheet(storyLimit, true);
-            }
-        }
 
         navigateTo(PAGE_CAMERA, false);
         switchToEditMode(EDIT_MODE_NONE, false);
@@ -2181,6 +2170,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             updateActionBarButtons(true);
         });
         previewContainer.addView(collageLayoutView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.FILL));
+        previewContainer.addView(new HUDView(context), LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         collageLayoutView.setOnClickListener(v -> {
             if (noCameraPermission) {
                 requestCameraPermission(true);
