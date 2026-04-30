@@ -190,6 +190,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     private WindowView windowView;
     private ContainerView containerView;
     private FlashViews flashViews;
+    private CameraHUDView cameraHUDView;
     private ThanosEffect thanosEffect;
 
     private static StoryRecorder instance;
@@ -582,6 +583,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         }
 
         navigateTo(PAGE_CAMERA, false);
+        cameraHUDView.setVisibility(View.VISIBLE);
         switchToEditMode(EDIT_MODE_NONE, false);
 
         if (sourceView != null) {
@@ -737,6 +739,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         }, time);
         previewButtons.appear(true, false);
         navigateTo(PAGE_PREVIEW, false);
+        cameraHUDView.setVisibility(View.GONE);
         switchToEditMode(EDIT_MODE_NONE, false);
 
         addNotificationObservers();
@@ -927,18 +930,18 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 }
             });
             if (value < 1 && wasSend) {
-                openCloseAnimator.setDuration(250);
+                openCloseAnimator.setDuration(420);
                 openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
             } else {
                 if (value > 0 || containerView.getTranslationY1() < AndroidUtilities.dp(20)) {
-                    openCloseAnimator.setDuration(300L);
-                    openCloseAnimator.setInterpolator(new FastOutSlowInInterpolator());
+                    openCloseAnimator.setDuration(420L);
+                    openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                 } else if (value < 0 && fastClose) {
-                    openCloseAnimator.setDuration(200L);
+                    openCloseAnimator.setDuration(420L);
                     openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                     fastClose = false;
                 } else {
-                    openCloseAnimator.setDuration(400L);
+                    openCloseAnimator.setDuration(420L);
                     openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                 }
             }
@@ -1777,7 +1780,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int w = right - left;
             final int h = bottom - top;
 
-            previewContainer.layout(0, 0, previewW, previewH);
+            previewContainer.layout(dp(16), dp(12), previewW - dp(16), previewH - dp(12));
             previewContainer.setPivotX(previewW * .5f);
             actionBarContainer.layout(0, t, previewW, t + actionBarContainer.getMeasuredHeight());
             controlContainer.layout(0, previewH - controlContainer.getMeasuredHeight(), previewW, previewH);
@@ -1816,7 +1819,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
 
-            measureChildExactly(previewContainer, previewW, previewH);
+            measureChildExactly(previewContainer, previewW - dp(32), previewH - dp(24));
             applyFilterMatrix();
             measureChildExactly(actionBarContainer, previewW, dp(56 + 56 + 38));
             measureChildExactly(controlContainer, previewW, dp(220));
@@ -2043,6 +2046,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         windowView.setFocusable(true);
 
         flashViews = new FlashViews(context, windowManager, windowView, windowLayoutParams);
+        cameraHUDView = new CameraHUDView(context);
+        cameraHUDView.setCurrentAccount(currentAccount);
         flashViews.add(new FlashViews.Invertable() {
             @Override
             public void setInvert(float invert) {
@@ -2123,6 +2128,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             }
         });
         containerView.addView(flashViews.foregroundView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        containerView.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
 
         blurManager = new BlurringShader.BlurManager(previewContainer);
         videoTextureHolder = new PreviewView.TextureViewHolder();
@@ -2202,7 +2208,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -4589,7 +4595,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                     onNavigateEnd(oldPage, page);
                 }
             });
-            pageAnimator.setDuration(460);
+            pageAnimator.setDuration(420);
             pageAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
             pageAnimator.start();
         } else {
@@ -5301,6 +5307,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         if (fromPage == PAGE_CAMERA) {
             destroyCameraView(false);
             recordControl.setVisibility(View.GONE);
+            cameraHUDView.setVisibility(View.GONE);
             zoomControlView.setVisibility(View.GONE);
             modeSwitcherView.setVisibility(View.GONE);
 //            dualButton.setVisibility(View.GONE);
@@ -5359,6 +5366,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             captionContainer.setAlpha(1f);
             captionContainer.setTranslationY(0);
             captionEdit.setVisibility(outputEntry != null && outputEntry.botId != 0 ? View.GONE : View.VISIBLE);
+        }
+        if (toPage == PAGE_CAMERA) {
+            cameraHUDView.setVisibility(View.VISIBLE);
         }
         if (toPage == PAGE_CAMERA && showSavedDraftHint) {
             getDraftSavedHint().setVisibility(View.VISIBLE);
@@ -5499,6 +5509,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             animators.add(ObjectAnimator.ofFloat(themeButton, View.ALPHA, (editMode == EDIT_MODE_NONE || editMode == EDIT_MODE_TIMELINE) && (outputEntry != null && outputEntry.isRepostMessage) ? 1f : 0));
         }
         animators.add(ObjectAnimator.ofFloat(titleTextView, View.ALPHA, (currentPage == PAGE_PREVIEW || currentPage == PAGE_COVER) && editMode == EDIT_MODE_NONE ? 1f : 0f));
+        animators.add(ObjectAnimator.ofFloat(cameraHUDView, View.ALPHA, currentPage == PAGE_CAMERA && editMode == EDIT_MODE_NONE ? 1f : 0f));
 
         int rightMargin = 0;
         int bottomMargin = 0;
@@ -6946,6 +6957,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         cameraView.recordHevc = !collageLayoutView.hasLayout();
         cameraView.setThumbDrawable(getCameraThumb());
         cameraView.initTexture();
+        cameraHUDView.setCameraView(cameraView);
         cameraView.setDelegate(() -> {
             String currentFlashMode = getCurrentFlashMode();
             if (TextUtils.equals(currentFlashMode, getNextFlashMode())) {
