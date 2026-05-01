@@ -1475,15 +1475,15 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
-            final int hFromW = (int) Math.ceil(w / 9f * 16f);
+            final int hFromW = (int) Math.ceil((w - dp(32)) / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
-                previewW = w;
+            if (hFromW + underControls <= H - navbar - dp(24)) {
+                previewW = w - dp(32);
                 previewH = hFromW;
-                underStatusBar = previewH + underControls > H - navbar - statusbar;
+                underStatusBar = previewH + underControls > H - navbar - statusbar - dp(24);
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - dp(24);
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
             underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
@@ -1598,17 +1598,17 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int underControls = navbarContainer.getMeasuredHeight();
 
             final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            int l = insetLeft + (W - insetLeft - insetRight - previewW) / 2,
+                r = l + previewW, t, b;
             if (underStatusBar) {
-                t = T;
-                b = T + previewH + underControls;
+                t = T + dp(12);
+                b = t + previewH + underControls;
             } else {
                 t = T + ((H - T - insetBottom) - previewH - underControls) / 2;
                 if (openType == 1 && fromRect.top + previewH + underControls < H - insetBottom) {
                     t = (int) fromRect.top;
                 } else if (t - T < dp(40)) {
-                    t = T;
+                    t = T + dp(12);
                 }
                 b = t + previewH + underControls;
             }
@@ -1728,7 +1728,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         public void updateBackground() {
             if (openType == 0) {
-                setBackground(Theme.createRoundRectDrawable(dp(12), 0xff000000));
+                setBackground(Theme.createRoundRectDrawable(dp(32), 0xff000000));
             } else {
                 setBackground(null);
             }
@@ -2202,7 +2202,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -3069,8 +3069,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         rotateButton = new FlashViews.ImageViewInvertable(context);
         rotateButton.setImageResource(R.drawable.stream_flip);
         rotateButton.setScaleType(ImageView.ScaleType.CENTER);
+        rotateButton.setScaleX(0.85f);
+        rotateButton.setScaleY(0.85f);
         rotateButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-        rotateButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        rotateButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         navbarContainer.addView(rotateButton, LayoutHelper.createFrame(24, 24, Gravity.LEFT | Gravity.CENTER_VERTICAL, 20, 0, 20, 4));
         flashViews.add(rotateButton);
         rotateButton.setOnClickListener(v -> {
@@ -3090,8 +3092,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         liveSettingsButton = new FlashViews.ImageViewInvertable(context);
         liveSettingsButton.setImageResource(R.drawable.stream_settings);
         liveSettingsButton.setScaleType(ImageView.ScaleType.CENTER);
+        liveSettingsButton.setScaleX(0.85f);
+        liveSettingsButton.setScaleY(0.85f);
         liveSettingsButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-        liveSettingsButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        liveSettingsButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         navbarContainer.addView(liveSettingsButton, LayoutHelper.createFrame(24, 24, Gravity.RIGHT | Gravity.CENTER_VERTICAL, 20, 0, 20, 4));
         flashViews.add(liveSettingsButton);
         liveSettingsButton.setOnClickListener(v -> {
