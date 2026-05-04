@@ -1470,23 +1470,23 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int w = W - insetLeft - insetRight - dp(32);
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
             final int hFromW = (int) Math.ceil(w / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
+            if (hFromW + underControls <= H - navbar - dp(24)) {
                 previewW = w;
                 previewH = hFromW;
                 underStatusBar = previewH + underControls > H - navbar - statusbar;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - dp(24);
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
-            underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
+            underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar) - dp(24), dp(68), dp(48));
 
             int flags = getSystemUiVisibility();
             if (underStatusBar) {
@@ -1892,6 +1892,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     private FrameLayout captionContainer;
     private FrameLayout navbarContainer;
 
+    private CameraHUDView cameraHUDView;
+
     private FlashViews.ImageViewInvertable backButton;
     private SelectPeerView livePeerView;
     private SimpleTextView titleTextView;
@@ -2016,6 +2018,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         Context context = getContext();
+
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
 
         windowView = new WindowView(context);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -2202,7 +2207,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -2987,6 +2992,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         zoomControlView.enabledTouch = false;
         zoomControlView.setAlpha(0.0f);
         controlContainer.addView(zoomControlView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 50, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 100 + 8));
+        controlContainer.addView(cameraHUDView, LayoutHelper.createFrame(80, 100, Gravity.TOP | Gravity.LEFT, 16, 60, 0, 0));
         zoomControlView.setDelegate(zoom -> {
             if (cameraView != null) {
                 cameraView.setZoom(cameraZoom = zoom);
@@ -4522,6 +4528,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         final int oldPage = currentPage;
         currentPage = page;
 
+        if (cameraHUDView != null) {
+            cameraHUDView.setVisibility(currentPage == PAGE_CAMERA && currentEditMode == EDIT_MODE_NONE ? View.VISIBLE : View.GONE);
+            cameraHUDView.setCameraView(cameraView);
+        }
+
         if (pageAnimator != null) {
             pageAnimator.cancel();
         }
@@ -5401,6 +5412,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         final int oldEditMode = currentEditMode;
         currentEditMode = editMode;
+
+        if (cameraHUDView != null) {
+            cameraHUDView.setVisibility(currentPage == PAGE_CAMERA && currentEditMode == EDIT_MODE_NONE ? View.VISIBLE : View.GONE);
+        }
 
         if (editModeAnimator != null) {
             editModeAnimator.cancel();
