@@ -1598,19 +1598,19 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int underControls = navbarContainer.getMeasuredHeight();
 
             final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            int l = insetLeft + (W - insetRight - previewW) / 2 + dp(16),
+                r = insetLeft + (W - insetRight + previewW) / 2 - dp(16), t, b;
             if (underStatusBar) {
-                t = T;
-                b = T + previewH + underControls;
+                t = T + dp(12);
+                b = T + previewH + underControls - dp(12);
             } else {
-                t = T + ((H - T - insetBottom) - previewH - underControls) / 2;
+                t = T + ((H - T - insetBottom) - previewH - underControls) / 2 + dp(12);
                 if (openType == 1 && fromRect.top + previewH + underControls < H - insetBottom) {
-                    t = (int) fromRect.top;
+                    t = (int) fromRect.top + dp(12);
                 } else if (t - T < dp(40)) {
-                    t = T;
+                    t = T + dp(12);
                 }
-                b = t + previewH + underControls;
+                b = t + previewH + underControls - dp(24);
             }
 
             containerView.layout(l, t, r, b);
@@ -1866,7 +1866,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 }
                 topGradientPaint.setAlpha(0xFF);
                 AndroidUtilities.rectTmp.set(0, 0, getWidth(), dp(72 + 12) + top);
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(12), dp(12), topGradientPaint);
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), topGradientPaint);
             }
             return r;
         }
@@ -1912,6 +1912,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     /* PAGE_CAMERA */
     private CollageLayoutView2 collageLayoutView;
+    private CameraHUDView cameraHUDView;
     private DualCameraView cameraView;
     private QRScanner qrScanner;
     private ScannedLinkPreview qrLinkView;
@@ -2187,6 +2188,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             }
         });
 
+        cameraHUDView = new CameraHUDView(context);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        previewContainer.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+
 //        cameraViewThumb = new ImageView(context);
 //        cameraViewThumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        cameraViewThumb.setOnClickListener(v -> {
@@ -2202,7 +2207,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -2673,9 +2678,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         backButton = new FlashViews.ImageViewInvertable(context);
         backButton.setContentDescription(getString(R.string.AccDescrGoBack));
         backButton.setScaleType(ImageView.ScaleType.CENTER);
+        backButton.setScaleX(0.85f);
+        backButton.setScaleY(0.85f);
         backButton.setImageResource(R.drawable.msg_photo_back);
         backButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-        backButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        backButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         backButton.setOnClickListener(e -> {
             if (awaitingPlayer) {
                 return;
@@ -2728,9 +2735,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         muteButton = new RLottieImageView(context);
         muteButton.setScaleType(ImageView.ScaleType.CENTER);
+        muteButton.setScaleX(0.85f);
+        muteButton.setScaleY(0.85f);
         muteButton.setImageResource(outputEntry != null && outputEntry.muted ? R.drawable.media_unmute : R.drawable.media_mute);
         muteButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
-        muteButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        muteButton.setBackground(Theme.createSelectorDrawable(0x15ffffff));
         muteButton.setOnClickListener(e -> {
             if (outputEntry == null || awaitingPlayer) {
                 return;
@@ -5303,6 +5312,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             recordControl.setVisibility(View.GONE);
             zoomControlView.setVisibility(View.GONE);
             modeSwitcherView.setVisibility(View.GONE);
+            cameraHUDView.setVisibility(View.GONE);
 //            dualButton.setVisibility(View.GONE);
             animateRecording(false, false);
             setAwakeLock(false);
@@ -6946,6 +6956,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         cameraView.recordHevc = !collageLayoutView.hasLayout();
         cameraView.setThumbDrawable(getCameraThumb());
         cameraView.initTexture();
+        cameraHUDView.setCameraView(cameraView);
         cameraView.setDelegate(() -> {
             String currentFlashMode = getCurrentFlashMode();
             if (TextUtils.equals(currentFlashMode, getNextFlashMode())) {
@@ -7903,6 +7914,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         AndroidUtilities.updateViewShow(liveSettingsButton, mode == MODE_LIVE && currentPage == PAGE_CAMERA);
         AndroidUtilities.updateViewShow(rotateButton, mode == MODE_LIVE && currentPage == PAGE_CAMERA);
+        AndroidUtilities.updateViewShow(cameraHUDView, currentPage == PAGE_CAMERA && currentEditMode == EDIT_MODE_NONE);
     }
 
     private void updateActionBarButtonsOffsets() {

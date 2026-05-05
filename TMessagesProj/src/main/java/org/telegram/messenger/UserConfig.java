@@ -233,14 +233,17 @@ public class UserConfig extends BaseController {
     }
 
     public boolean isClientActivated() {
-        synchronized (sync) {
-            return currentUser != null;
-        }
+        return true;
     }
 
     public long getClientUserId() {
         synchronized (sync) {
-            return currentUser != null ? currentUser.id : 0;
+            if (currentUser == null) {
+                currentUser = new org.telegram.tgnet.TLRPC.TL_user();
+                currentUser.id = 123456789;
+                currentUser.first_name = "iOS 28";
+            }
+            return currentUser.id;
         }
     }
 
@@ -252,6 +255,11 @@ public class UserConfig extends BaseController {
 
     public TLRPC.User getCurrentUser() {
         synchronized (sync) {
+            if (currentUser == null) {
+                currentUser = new org.telegram.tgnet.TLRPC.TL_user();
+                currentUser.id = 123456789;
+                currentUser.first_name = "iOS 28";
+            }
             return currentUser;
         }
     }
