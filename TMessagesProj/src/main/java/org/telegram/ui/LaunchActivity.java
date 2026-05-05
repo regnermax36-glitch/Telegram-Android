@@ -6874,6 +6874,10 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             // Re-check if the user updated their email from another client
             MessagesController.getInstance(currentAccount).checkPromoInfo(true);
         }
+        AndroidUtilities.runOnUIThread(() -> {
+            if (isFinishing()) return;
+            StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
         //if (refreshRateController != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         //    refreshRateController.start();
         //}
