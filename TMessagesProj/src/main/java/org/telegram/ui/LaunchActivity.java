@@ -388,6 +388,11 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 .build());
         }
         instance = this;
+
+        AndroidUtilities.runOnUIThread(() -> {
+            StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
+
         ApplicationLoader.postInitApplication();
         AndroidUtilities.checkDisplaySize(this, getResources().getConfiguration());
         currentAccount = UserConfig.selectedAccount;
