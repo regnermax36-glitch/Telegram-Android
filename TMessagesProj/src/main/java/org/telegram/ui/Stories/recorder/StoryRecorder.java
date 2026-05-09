@@ -938,7 +938,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                     openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                     fastClose = false;
                 } else {
-                    openCloseAnimator.setDuration(400L);
+                    openCloseAnimator.setDuration(420L);
                     openCloseAnimator.setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT);
                 }
             }
@@ -1497,8 +1497,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             setSystemUiVisibility(flags);
 
             containerView.measure(
-                MeasureSpec.makeMeasureSpec(previewW, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(previewH + underControls, MeasureSpec.EXACTLY)
+                MeasureSpec.makeMeasureSpec(previewW - dp(32), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(previewH + underControls - dp(32), MeasureSpec.EXACTLY)
             );
             flashViews.backgroundView.measure(
                 MeasureSpec.makeMeasureSpec(W, MeasureSpec.EXACTLY),
@@ -1613,7 +1613,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 b = t + previewH + underControls;
             }
 
-            containerView.layout(l, t, r, b);
+            containerView.layout(l + dp(16), t + dp(16), r - dp(16), b - dp(16));
             flashViews.backgroundView.layout(0, 0, W, H);
             if (thanosEffect != null) {
                 thanosEffect.layout(0, 0, W, H);
@@ -1777,12 +1777,12 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int w = right - left;
             final int h = bottom - top;
 
-            previewContainer.layout(0, 0, previewW, previewH);
+            previewContainer.layout(0, 0, previewW - dp(32), previewH);
             previewContainer.setPivotX(previewW * .5f);
-            actionBarContainer.layout(0, t, previewW, t + actionBarContainer.getMeasuredHeight());
-            controlContainer.layout(0, previewH - controlContainer.getMeasuredHeight(), previewW, previewH);
-            navbarContainer.layout(0, previewH, previewW, previewH + navbarContainer.getMeasuredHeight());
-            captionContainer.layout(0, 0, previewW, previewH);
+            actionBarContainer.layout(0, t, previewW - dp(32), t + actionBarContainer.getMeasuredHeight());
+            controlContainer.layout(0, previewH - controlContainer.getMeasuredHeight(), previewW - dp(32), previewH);
+            navbarContainer.layout(0, previewH, previewW - dp(32), previewH + navbarContainer.getMeasuredHeight());
+            captionContainer.layout(0, 0, previewW - dp(32), previewH);
             if (captionEditOverlay != null) {
                 captionEditOverlay.layout(0, 0, w, h);
             }
@@ -1816,12 +1816,13 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
 
-            measureChildExactly(previewContainer, previewW, previewH);
+            measureChildExactly(previewContainer, previewW - dp(32), previewH);
             applyFilterMatrix();
-            measureChildExactly(actionBarContainer, previewW, dp(56 + 56 + 38));
-            measureChildExactly(controlContainer, previewW, dp(220));
-            measureChildExactly(navbarContainer, previewW, underControls);
-            measureChildExactly(captionContainer, previewW, previewH);
+            measureChildExactly(actionBarContainer, previewW - dp(32), dp(56 + 56 + 38));
+            measureChildExactly(controlContainer, previewW - dp(32), dp(220));
+            measureChildExactly(navbarContainer, previewW - dp(32), underControls);
+            measureChildExactly(captionContainer, previewW - dp(32), previewH);
+            measureChildExactly(cameraHUDView, previewW - dp(32), previewH + underControls);
             measureChildExactly(flashViews.foregroundView, W, H);
             if (captionEditOverlay != null) {
                 measureChildExactly(captionEditOverlay, W, H);
@@ -1894,6 +1895,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     private FlashViews.ImageViewInvertable backButton;
     private SelectPeerView livePeerView;
+    private CameraHUDView cameraHUDView;
     private SimpleTextView titleTextView;
     private StoryPrivacyBottomSheet privacySheet;
     private BlurringShader.BlurManager blurManager;
@@ -2141,6 +2143,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         captionContainer.setAlpha(0f);
         containerView.addView(navbarContainer = new FrameLayout(context)); // 48dp
 
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        containerView.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+
         Bulletin.addDelegate(windowView, new Bulletin.Delegate() {
             @Override
             public int getTopOffset(int tag) {
@@ -2202,7 +2208,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -7226,8 +7232,12 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         if (!noCameraPermission) {
             if (CameraController.getInstance().isCameraInitied()) {
                 createCameraView();
+                if (cameraHUDView != null) cameraHUDView.setCameraView(cameraView);
             } else {
-                CameraController.getInstance().initCamera(this::createCameraView);
+                CameraController.getInstance().initCamera(() -> {
+                    createCameraView();
+                    if (cameraHUDView != null) cameraHUDView.setCameraView(cameraView);
+                });
             }
         }
     }
@@ -7330,8 +7340,12 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 collageLayoutView.setCameraThumb(null);
                 if (CameraController.getInstance().isCameraInitied()) {
                     createCameraView();
+                    if (cameraHUDView != null) cameraHUDView.setCameraView(cameraView);
                 } else {
-                    CameraController.getInstance().initCamera(this::createCameraView);
+                    CameraController.getInstance().initCamera(() -> {
+                        createCameraView();
+                        if (cameraHUDView != null) cameraHUDView.setCameraView(cameraView);
+                    });
                 }
             }
         } else if (requestCode == 114) {
@@ -7889,6 +7903,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     }
 
     private void updateActionBarButtons(boolean animated) {
+        if (cameraHUDView != null) {
+            AndroidUtilities.updateViewShow(cameraHUDView, currentPage == PAGE_CAMERA && currentEditMode == EDIT_MODE_NONE);
+        }
         showVideoTimer(currentPage == PAGE_CAMERA && mode == MODE_VIDEO && !collageListView.isVisible() && !inCheck(), animated);
         collageButton.setSelected(collageLayoutView.hasLayout());
         setActionBarButtonVisible(backButton, collageListView == null || !collageListView.isVisible(), animated);
