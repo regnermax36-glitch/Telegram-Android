@@ -104,7 +104,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
     private final static int WHITE = 0xFFFFFFFF;
     private final static int RED = 0xFFF73131;
-    private final static int BG = 0x64000000;
+    private final static int BG = 0x20ffffff;
 
     private final Paint mainPaint =          new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint outlinePaint =       new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -399,11 +399,11 @@ public class RecordControl extends View implements FlashViews.Invertable {
         }
 
         float acx = lerp(cx, recordCx.set(cx + dp(4) * touchCenterT16), touchIsCenterT);
-        float r =   lerp(lerp(dp(29), dp(12), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
-        float rad = lerp(lerp(dp(32), dp(7), recordingT), dp(32), touchIsCenterT);
+        float r =   lerp(lerp(dp(29), dp(24), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
+        float rad = lerp(lerp(dp(32), dp(24), recordingT), dp(32), touchIsCenterT);
         scale = lerp(recordButton.getScale(startModeIsVideo ? 0 : .2f), 1 + .2f * animatedAmplitude.set(amplitude), recordingT);
         AndroidUtilities.rectTmp.set(acx - r, cy - r, acx + r, cy + r);
-        mainPaint.setColor(ColorUtils.blendARGB(WHITE, RED, isVideo * (1.0f - check)));
+        mainPaint.setColor(ColorUtils.blendARGB(BG, RED, isVideo * (1.0f - check)));
         if (check > 0) {
             canvas.save();
             canvas.scale(scale, scale, cx, cy);
@@ -417,6 +417,18 @@ public class RecordControl extends View implements FlashViews.Invertable {
         canvas.scale(scale, scale, cx, cy);
         mainPaint.setAlpha(0xFF);
         canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+        // Technical accents
+        outlinePaint.setStrokeWidth(dpf2(0.7f));
+        outlinePaint.setAlpha((int) (255 * (1.0f - recordingT)));
+        canvas.drawCircle(cx, cy, r + dp(8), outlinePaint);
+
+        if (recordingT > 0) {
+            outlineFilledPaint.setStrokeWidth(dp(2));
+            outlineFilledPaint.setAlpha(255);
+            AndroidUtilities.rectTmp.set(cx - r - dp(4), cy - r - dp(4), cx + r + dp(4), cy + r + dp(4));
+            canvas.drawArc(AndroidUtilities.rectTmp, -90 + 360 * ((System.currentTimeMillis() % 1000) / 1000f), 90, false, outlineFilledPaint);
+        }
+
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();
