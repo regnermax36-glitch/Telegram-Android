@@ -1912,6 +1912,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     /* PAGE_CAMERA */
     private CollageLayoutView2 collageLayoutView;
+    private CameraHUDView cameraHUDView;
     private DualCameraView cameraView;
     private QRScanner qrScanner;
     private ScannedLinkPreview qrLinkView;
@@ -2987,6 +2988,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         zoomControlView.enabledTouch = false;
         zoomControlView.setAlpha(0.0f);
         controlContainer.addView(zoomControlView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 50, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 100 + 8));
+
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        controlContainer.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         zoomControlView.setDelegate(zoom -> {
             if (cameraView != null) {
                 cameraView.setZoom(cameraZoom = zoom);
@@ -5063,6 +5068,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         if (toPage == PAGE_CAMERA) {
             requestCameraPermission(false);
             recordControl.setVisibility(View.VISIBLE);
+            cameraHUDView.setVisibility(View.VISIBLE);
             if (recordControl != null) {
                 recordControl.stopRecordingLoading(false);
             }
@@ -5302,6 +5308,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             destroyCameraView(false);
             recordControl.setVisibility(View.GONE);
             zoomControlView.setVisibility(View.GONE);
+            cameraHUDView.setVisibility(View.GONE);
             modeSwitcherView.setVisibility(View.GONE);
 //            dualButton.setVisibility(View.GONE);
             animateRecording(false, false);
@@ -5338,6 +5345,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             entries = null;
             selectedEntries = null;
             selectedEntriesOrder = null;
+        }
+        if (toPage == PAGE_CAMERA) {
+            cameraHUDView.setVisibility(View.VISIBLE);
+            cameraHUDView.setAlpha(1f);
         }
         if (toPage == PAGE_PREVIEW) {
             if (outputEntry == null || !outputEntry.isRepost) {
@@ -5537,6 +5548,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             animators.add(ObjectAnimator.ofFloat(photoFilterViewBlurControl, View.ALPHA, editMode == EDIT_MODE_FILTER ? 1f : 0));
         }
 
+        animators.add(ObjectAnimator.ofFloat(cameraHUDView, View.ALPHA, currentPage == PAGE_CAMERA && editMode == EDIT_MODE_NONE ? 1f : 0));
         animators.add(ObjectAnimator.ofFloat(captionEdit, View.ALPHA, editMode == EDIT_MODE_NONE ? 1f : 0));
         animators.add(ObjectAnimator.ofFloat(captionContainer, View.ALPHA, editMode == EDIT_MODE_NONE || editMode == EDIT_MODE_TIMELINE ? 1f : 0));
         animators.add(ObjectAnimator.ofFloat(captionContainer, View.TRANSLATION_Y, editMode == EDIT_MODE_NONE || editMode == EDIT_MODE_TIMELINE ? 0 : dp(120)));
@@ -6937,6 +6949,14 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             protected void receivedAmplitude(double amplitude) {
                 if (recordControl != null) {
                     recordControl.setAmplitude(Utilities.clamp((float) (amplitude / WaveDrawable.MAX_AMPLITUDE), 1, 0), true);
+                }
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(android.graphics.SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (cameraHUDView != null && currentPage == PAGE_CAMERA) {
+                    cameraHUDView.updateMetadata(this);
                 }
             }
         };
