@@ -42,6 +42,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.RenderNode;
 import android.graphics.Shader;
+import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -1475,15 +1476,15 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
-            final int hFromW = (int) Math.ceil(w / 9f * 16f);
+            final int hFromW = (int) Math.ceil((w - dp(32)) / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
-                previewW = w;
+            if (hFromW + underControls <= H - navbar - dp(32)) {
+                previewW = w - dp(32);
                 previewH = hFromW;
                 underStatusBar = previewH + underControls > H - navbar - statusbar;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - dp(32);
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
             underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
@@ -1728,7 +1729,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         public void updateBackground() {
             if (openType == 0) {
-                setBackground(Theme.createRoundRectDrawable(dp(12), 0xff000000));
+                setBackground(Theme.createRoundRectDrawable(dp(32), 0xff000000));
             } else {
                 setBackground(null);
             }
@@ -1865,8 +1866,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                     topGradientPaint.setShader(topGradient);
                 }
                 topGradientPaint.setAlpha(0xFF);
-                AndroidUtilities.rectTmp.set(0, 0, getWidth(), dp(72 + 12) + top);
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(12), dp(12), topGradientPaint);
+                AndroidUtilities.rectTmp.set(0, 0, getWidth(), dp(72 + 32) + top);
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), topGradientPaint);
             }
             return r;
         }
@@ -1913,6 +1914,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     /* PAGE_CAMERA */
     private CollageLayoutView2 collageLayoutView;
     private DualCameraView cameraView;
+    private CameraHUDView cameraHUDView;
     private QRScanner qrScanner;
     private ScannedLinkPreview qrLinkView;
 
@@ -2125,6 +2127,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         containerView.addView(flashViews.foregroundView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         blurManager = new BlurringShader.BlurManager(previewContainer);
+
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        containerView.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
         videoTextureHolder = new PreviewView.TextureViewHolder();
         containerView.addView(actionBarContainer = new FrameLayout(context)); // 150dp
         containerView.addView(controlContainer = new FrameLayout(context)); // 220dp
@@ -2202,7 +2208,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                        outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -5061,6 +5067,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     private void onNavigateStart(int fromPage, int toPage) {
         if (toPage == PAGE_CAMERA) {
+            if (cameraHUDView != null) {
+                cameraHUDView.setVisibility(View.VISIBLE);
+                cameraHUDView.setAlpha(0f);
+            }
             requestCameraPermission(false);
             recordControl.setVisibility(View.VISIBLE);
             if (recordControl != null) {
@@ -5300,6 +5310,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     private void onNavigateEnd(int fromPage, int toPage) {
         if (fromPage == PAGE_CAMERA) {
             destroyCameraView(false);
+            if (cameraHUDView != null) {
+                cameraHUDView.setVisibility(View.GONE);
+            }
             recordControl.setVisibility(View.GONE);
             zoomControlView.setVisibility(View.GONE);
             modeSwitcherView.setVisibility(View.GONE);
@@ -5499,6 +5512,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             animators.add(ObjectAnimator.ofFloat(themeButton, View.ALPHA, (editMode == EDIT_MODE_NONE || editMode == EDIT_MODE_TIMELINE) && (outputEntry != null && outputEntry.isRepostMessage) ? 1f : 0));
         }
         animators.add(ObjectAnimator.ofFloat(titleTextView, View.ALPHA, (currentPage == PAGE_PREVIEW || currentPage == PAGE_COVER) && editMode == EDIT_MODE_NONE ? 1f : 0f));
+        if (cameraHUDView != null) {
+            animators.add(ObjectAnimator.ofFloat(cameraHUDView, View.ALPHA, currentPage == PAGE_CAMERA && editMode == EDIT_MODE_NONE ? 1f : 0f));
+        }
 
         int rightMargin = 0;
         int bottomMargin = 0;
@@ -6904,6 +6920,14 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             public void onEntityDraggedBottom(boolean value) {
                 previewHighlight.updateCaption(captionEdit.getText());
                 previewHighlight.show(false, value, controlContainer);
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (cameraHUDView != null && cameraHUDView.getVisibility() == View.VISIBLE) {
+                    cameraHUDView.updateMetadata(getCameraSession() != null && getCameraSession().camera1Session != null ? getCameraSession().camera1Session.cameraInfo.camera : null);
+                }
             }
 
             @Override
