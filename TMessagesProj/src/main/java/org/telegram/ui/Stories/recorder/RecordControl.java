@@ -104,7 +104,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
     private final static int WHITE = 0xFFFFFFFF;
     private final static int RED = 0xFFF73131;
-    private final static int BG = 0x64000000;
+    private final static int BG = 0x20ffffff;
 
     private final Paint mainPaint =          new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint outlinePaint =       new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -381,6 +381,9 @@ public class RecordControl extends View implements FlashViews.Invertable {
         final float touchCenterT96 = clamp((touchX - cx) / dp(64), 1, -1);
         final float touchIsButtonT = touchT * this.touchIsButtonT.set(Math.min(Math.abs(touchX - rightCx), Math.abs(touchX - leftCx)) < dp(16) ? 1 : 0);
 
+        float r =   lerp(lerp(dp(29), dp(24), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
+        float rad = lerp(lerp(dp(32), dp(24), recordingT), dp(32), touchIsCenterT);
+
         final float collage = this.collage.set(collageProgress > 0) * (1.0f - recordingT);
         final float collageProgress = this.collageProgressAnimated.set(this.collageProgress);
         final float check = checkAnimated.set(hasCheck());
@@ -399,8 +402,6 @@ public class RecordControl extends View implements FlashViews.Invertable {
         }
 
         float acx = lerp(cx, recordCx.set(cx + dp(4) * touchCenterT16), touchIsCenterT);
-        float r =   lerp(lerp(dp(29), dp(12), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
-        float rad = lerp(lerp(dp(32), dp(7), recordingT), dp(32), touchIsCenterT);
         scale = lerp(recordButton.getScale(startModeIsVideo ? 0 : .2f), 1 + .2f * animatedAmplitude.set(amplitude), recordingT);
         AndroidUtilities.rectTmp.set(acx - r, cy - r, acx + r, cy + r);
         mainPaint.setColor(ColorUtils.blendARGB(WHITE, RED, isVideo * (1.0f - check)));
