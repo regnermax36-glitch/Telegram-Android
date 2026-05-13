@@ -265,14 +265,14 @@ public class ZoomControlView extends View {
         int knobY = (int) (progressStartY + totalY * zoom);
 
         if (isPortrait) {
-            progressDrawable.setBounds(progressStartX, progressStartY - AndroidUtilities.dp(3), progressEndX, progressStartY + AndroidUtilities.dp(3));
-            filledProgressDrawable.setBounds(progressStartX, progressStartY - AndroidUtilities.dp(3), knobX, progressStartY + AndroidUtilities.dp(3));
+            progressDrawable.setBounds(progressStartX, progressStartY - AndroidUtilities.dp(0.5f), progressEndX, progressStartY + AndroidUtilities.dp(0.5f));
+            filledProgressDrawable.setBounds(progressStartX, progressStartY - AndroidUtilities.dp(0.5f), knobX, progressStartY + AndroidUtilities.dp(0.5f));
         } else {
-            progressDrawable.setBounds(progressStartY, 0, progressEndY, AndroidUtilities.dp(6));
-            filledProgressDrawable.setBounds(progressStartY, 0, knobY, AndroidUtilities.dp(6));
+            progressDrawable.setBounds(progressStartY, 0, progressEndY, AndroidUtilities.dp(1.0f));
+            filledProgressDrawable.setBounds(progressStartY, 0, knobY, AndroidUtilities.dp(1.0f));
             canvas.save();
             canvas.rotate(90);
-            canvas.translate(0, -progressStartX - AndroidUtilities.dp(3));
+            canvas.translate(0, -progressStartX - AndroidUtilities.dp(0.5f));
         }
         progressDrawable.draw(canvas);
         filledProgressDrawable.draw(canvas);
@@ -281,7 +281,7 @@ public class ZoomControlView extends View {
         }
 
         Drawable drawable = knobPressed ? pressedKnobDrawable : knobDrawable;
-        int size = drawable.getIntrinsicWidth();
+        int size = (int) (drawable.getIntrinsicWidth() * 0.45f);
         drawable.setBounds(knobX - size / 2, knobY - size / 2, knobX + size / 2, knobY + size / 2);
         drawable.draw(canvas);
     }
