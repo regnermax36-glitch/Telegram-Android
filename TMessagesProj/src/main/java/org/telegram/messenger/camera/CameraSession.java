@@ -608,4 +608,29 @@ public class CameraSession {
     public Camera.Size getCurrentPictureSize() {
         return cameraInfo.camera.getParameters().getPictureSize();
     }
+
+    public int getIso() {
+        if (cameraInfo.camera == null) return 0;
+        try {
+            Camera.Parameters params = cameraInfo.camera.getParameters();
+            String iso = params.get("iso");
+            if (iso == null) iso = params.get("iso-speed");
+            if (iso == null) iso = params.get("nv-iso-speed");
+            if (iso != null) {
+                return Integer.parseInt(iso);
+            }
+        } catch (Exception ignore) {}
+        return 0;
+    }
+
+    public float getExposure() {
+        if (cameraInfo.camera == null) return 0;
+        try {
+            Camera.Parameters params = cameraInfo.camera.getParameters();
+            float step = params.getExposureCompensationStep();
+            int compensation = params.getExposureCompensation();
+            return compensation * step;
+        } catch (Exception ignore) {}
+        return 0;
+    }
 }
