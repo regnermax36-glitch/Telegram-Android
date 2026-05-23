@@ -340,6 +340,10 @@ public class Camera2Session {
         return getJpegOrientation();
     }
 
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
     private final Rect cropRegion = new Rect();
     public void setZoom(float value) {
         if (!isInitiated()) return;
