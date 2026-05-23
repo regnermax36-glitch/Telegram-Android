@@ -1470,20 +1470,20 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int w = W - insetLeft - insetRight - dp(32);
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
             final int hFromW = (int) Math.ceil(w / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
+            if (hFromW + underControls <= H - navbar - dp(32)) {
                 previewW = w;
                 previewH = hFromW;
                 underStatusBar = previewH + underControls > H - navbar - statusbar;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - dp(32);
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
             underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
@@ -1598,11 +1598,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int underControls = navbarContainer.getMeasuredHeight();
 
             final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            int l = (W + insetLeft - insetRight - previewW) / 2,
+                r = (W + insetLeft - insetRight + previewW) / 2, t, b;
             if (underStatusBar) {
-                t = T;
-                b = T + previewH + underControls;
+                t = T + dp(16);
+                b = T + dp(16) + previewH + underControls;
             } else {
                 t = T + ((H - T - insetBottom) - previewH - underControls) / 2;
                 if (openType == 1 && fromRect.top + previewH + underControls < H - insetBottom) {
@@ -1887,6 +1887,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     private FrameLayout previewContainer;
     private FrameLayout actionBarContainer;
+    private CameraHUDView cameraHUDView;
     private LinearLayout actionBarButtons;
     private FrameLayout controlContainer;
     private FrameLayout captionContainer;
@@ -2126,8 +2127,28 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         blurManager = new BlurringShader.BlurManager(previewContainer);
         videoTextureHolder = new PreviewView.TextureViewHolder();
-        containerView.addView(actionBarContainer = new FrameLayout(context)); // 150dp
-        containerView.addView(controlContainer = new FrameLayout(context)); // 220dp
+        containerView.addView(actionBarContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, 0);
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                if (canvas.isHardwareAccelerated()) {
+                    blurDrawer.drawRect(canvas, 0, 0, 1.0f);
+                    canvas.drawColor(0x10ffffff);
+                }
+                super.dispatchDraw(canvas);
+            }
+        }); // 150dp
+        containerView.addView(controlContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, 0);
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                if (canvas.isHardwareAccelerated()) {
+                    blurDrawer.drawRect(canvas, 0, 0, 1.0f);
+                    canvas.drawColor(0x10ffffff);
+                }
+                super.dispatchDraw(canvas);
+            }
+        }); // 220dp
         containerView.addView(captionContainer = new FrameLayout(context) {
             @Override
             public void setTranslationY(float translationY) {
@@ -2187,6 +2208,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             }
         });
 
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        previewContainer.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+
 //        cameraViewThumb = new ImageView(context);
 //        cameraViewThumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        cameraViewThumb.setOnClickListener(v -> {
@@ -2202,7 +2226,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -6946,6 +6970,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         cameraView.recordHevc = !collageLayoutView.hasLayout();
         cameraView.setThumbDrawable(getCameraThumb());
         cameraView.initTexture();
+        cameraView.listenDraw(() -> {
+            if (cameraHUDView != null && currentPage == PAGE_CAMERA && cameraView != null) {
+                cameraHUDView.updateMetadata(cameraView.getCameraSession(0));
+            }
+        });
         cameraView.setDelegate(() -> {
             String currentFlashMode = getCurrentFlashMode();
             if (TextUtils.equals(currentFlashMode, getNextFlashMode())) {
@@ -7900,6 +7929,13 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         recordControl.setCollageProgress(collageProgress, animated);
         removeCollageHint.show(collageListView.isVisible());
         animateRecording(animatedRecording, animated);
+
+        if (cameraHUDView != null) {
+            cameraHUDView.animate()
+                .alpha(currentPage == PAGE_CAMERA && currentEditMode == EDIT_MODE_NONE ? 1.0f : 0.0f)
+                .setDuration(220)
+                .start();
+        }
 
         AndroidUtilities.updateViewShow(liveSettingsButton, mode == MODE_LIVE && currentPage == PAGE_CAMERA);
         AndroidUtilities.updateViewShow(rotateButton, mode == MODE_LIVE && currentPage == PAGE_CAMERA);

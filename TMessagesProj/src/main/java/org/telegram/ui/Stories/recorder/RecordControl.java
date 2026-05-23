@@ -149,7 +149,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
         outlineFilledPaint.setColor(RED);
         outlineFilledPaint.setStrokeCap(Paint.Cap.ROUND);
         outlineFilledPaint.setStyle(Paint.Style.STROKE);
-        buttonPaint.setColor(BG);
+        buttonPaint.setColor(0x20ffffff);
         buttonPaintWhite.setColor(WHITE);
         hintLinePaintWhite.setColor(0x58ffffff);
         hintLinePaintBlack.setColor(0x18000000);
@@ -399,8 +399,8 @@ public class RecordControl extends View implements FlashViews.Invertable {
         }
 
         float acx = lerp(cx, recordCx.set(cx + dp(4) * touchCenterT16), touchIsCenterT);
-        float r =   lerp(lerp(dp(29), dp(12), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
-        float rad = lerp(lerp(dp(32), dp(7), recordingT), dp(32), touchIsCenterT);
+        float r =   lerp(lerp(dp(24), dp(24), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
+        float rad = lerp(lerp(dp(24), dp(24), recordingT), dp(32), touchIsCenterT);
         scale = lerp(recordButton.getScale(startModeIsVideo ? 0 : .2f), 1 + .2f * animatedAmplitude.set(amplitude), recordingT);
         AndroidUtilities.rectTmp.set(acx - r, cy - r, acx + r, cy + r);
         mainPaint.setColor(ColorUtils.blendARGB(WHITE, RED, isVideo * (1.0f - check)));
