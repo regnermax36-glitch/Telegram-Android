@@ -1912,6 +1912,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     /* PAGE_CAMERA */
     private CollageLayoutView2 collageLayoutView;
+    private CameraHUDView cameraHUDView;
     private DualCameraView cameraView;
     private QRScanner qrScanner;
     private ScannedLinkPreview qrLinkView;
@@ -2068,6 +2069,13 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
+                if (cameraHUDView != null) {
+                    cameraHUDView.measure(
+                        MeasureSpec.makeMeasureSpec(getMeasuredWidth() - dp(32), MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(dp(44), MeasureSpec.EXACTLY)
+                    );
+                }
+
                 if (photoFilterViewCurvesControl != null) {
                     photoFilterViewCurvesControl.setActualArea(0, 0, photoFilterViewCurvesControl.getMeasuredWidth(), photoFilterViewCurvesControl.getMeasuredHeight());
                 }
@@ -2082,6 +2090,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             @Override
             protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
                 super.onLayout(changed, left, top, right, bottom);
+
+                if (cameraHUDView != null) {
+                    cameraHUDView.layout(dp(16), dp(16), getWidth() - dp(16), dp(16) + cameraHUDView.getMeasuredHeight());
+                }
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     final int w = right - left;
                     final int h = bottom - top;
@@ -2181,6 +2194,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             updateActionBarButtons(true);
         });
         previewContainer.addView(collageLayoutView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.FILL));
+
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        previewContainer.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 44, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 16, 16, 16, 0));
+
         collageLayoutView.setOnClickListener(v -> {
             if (noCameraPermission) {
                 requestCameraPermission(true);
@@ -2202,7 +2220,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -5060,6 +5078,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     }
 
     private void onNavigateStart(int fromPage, int toPage) {
+        if (cameraHUDView != null) {
+            cameraHUDView.animate().alpha(toPage == PAGE_CAMERA ? 1.0f : 0.0f).setDuration(420).setInterpolator(CubicBezierInterpolator.EASE_OUT_QUINT).start();
+        }
         if (toPage == PAGE_CAMERA) {
             requestCameraPermission(false);
             recordControl.setVisibility(View.VISIBLE);
@@ -6904,6 +6925,21 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             public void onEntityDraggedBottom(boolean value) {
                 previewHighlight.updateCaption(captionEdit.getText());
                 previewHighlight.show(false, value, controlContainer);
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(android.graphics.SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (cameraHUDView != null && cameraView != null) {
+                    org.telegram.messenger.camera.CameraSessionWrapper session = cameraView.getCameraSession();
+                    if (session != null) {
+                        if (session.camera1Session != null && session.camera1Session.cameraInfo != null) {
+                            cameraHUDView.updateMetadata(session.camera1Session.cameraInfo.getCamera());
+                        } else if (session.camera2Session != null) {
+                            cameraHUDView.updateMetadata(session.camera2Session.getCameraCharacteristics(), session.camera2Session.getLastCaptureResult());
+                        }
+                    }
+                }
             }
 
             @Override
