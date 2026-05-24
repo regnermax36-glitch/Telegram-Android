@@ -59,12 +59,21 @@ public class Camera2Session {
     public final String cameraId;
     private CameraCharacteristics cameraCharacteristics;
 
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
+    public CaptureResult getLastCaptureResult() {
+        return lastCaptureResult;
+    }
+
     private HandlerThread thread;
     private Handler handler;
 
     private CameraDevice cameraDevice;
     private SurfaceTexture surfaceTexture;
     private CameraCaptureSession captureSession;
+    private CaptureResult lastCaptureResult;
     private Surface surface;
 
     private final CameraDevice.StateCallback cameraStateCallback;
@@ -349,7 +358,12 @@ public class Camera2Session {
         updateCaptureRequest();
 
         try {
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    lastCaptureResult = result;
+                }
+            }, handler);
         } catch (Exception e) {
             FileLog.e(e);
         }
@@ -509,7 +523,12 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.addTarget(surface);
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    lastCaptureResult = result;
+                }
+            }, handler);
         } catch (Exception e) {
             FileLog.e("Camera2Sessions setRepeatingRequest error in updateCaptureRequest", e);
         }
