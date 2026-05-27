@@ -578,6 +578,10 @@ public class CameraSession {
         return 0;
     }
 
+    public Camera getCamera() {
+        return cameraInfo != null ? cameraInfo.getCamera() : null;
+    }
+
     public void setPreviewCallback(Camera.PreviewCallback callback){
         cameraInfo.camera.setPreviewCallback(callback);
     }

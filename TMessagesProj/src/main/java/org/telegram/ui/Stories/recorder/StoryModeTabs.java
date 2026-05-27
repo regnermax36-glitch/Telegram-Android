@@ -5,6 +5,7 @@ import static org.telegram.messenger.AndroidUtilities.lerp;
 import static org.telegram.messenger.LocaleController.getString;
 
 import android.animation.ValueAnimator;
+import android.os.Build;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -57,7 +58,7 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
                 setRect((int) Math.floor(mode), a);
                 setRect((int) Math.ceil(mode), b);
                 lerp(a, b, mode - (float) Math.floor(mode), c);
-                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.15f));
+                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.25f));
                 canvas.drawRoundRect(c, c.height() / 2f, c.height() / 2f, backgroundPaint);
 
                 super.dispatchDraw(canvas);
@@ -67,8 +68,11 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         liveLayout = new FrameLayout(context);
         live = new TextView(context);
-        live.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        live.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         live.setTypeface(AndroidUtilities.bold());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            live.setLetterSpacing(0.05f);
+        }
         live.setTextColor(0xFFFFFFFF);
         live.setText(getString(R.string.StoryLive));
         liveLayout.addView(live, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
@@ -78,8 +82,11 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         photoLayout = new FrameLayout(context);
         photo = new TextView(context);
-        photo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        photo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         photo.setTypeface(AndroidUtilities.bold());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            photo.setLetterSpacing(0.05f);
+        }
         photo.setTextColor(0xFFFFFFFF);
         photo.setText(getString(R.string.StoryPhoto));
         photoLayout.addView(photo, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
@@ -89,8 +96,11 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         videoLayout = new FrameLayout(context);
         video = new TextView(context);
-        video.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        video.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         video.setTypeface(AndroidUtilities.bold());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            video.setLetterSpacing(0.05f);
+        }
         video.setTextColor(0xFFFFFFFF);
         video.setText(getString(R.string.StoryVideo));
         videoLayout.addView(video, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
