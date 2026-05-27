@@ -159,6 +159,13 @@ public class CameraSessionWrapper {
         }
     }
 
+    public Camera getCamera() {
+        if (camera1Session != null) {
+            return camera1Session.getCamera();
+        }
+        return null;
+    }
+
     public void destroy(boolean async, Runnable before, Runnable after) {
         if (camera2Session != null) {
             if (before != null) {
