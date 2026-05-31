@@ -111,6 +111,7 @@ import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.camera.CameraController;
+import org.telegram.messenger.camera.CameraSessionWrapper;
 import org.telegram.messenger.camera.CameraView;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
@@ -1470,7 +1471,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int w = W - insetLeft - insetRight - dp(32);
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
@@ -1598,8 +1599,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int underControls = navbarContainer.getMeasuredHeight();
 
             final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            int l = (W + insetLeft - insetRight - previewW) / 2,
+                r = (W + insetLeft - insetRight + previewW) / 2, t, b;
             if (underStatusBar) {
                 t = T;
                 b = T + previewH + underControls;
@@ -1728,7 +1729,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         public void updateBackground() {
             if (openType == 0) {
-                setBackground(Theme.createRoundRectDrawable(dp(12), 0xff000000));
+                setBackground(Theme.createRoundRectDrawable(dp(32), 0xff000000));
             } else {
                 setBackground(null);
             }
@@ -1865,8 +1866,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                     topGradientPaint.setShader(topGradient);
                 }
                 topGradientPaint.setAlpha(0xFF);
-                AndroidUtilities.rectTmp.set(0, 0, getWidth(), dp(72 + 12) + top);
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(12), dp(12), topGradientPaint);
+                AndroidUtilities.rectTmp.set(0, 0, getWidth(), dp(72 + 32) + top);
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), topGradientPaint);
             }
             return r;
         }
@@ -1928,6 +1929,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     private GalleryListView galleryListView;
     private DraftSavedHint draftSavedHint;
     private RecordControl recordControl;
+    private CameraHUDView cameraHUDView;
     private ButtonWithCounterView startLiveButton;
     private StoryModeTabs modeSwitcherView;
     private FlashViews.ImageViewInvertable rotateButton;
@@ -2202,7 +2204,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -2982,6 +2984,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 .setDuration(5000L)
                 .setTextAlign(Layout.Alignment.ALIGN_CENTER);
         controlContainer.addView(cameraHint, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.BOTTOM, 0, 0, 0, 100));
+
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        previewContainer.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
 
         zoomControlView = new ZoomControlView(context);
         zoomControlView.enabledTouch = false;
@@ -6939,6 +6945,31 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                     recordControl.setAmplitude(Utilities.clamp((float) (amplitude / WaveDrawable.MAX_AMPLITUDE), 1, 0), true);
                 }
             }
+
+            private long lastMetadataUpdate;
+            @Override
+            public void onSurfaceTextureUpdated(android.graphics.SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (cameraHUDView != null && cameraHUDView.getVisibility() == View.VISIBLE && cameraHUDView.getAlpha() > 0) {
+                    long now = System.currentTimeMillis();
+                    if (now - lastMetadataUpdate > 500) {
+                        lastMetadataUpdate = now;
+                        CameraSessionWrapper session = getCameraSession();
+                        if (session != null) {
+                            if (session.camera2Session != null) {
+                                cameraHUDView.updateMetadata(session.camera2Session.getCameraCharacteristics(), session.camera2Session.getLastCaptureResult());
+                            } else if (session.camera1Session != null) {
+                                Camera camera = session.camera1Session.cameraInfo.getCamera();
+                                if (camera != null) {
+                                    try {
+                                        cameraHUDView.updateMetadata(camera.getParameters());
+                                    } catch (Exception ignore) {}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         };
         if (recordControl != null) {
             recordControl.setAmplitude(0, false);
@@ -7889,6 +7920,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     }
 
     private void updateActionBarButtons(boolean animated) {
+        if (cameraHUDView != null) {
+            AndroidUtilities.updateViewShow(cameraHUDView, currentPage == PAGE_CAMERA && currentEditMode == EDIT_MODE_NONE, false, animated);
+        }
         showVideoTimer(currentPage == PAGE_CAMERA && mode == MODE_VIDEO && !collageListView.isVisible() && !inCheck(), animated);
         collageButton.setSelected(collageLayoutView.hasLayout());
         setActionBarButtonVisible(backButton, collageListView == null || !collageListView.isVisible(), animated);
