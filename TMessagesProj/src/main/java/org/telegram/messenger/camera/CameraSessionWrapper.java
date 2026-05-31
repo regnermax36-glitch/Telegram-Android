@@ -151,6 +151,13 @@ public class CameraSessionWrapper {
         }
     }
 
+    public android.hardware.Camera getCamera() {
+        if (camera1Session != null) {
+            return camera1Session.cameraInfo.camera;
+        }
+        return null;
+    }
+
     public void focusToRect(android.graphics.Rect focusRect, android.graphics.Rect meteringRect) {
         if (camera2Session != null) {
             // TODO
