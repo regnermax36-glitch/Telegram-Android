@@ -170,6 +170,13 @@ public class CameraSessionWrapper {
         }
     }
 
+    public Camera getCamera() {
+        if (camera1Session != null) {
+            return camera1Session.getCamera();
+        }
+        return null;
+    }
+
     public Object getObject() {
         if (camera2Session != null) {
             return camera2Session;
