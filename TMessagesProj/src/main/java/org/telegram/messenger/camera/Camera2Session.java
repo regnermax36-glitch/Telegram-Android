@@ -70,6 +70,7 @@ public class Camera2Session {
     private final CameraDevice.StateCallback cameraStateCallback;
     private final CameraCaptureSession.StateCallback captureStateCallback;
     private CaptureRequest.Builder captureRequestBuilder;
+    private CaptureResult lastCaptureResult;
     private Rect sensorSize;
     private float maxZoom = 1f;
     private float currentZoom = 1f;
@@ -509,7 +510,12 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.addTarget(surface);
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    lastCaptureResult = result;
+                }
+            }, handler);
         } catch (Exception e) {
             FileLog.e("Camera2Sessions setRepeatingRequest error in updateCaptureRequest", e);
         }
@@ -590,6 +596,14 @@ public class Camera2Session {
             return Collections.max(Arrays.asList(choices), new CompareSizesByArea());
         }
     }
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
+    public CaptureResult getLastCaptureResult() {
+        return lastCaptureResult;
+    }
+
     static class CompareSizesByArea implements Comparator<Size> {
         @Override
         public int compare(Size lhs, Size rhs) {
