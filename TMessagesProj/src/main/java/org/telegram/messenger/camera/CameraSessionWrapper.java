@@ -179,6 +179,18 @@ public class CameraSessionWrapper {
         return null;
     }
 
+    public boolean isCamera2() {
+        return camera2Session != null;
+    }
+
+    public Camera2Session getCamera2Session() {
+        return camera2Session;
+    }
+
+    public CameraSession getCamera1Session() {
+        return camera1Session;
+    }
+
     public static CameraSessionWrapper of(CameraSession session) {
         CameraSessionWrapper wrapper = new CameraSessionWrapper();
         wrapper.camera1Session = session;
