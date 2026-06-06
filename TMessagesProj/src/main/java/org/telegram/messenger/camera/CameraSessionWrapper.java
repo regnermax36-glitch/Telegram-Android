@@ -32,6 +32,25 @@ public class CameraSessionWrapper {
         }
     }
 
+    public Camera getCamera() {
+        if (camera1Session != null) {
+            return camera1Session.getCamera();
+        }
+        return null;
+    }
+
+    public boolean isCamera2() {
+        return camera2Session != null;
+    }
+
+    public Camera2Session getCamera2Session() {
+        return camera2Session;
+    }
+
+    public CameraSession getCamera1Session() {
+        return camera1Session;
+    }
+
     public int getCurrentOrientation() {
         if (camera2Session != null) {
             return camera2Session.getCurrentOrientation();

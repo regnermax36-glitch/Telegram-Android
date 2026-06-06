@@ -218,6 +218,10 @@ public class CameraSession {
         return diffOrientation;
     }
 
+    public Camera getCamera() {
+        return cameraInfo != null ? cameraInfo.camera : null;
+    }
+
     public boolean isSameTakePictureOrientation() {
         return sameTakePictureOrientation;
     }

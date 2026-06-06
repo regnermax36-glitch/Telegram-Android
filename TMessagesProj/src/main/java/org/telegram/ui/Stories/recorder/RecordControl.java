@@ -104,7 +104,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
     private final static int WHITE = 0xFFFFFFFF;
     private final static int RED = 0xFFF73131;
-    private final static int BG = 0x64000000;
+    private final static int BG = 0x20ffffff;
 
     private final Paint mainPaint =          new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint outlinePaint =       new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -266,12 +266,12 @@ public class RecordControl extends View implements FlashViews.Invertable {
         leftCx = cx - dist;
         rightCx = cx + dist;
 
-        setDrawableBounds(flipDrawableWhite, rightCx, cy, dp(14));
-        setDrawableBounds(flipDrawableBlack, rightCx, cy, dp(14));
-        setDrawableBounds(unlockDrawable, leftCx, cy);
-        setDrawableBounds(lockDrawable, leftCx, cy);
-        setDrawableBounds(pauseDrawable, leftCx, cy);
-        galleryImage.setImageCoords(leftCx - dp(20), cy - dp(20), dp(40), dp(40));
+        setDrawableBounds(flipDrawableWhite, rightCx, cy, dp(12));
+        setDrawableBounds(flipDrawableBlack, rightCx, cy, dp(12));
+        setDrawableBounds(unlockDrawable, leftCx, cy, dp(12));
+        setDrawableBounds(lockDrawable, leftCx, cy, dp(12));
+        setDrawableBounds(pauseDrawable, leftCx, cy, dp(12));
+        galleryImage.setImageCoords(leftCx - dp(18), cy - dp(18), dp(36), dp(36));
 
         redMatrix.reset();
         redMatrix.postTranslate(cx, cy);
@@ -399,8 +399,8 @@ public class RecordControl extends View implements FlashViews.Invertable {
         }
 
         float acx = lerp(cx, recordCx.set(cx + dp(4) * touchCenterT16), touchIsCenterT);
-        float r =   lerp(lerp(dp(29), dp(12), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
-        float rad = lerp(lerp(dp(32), dp(7), recordingT), dp(32), touchIsCenterT);
+        float r =   lerp(lerp(dp(24), dp(24), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
+        float rad = lerp(lerp(dp(24), dp(24), recordingT), dp(32), touchIsCenterT);
         scale = lerp(recordButton.getScale(startModeIsVideo ? 0 : .2f), 1 + .2f * animatedAmplitude.set(amplitude), recordingT);
         AndroidUtilities.rectTmp.set(acx - r, cy - r, acx + r, cy + r);
         mainPaint.setColor(ColorUtils.blendARGB(WHITE, RED, isVideo * (1.0f - check)));
