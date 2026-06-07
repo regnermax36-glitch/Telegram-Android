@@ -104,7 +104,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
     private final static int WHITE = 0xFFFFFFFF;
     private final static int RED = 0xFFF73131;
-    private final static int BG = 0x64000000;
+    private final static int BG = 0x20FFFFFF;
 
     private final Paint mainPaint =          new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint outlinePaint =       new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -399,8 +399,8 @@ public class RecordControl extends View implements FlashViews.Invertable {
         }
 
         float acx = lerp(cx, recordCx.set(cx + dp(4) * touchCenterT16), touchIsCenterT);
-        float r =   lerp(lerp(dp(29), dp(12), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
-        float rad = lerp(lerp(dp(32), dp(7), recordingT), dp(32), touchIsCenterT);
+        float r =   lerp(lerp(dp(24), dp(24), recordingT), dp(32) - dp(4) * Math.abs(touchCenterT96), touchIsCenterT);
+        float rad = lerp(lerp(dp(24), dp(24), recordingT), dp(32), touchIsCenterT);
         scale = lerp(recordButton.getScale(startModeIsVideo ? 0 : .2f), 1 + .2f * animatedAmplitude.set(amplitude), recordingT);
         AndroidUtilities.rectTmp.set(acx - r, cy - r, acx + r, cy + r);
         mainPaint.setColor(ColorUtils.blendARGB(WHITE, RED, isVideo * (1.0f - check)));
@@ -501,7 +501,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
             scale = lockButton.getScale(.2f) * recordingT;
             if (scale > 0) {
                 canvas.save();
-                canvas.scale(scale, scale, leftCx, cy);
+                canvas.scale(scale * 0.85f, scale * 0.85f, leftCx, cy);
                 canvas.drawCircle(leftCx, cy, dp(22), buttonPaint);
                 canvas.rotate(-getRotation(), leftCx, cy);
                 unlockDrawable.draw(canvas);
@@ -512,7 +512,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
         scale = lockButton.getScale(.2f) * (1f - recordingT) * (1.0f - check);
         if (scale > 0) {
             canvas.save();
-            canvas.scale(scale, scale, leftCx, cy);
+            canvas.scale(scale * 0.85f, scale * 0.85f, leftCx, cy);
             canvas.rotate(-getRotation(), leftCx, cy);
             galleryImage.draw(canvas);
             canvas.restore();
@@ -522,7 +522,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
         if (dualT > 0) {
             canvas.save();
             scale = flipButton.getScale(.2f) * dualT * (1.0f - check);
-            canvas.scale(scale, scale, rightCx, cy);
+            canvas.scale(scale * 0.85f, scale * 0.85f, rightCx, cy);
             canvas.rotate(flipDrawableRotateT.set(flipDrawableRotate) - getRotation(), rightCx, cy);
             canvas.drawCircle(rightCx, cy, dp(22), buttonPaintWhite);
             flipDrawableBlack.draw(canvas);
@@ -531,7 +531,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
         if (dualT < 1) {
             canvas.save();
             scale = flipButton.getScale(.2f) * (1f - dualT) * (1.0f - check);
-            canvas.scale(scale, scale, rightCx, cy);
+            canvas.scale(scale * 0.85f, scale * 0.85f, rightCx, cy);
             canvas.rotate(flipDrawableRotateT.set(flipDrawableRotate) - getRotation(), rightCx, cy);
             canvas.drawCircle(rightCx, cy, dp(22), buttonPaint);
             flipDrawableWhite.draw(canvas);

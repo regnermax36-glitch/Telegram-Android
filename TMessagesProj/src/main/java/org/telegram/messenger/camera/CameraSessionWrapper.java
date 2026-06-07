@@ -98,6 +98,18 @@ public class CameraSessionWrapper {
         return null;
     }
 
+    public boolean isCamera2() {
+        return camera2Session != null;
+    }
+
+    public Camera2Session getCamera2Session() {
+        return camera2Session;
+    }
+
+    public CameraSession getCamera1Session() {
+        return camera1Session;
+    }
+
     public String getNextFlashMode() {
         if (camera2Session != null) {
             // TODO
@@ -189,6 +201,13 @@ public class CameraSessionWrapper {
         CameraSessionWrapper wrapper = new CameraSessionWrapper();
         wrapper.camera2Session = session;
         return wrapper;
+    }
+
+    public Camera getCamera() {
+        if (camera1Session != null) {
+            return camera1Session.getCamera();
+        }
+        return null;
     }
 
     @Override
