@@ -32,6 +32,7 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Outline;
+import android.graphics.SurfaceTexture;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
@@ -111,6 +112,7 @@ import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.camera.CameraController;
+import org.telegram.messenger.camera.CameraSessionWrapper;
 import org.telegram.messenger.camera.CameraView;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
@@ -1470,7 +1472,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int w = W - insetLeft - insetRight - dp(32);
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
@@ -1597,9 +1599,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int statusbar = insetTop;
             final int underControls = navbarContainer.getMeasuredHeight();
 
-            final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            final int T = (underStatusBar ? 0 : statusbar) + dp(16);
+            int l = (W + insetLeft - insetRight - previewW) / 2,
+                r = (W + insetLeft - insetRight + previewW) / 2, t, b;
             if (underStatusBar) {
                 t = T;
                 b = T + previewH + underControls;
@@ -1912,6 +1914,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     /* PAGE_CAMERA */
     private CollageLayoutView2 collageLayoutView;
+    private CameraHUDView cameraHUDView;
     private DualCameraView cameraView;
     private QRScanner qrScanner;
     private ScannedLinkPreview qrLinkView;
@@ -2186,6 +2189,13 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 requestCameraPermission(true);
             }
         });
+        cameraHUDView = new CameraHUDView(context, blurManager);
+        cameraHUDView.setCurrentAccount(currentAccount);
+        cameraHUDView.setVisibility(View.GONE);
+        cameraHUDView.setAlpha(0f);
+        cameraHUDView.setScaleX(0.85f);
+        cameraHUDView.setScaleY(0.85f);
+        previewContainer.addView(cameraHUDView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.LEFT, 16, 16, 0, 0));
 
 //        cameraViewThumb = new ImageView(context);
 //        cameraViewThumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -2202,7 +2212,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -2986,6 +2996,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         zoomControlView = new ZoomControlView(context);
         zoomControlView.enabledTouch = false;
         zoomControlView.setAlpha(0.0f);
+        zoomControlView.setScaleX(0.85f);
+        zoomControlView.setScaleY(0.85f);
         controlContainer.addView(zoomControlView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 50, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 100 + 8));
         zoomControlView.setDelegate(zoom -> {
             if (cameraView != null) {
@@ -5295,6 +5307,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             removeCollageHint.hide();
         }
         collageLayoutView.setPreview(toPage == PAGE_PREVIEW && collageLayoutView.hasLayout());
+        AndroidUtilities.updateViewShow(cameraHUDView, toPage == PAGE_CAMERA, true, true);
     }
 
     private void onNavigateEnd(int fromPage, int toPage) {
@@ -6895,6 +6908,14 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             return;
         }
         cameraView = new DualCameraView(getContext(), getCameraFace(), false) {
+            @Override
+            public void onSurfaceTextureUpdated(android.graphics.SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (cameraHUDView != null) {
+                    cameraHUDView.updateMetadata(getCameraSession());
+                }
+            }
+
             @Override
             public void onEntityDraggedTop(boolean value) {
                 previewHighlight.show(true, value, actionBarContainer);
