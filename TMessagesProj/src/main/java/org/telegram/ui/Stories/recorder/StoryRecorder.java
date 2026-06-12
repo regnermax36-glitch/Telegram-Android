@@ -1779,8 +1779,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             previewContainer.layout(0, 0, previewW, previewH);
             previewContainer.setPivotX(previewW * .5f);
-            actionBarContainer.layout(0, t, previewW, t + actionBarContainer.getMeasuredHeight());
-            controlContainer.layout(0, previewH - controlContainer.getMeasuredHeight(), previewW, previewH);
+            int m = dp(12);
+            actionBarContainer.layout(m, t + m, previewW - m, t + m + actionBarContainer.getMeasuredHeight());
+            controlContainer.layout(m, previewH - controlContainer.getMeasuredHeight() - m, previewW - m, previewH - m);
             navbarContainer.layout(0, previewH, previewW, previewH + navbarContainer.getMeasuredHeight());
             captionContainer.layout(0, 0, previewW, previewH);
             if (captionEditOverlay != null) {
@@ -1818,8 +1819,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             measureChildExactly(previewContainer, previewW, previewH);
             applyFilterMatrix();
-            measureChildExactly(actionBarContainer, previewW, dp(56 + 56 + 38));
-            measureChildExactly(controlContainer, previewW, dp(220));
+            int m = dp(12);
+            measureChildExactly(actionBarContainer, previewW - 2 * m, dp(56 + 56 + 38));
+            measureChildExactly(controlContainer, previewW - 2 * m, dp(220));
             measureChildExactly(navbarContainer, previewW, underControls);
             measureChildExactly(captionContainer, previewW, previewH);
             measureChildExactly(flashViews.foregroundView, W, H);
@@ -2126,8 +2128,52 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         blurManager = new BlurringShader.BlurManager(previewContainer);
         videoTextureHolder = new PreviewView.TextureViewHolder();
-        containerView.addView(actionBarContainer = new FrameLayout(context)); // 150dp
-        containerView.addView(controlContainer = new FrameLayout(context)); // 220dp
+        containerView.addView(actionBarContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_IOS28);
+            private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            private final Path path = new Path();
+            private final RectF rect = new RectF();
+            {
+                borderPaint.setStyle(Paint.Style.STROKE);
+                borderPaint.setStrokeWidth(dp(1));
+                borderPaint.setColor(0x25FFFFFF);
+            }
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                rect.set(0, 0, getWidth(), getHeight());
+                canvas.save();
+                path.rewind();
+                path.addRoundRect(rect, dp(32), dp(32), Path.Direction.CW);
+                canvas.clipPath(path);
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+                canvas.restore();
+                canvas.drawRoundRect(rect, dp(32), dp(32), borderPaint);
+                super.dispatchDraw(canvas);
+            }
+        }); // 150dp
+        containerView.addView(controlContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_IOS28);
+            private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            private final Path path = new Path();
+            private final RectF rect = new RectF();
+            {
+                borderPaint.setStyle(Paint.Style.STROKE);
+                borderPaint.setStrokeWidth(dp(1));
+                borderPaint.setColor(0x25FFFFFF);
+            }
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                rect.set(0, 0, getWidth(), getHeight());
+                canvas.save();
+                path.rewind();
+                path.addRoundRect(rect, dp(32), dp(32), Path.Direction.CW);
+                canvas.clipPath(path);
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+                canvas.restore();
+                canvas.drawRoundRect(rect, dp(32), dp(32), borderPaint);
+                super.dispatchDraw(canvas);
+            }
+        }); // 220dp
         containerView.addView(captionContainer = new FrameLayout(context) {
             @Override
             public void setTranslationY(float translationY) {

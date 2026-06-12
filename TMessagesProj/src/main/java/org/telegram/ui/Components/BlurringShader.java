@@ -745,6 +745,7 @@ public class BlurringShader {
         public static final int BLUR_TYPE_REPLY_BACKGROUND = 8;
         public static final int BLUR_TYPE_REPLY_TEXT_XFER = 9;
         public static final int BLUR_TYPE_ACTION_BACKGROUND = 10;
+        public static final int BLUR_TYPE_IOS28 = 11;
 
         private final BlurManager manager;
         private final View view;
@@ -817,6 +818,10 @@ public class BlurringShader {
                 colorMatrix.setSaturation(1.6f);
                 AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, wasDark ? .97f : .92f);
                 AndroidUtilities.adjustBrightnessColorMatrix(colorMatrix, wasDark ? +.12f : -.06f);
+            } else if (type == BLUR_TYPE_IOS28) {
+                AndroidUtilities.adjustSaturationColorMatrix(colorMatrix, +.5f);
+                AndroidUtilities.adjustBrightnessColorMatrix(colorMatrix, +.15f);
+                AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, 1.15f);
             }
             paint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
             oldPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
