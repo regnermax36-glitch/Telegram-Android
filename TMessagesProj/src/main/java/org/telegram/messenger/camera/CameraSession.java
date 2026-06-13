@@ -608,4 +608,8 @@ public class CameraSession {
     public Camera.Size getCurrentPictureSize() {
         return cameraInfo.camera.getParameters().getPictureSize();
     }
+
+    public Camera getCamera() {
+        return cameraInfo != null ? cameraInfo.camera : null;
+    }
 }

@@ -115,8 +115,10 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final Paint hintLinePaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint hintLinePaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint checkPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint glossPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Matrix redMatrix =         new Matrix();
     private RadialGradient redGradient;
+    private android.graphics.LinearGradient glossGradient;
 
     private final ButtonBounce recordButton =  new ButtonBounce(this);
     private final ButtonBounce flipButton =    new ButtonBounce(this);
@@ -140,9 +142,11 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {0xFFEB2D2D, RED, WHITE}, new float[] {0, .75f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
+
+        glossPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SCREEN));
         outlinePaint.setColor(WHITE);
         outlinePaint.setStyle(Paint.Style.STROKE);
         outlinePaint.setStrokeCap(Paint.Cap.ROUND);
@@ -261,6 +265,9 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         cx = width / 2f;
         cy = height / 2f;
+
+        glossGradient = new android.graphics.LinearGradient(0, cy - dp(32), 0, cy + dp(32), new int[] { 0x40FFFFFF, 0x00FFFFFF, 0x00FFFFFF }, new float[] { 0, 0.45f, 1f }, Shader.TileMode.CLAMP);
+        glossPaint.setShader(glossGradient);
 
         final float dist = Math.min(dp(135), width * .35f);
         leftCx = cx - dist;
@@ -417,6 +424,9 @@ public class RecordControl extends View implements FlashViews.Invertable {
         canvas.scale(scale, scale, cx, cy);
         mainPaint.setAlpha(0xFF);
         canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+        if (check <= 0 && isVideo > 0) {
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, glossPaint);
+        }
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();
