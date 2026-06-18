@@ -105,6 +105,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final static int WHITE = 0xFFFFFFFF;
     private final static int RED = 0xFFF73131;
     private final static int BG = 0x64000000;
+    private final static int GLOSS = 0x40FFFFFF;
 
     private final Paint mainPaint =          new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint outlinePaint =       new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -115,8 +116,11 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final Paint hintLinePaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint hintLinePaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint checkPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint glossPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Matrix redMatrix =         new Matrix();
+    private final Matrix glossMatrix =       new Matrix();
     private RadialGradient redGradient;
+    private android.graphics.LinearGradient glossGradient;
 
     private final ButtonBounce recordButton =  new ButtonBounce(this);
     private final ButtonBounce flipButton =    new ButtonBounce(this);
@@ -140,9 +144,12 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(32), new int[] {RED, RED, 0x00F73131}, new float[] {0, .85f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
+
+        glossGradient = new android.graphics.LinearGradient(0, -dp(32), 0, dp(32), new int[] {GLOSS, 0x00FFFFFF}, new float[] {0, 0.45f}, Shader.TileMode.CLAMP);
+        glossPaint.setShader(glossGradient);
         outlinePaint.setColor(WHITE);
         outlinePaint.setStyle(Paint.Style.STROKE);
         outlinePaint.setStrokeCap(Paint.Cap.ROUND);
@@ -276,6 +283,10 @@ public class RecordControl extends View implements FlashViews.Invertable {
         redMatrix.reset();
         redMatrix.postTranslate(cx, cy);
         redGradient.setLocalMatrix(redMatrix);
+
+        glossMatrix.reset();
+        glossMatrix.postTranslate(cx, cy);
+        glossGradient.setLocalMatrix(glossMatrix);
 
         setMeasuredDimension(width, height);
     }
@@ -417,6 +428,21 @@ public class RecordControl extends View implements FlashViews.Invertable {
         canvas.scale(scale, scale, cx, cy);
         mainPaint.setAlpha(0xFF);
         canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+
+        // 3D Effect for Shutter
+        if (isVideo > 0 && check == 0) {
+            redMatrix.reset();
+            redMatrix.postScale(scale, scale);
+            redMatrix.postTranslate(acx, cy);
+            redGradient.setLocalMatrix(redMatrix);
+            canvas.drawCircle(acx, cy, r, redPaint);
+
+            glossMatrix.reset();
+            glossMatrix.postScale(scale, scale);
+            glossMatrix.postTranslate(acx, cy);
+            glossGradient.setLocalMatrix(glossMatrix);
+            canvas.drawCircle(acx, cy, r, glossPaint);
+        }
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();
