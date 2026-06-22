@@ -814,8 +814,8 @@ public class BlurringShader {
                 xfer = true;
 //                AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, 1.4f);
             } else if (type == BLUR_TYPE_ACTION_BACKGROUND) {
-                colorMatrix.setSaturation(1.6f);
-                AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, wasDark ? .97f : .92f);
+                colorMatrix.setSaturation(1.8f);
+                AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, wasDark ? .98f : .95f);
                 AndroidUtilities.adjustBrightnessColorMatrix(colorMatrix, wasDark ? +.12f : -.06f);
             }
             paint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));

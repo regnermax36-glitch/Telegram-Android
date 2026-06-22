@@ -111,8 +111,10 @@ import org.telegram.messenger.UserObject;
 import org.telegram.messenger.Utilities;
 import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.messenger.camera.CameraController;
+import org.telegram.messenger.camera.CameraSessionWrapper;
 import org.telegram.messenger.camera.CameraView;
 import org.telegram.tgnet.ConnectionsManager;
+import android.graphics.SurfaceTexture;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_stories;
@@ -190,6 +192,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     private WindowView windowView;
     private ContainerView containerView;
     private FlashViews flashViews;
+    private CameraHUDView hudView;
     private ThanosEffect thanosEffect;
 
     private static StoryRecorder instance;
@@ -1470,20 +1473,20 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
             final int W = MeasureSpec.getSize(widthMeasureSpec);
             final int H = MeasureSpec.getSize(heightMeasureSpec);
-            final int w = W - insetLeft - insetRight;
+            final int w = W - insetLeft - insetRight - dp(32);
 
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
             final int hFromW = (int) Math.ceil(w / 9f * 16f);
             underControls = dp(48);
-            if (hFromW + underControls <= H - navbar) {
+            if (hFromW + underControls <= H - navbar - dp(32)) {
                 previewW = w;
                 previewH = hFromW;
                 underStatusBar = previewH + underControls > H - navbar - statusbar;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - dp(32);
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
             underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
@@ -1598,8 +1601,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int underControls = navbarContainer.getMeasuredHeight();
 
             final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            int l = (W + insetLeft - insetRight - previewW) / 2,
+                r = (W + insetLeft - insetRight + previewW) / 2, t, b;
             if (underStatusBar) {
                 t = T;
                 b = T + previewH + underControls;
@@ -2067,6 +2070,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             @Override
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                if (hudView != null) {
+                    hudView.measure(MeasureSpec.makeMeasureSpec(dp(220), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(dp(64), MeasureSpec.EXACTLY));
+                }
 
                 if (photoFilterViewCurvesControl != null) {
                     photoFilterViewCurvesControl.setActualArea(0, 0, photoFilterViewCurvesControl.getMeasuredWidth(), photoFilterViewCurvesControl.getMeasuredHeight());
@@ -2082,6 +2088,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             @Override
             protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
                 super.onLayout(changed, left, top, right, bottom);
+                if (hudView != null) {
+                    hudView.layout(dp(12), dp(12), dp(12 + 220), dp(12 + 64));
+                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     final int w = right - left;
                     final int h = bottom - top;
@@ -2126,8 +2135,22 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         blurManager = new BlurringShader.BlurManager(previewContainer);
         videoTextureHolder = new PreviewView.TextureViewHolder();
-        containerView.addView(actionBarContainer = new FrameLayout(context)); // 150dp
-        containerView.addView(controlContainer = new FrameLayout(context)); // 220dp
+        containerView.addView(actionBarContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_ACTION_BACKGROUND);
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f);
+                super.dispatchDraw(canvas);
+            }
+        }); // 150dp
+        containerView.addView(controlContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_ACTION_BACKGROUND);
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f);
+                super.dispatchDraw(canvas);
+            }
+        }); // 220dp
         containerView.addView(captionContainer = new FrameLayout(context) {
             @Override
             public void setTranslationY(float translationY) {
@@ -2181,6 +2204,10 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             updateActionBarButtons(true);
         });
         previewContainer.addView(collageLayoutView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.FILL));
+
+        hudView = new CameraHUDView(context, blurManager);
+        hudView.setCurrentAccount(currentAccount);
+        previewContainer.addView(hudView);
         collageLayoutView.setOnClickListener(v -> {
             if (noCameraPermission) {
                 requestCameraPermission(true);
@@ -2202,7 +2229,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -6937,6 +6964,17 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             protected void receivedAmplitude(double amplitude) {
                 if (recordControl != null) {
                     recordControl.setAmplitude(Utilities.clamp((float) (amplitude / WaveDrawable.MAX_AMPLITUDE), 1, 0), true);
+                }
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (hudView != null) {
+                    CameraSessionWrapper session = getCameraSession();
+                    if (session != null) {
+                        hudView.updateMetadata(session.getCamera() != null ? session.getCamera().getParameters() : null);
+                    }
                 }
             }
         };

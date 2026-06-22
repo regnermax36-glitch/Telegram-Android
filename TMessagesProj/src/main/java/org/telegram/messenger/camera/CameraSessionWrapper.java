@@ -12,6 +12,13 @@ public class CameraSessionWrapper {
     public CameraSession camera1Session;
     public Camera2Session camera2Session;
 
+    public Camera getCamera() {
+        if (camera1Session != null && camera1Session.cameraInfo != null) {
+            return camera1Session.cameraInfo.camera;
+        }
+        return null;
+    }
+
     public boolean isInitiated() {
         if (camera2Session != null) {
             return camera2Session.isInitiated();
