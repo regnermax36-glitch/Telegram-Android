@@ -140,7 +140,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, 0x00FFFFFF}, new float[] {0, .7f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
         outlinePaint.setColor(WHITE);
@@ -266,12 +266,12 @@ public class RecordControl extends View implements FlashViews.Invertable {
         leftCx = cx - dist;
         rightCx = cx + dist;
 
-        setDrawableBounds(flipDrawableWhite, rightCx, cy, dp(14));
-        setDrawableBounds(flipDrawableBlack, rightCx, cy, dp(14));
-        setDrawableBounds(unlockDrawable, leftCx, cy);
-        setDrawableBounds(lockDrawable, leftCx, cy);
-        setDrawableBounds(pauseDrawable, leftCx, cy);
-        galleryImage.setImageCoords(leftCx - dp(20), cy - dp(20), dp(40), dp(40));
+        setDrawableBounds(flipDrawableWhite, rightCx, cy, dp(14) * 0.85f);
+        setDrawableBounds(flipDrawableBlack, rightCx, cy, dp(14) * 0.85f);
+        setDrawableBounds(unlockDrawable, leftCx, cy, dp(12) * 0.85f);
+        setDrawableBounds(lockDrawable, leftCx, cy, dp(12) * 0.85f);
+        setDrawableBounds(pauseDrawable, leftCx, cy, dp(12) * 0.85f);
+        galleryImage.setImageCoords(leftCx - dp(20) * 0.85f, cy - dp(20) * 0.85f, dp(40) * 0.85f, dp(40) * 0.85f);
 
         redMatrix.reset();
         redMatrix.postTranslate(cx, cy);
@@ -435,7 +435,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
         final float strokeWidth = lerp(dp(3), dp(4), collage);
         or = lerp(or, r - strokeWidth - dp(4), check);
         AndroidUtilities.rectTmp.set(cx - or, cy - or, cx + or, cy + or);
-        outlinePaint.setStrokeWidth(strokeWidth);
+        outlinePaint.setStrokeWidth(dp(1));
         outlinePaint.setAlpha((int) (0xFF * lerp(1.0f, 0.3f, collage) * (1.0f - check)));
         canvas.drawCircle(cx, cy, or, outlinePaint);
         if (collage > 0 & collageProgress > 0) {
