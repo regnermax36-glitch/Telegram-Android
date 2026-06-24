@@ -140,7 +140,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, 0x00FFFFFF}, new float[] {0, .7f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
         outlinePaint.setColor(WHITE);
@@ -417,6 +417,11 @@ public class RecordControl extends View implements FlashViews.Invertable {
         canvas.scale(scale, scale, cx, cy);
         mainPaint.setAlpha(0xFF);
         canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+
+        if (isVideo > 0 && check <= 0) {
+            redPaint.setAlpha((int) (255 * isVideo));
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, redPaint);
+        }
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();

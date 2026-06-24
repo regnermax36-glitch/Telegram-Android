@@ -6853,6 +6853,10 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         }
         checkAppUpdate(false, null);
 
+        AndroidUtilities.runOnUIThread(() -> {
+            StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ApplicationLoader.canDrawOverlays = Settings.canDrawOverlays(this);
         }
