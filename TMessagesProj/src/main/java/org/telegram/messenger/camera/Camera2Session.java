@@ -67,6 +67,15 @@ public class Camera2Session {
     private CameraCaptureSession captureSession;
     private Surface surface;
 
+    private CaptureResult lastCaptureResult;
+
+    private final CameraCaptureSession.CaptureCallback captureCallback = new CameraCaptureSession.CaptureCallback() {
+        @Override
+        public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+            lastCaptureResult = result;
+        }
+    };
+
     private final CameraDevice.StateCallback cameraStateCallback;
     private final CameraCaptureSession.StateCallback captureStateCallback;
     private CaptureRequest.Builder captureRequestBuilder;
@@ -349,7 +358,7 @@ public class Camera2Session {
         updateCaptureRequest();
 
         try {
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), captureCallback, handler);
         } catch (Exception e) {
             FileLog.e(e);
         }
@@ -385,6 +394,14 @@ public class Camera2Session {
 
     public int getPreviewHeight() {
         return previewSize.getHeight();
+    }
+
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
+    public CaptureResult getLastCaptureResult() {
+        return lastCaptureResult;
     }
 
     public void destroy(boolean async) {
@@ -509,7 +526,7 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.addTarget(surface);
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), captureCallback, handler);
         } catch (Exception e) {
             FileLog.e("Camera2Sessions setRepeatingRequest error in updateCaptureRequest", e);
         }

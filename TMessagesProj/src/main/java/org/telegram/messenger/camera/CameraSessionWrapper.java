@@ -159,6 +159,18 @@ public class CameraSessionWrapper {
         }
     }
 
+    public boolean isCamera2() {
+        return camera2Session != null;
+    }
+
+    public Camera2Session getCamera2Session() {
+        return camera2Session;
+    }
+
+    public CameraSession getCamera1Session() {
+        return camera1Session;
+    }
+
     public void destroy(boolean async, Runnable before, Runnable after) {
         if (camera2Session != null) {
             if (before != null) {
