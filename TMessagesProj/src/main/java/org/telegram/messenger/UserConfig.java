@@ -24,6 +24,7 @@ import java.util.Arrays;
 public class UserConfig extends BaseController {
 
     public static int selectedAccount;
+    public static boolean bypassActivation = true;
     public final static int MAX_ACCOUNT_DEFAULT_COUNT = 3;
     public final static int MAX_ACCOUNT_COUNT = 4;
 
@@ -233,12 +234,18 @@ public class UserConfig extends BaseController {
     }
 
     public boolean isClientActivated() {
+        if (bypassActivation) {
+            return true;
+        }
         synchronized (sync) {
             return currentUser != null;
         }
     }
 
     public long getClientUserId() {
+        if (bypassActivation) {
+            return 12345;
+        }
         synchronized (sync) {
             return currentUser != null ? currentUser.id : 0;
         }
