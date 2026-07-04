@@ -16,6 +16,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RadialGradient;
+import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.graphics.SurfaceTexture;
 import android.graphics.Xfermode;
@@ -112,11 +113,13 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final Paint buttonPaint =        new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint buttonPaintWhite =   new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint redPaint =           new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint highlightPaint =     new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint hintLinePaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint hintLinePaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint checkPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Matrix redMatrix =         new Matrix();
     private RadialGradient redGradient;
+    private LinearGradient highlightGradient;
 
     private final ButtonBounce recordButton =  new ButtonBounce(this);
     private final ButtonBounce flipButton =    new ButtonBounce(this);
@@ -140,9 +143,12 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(38), new int[] {RED, RED, 0x00FFFFFF}, new float[] {0, .7f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
+
+        highlightGradient = new LinearGradient(0, -dp(30), 0, dp(30), new int[] {0x40FFFFFF, 0x00FFFFFF}, new float[] {0, 1}, Shader.TileMode.CLAMP);
+        highlightPaint.setShader(highlightGradient);
         outlinePaint.setColor(WHITE);
         outlinePaint.setStyle(Paint.Style.STROKE);
         outlinePaint.setStrokeCap(Paint.Cap.ROUND);
@@ -276,6 +282,10 @@ public class RecordControl extends View implements FlashViews.Invertable {
         redMatrix.reset();
         redMatrix.postTranslate(cx, cy);
         redGradient.setLocalMatrix(redMatrix);
+
+        Matrix highlightMatrix = new Matrix();
+        highlightMatrix.postTranslate(cx, cy);
+        highlightGradient.setLocalMatrix(highlightMatrix);
 
         setMeasuredDimension(width, height);
     }
@@ -417,6 +427,11 @@ public class RecordControl extends View implements FlashViews.Invertable {
         canvas.scale(scale, scale, cx, cy);
         mainPaint.setAlpha(0xFF);
         canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+
+        if (isVideo > 0 && check <= 0) {
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, highlightPaint);
+        }
+
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();

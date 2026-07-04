@@ -42,6 +42,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.RenderNode;
 import android.graphics.Shader;
+import android.graphics.SurfaceTexture;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -1475,15 +1476,16 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int statusbar = insetTop;
             final int navbar = insetBottom;
 
-            final int hFromW = (int) Math.ceil(w / 9f * 16f);
+            final int w_card = w - dp(32);
+            final int hFromW = (int) Math.ceil(w_card / 9f * 16f);
             underControls = dp(48);
             if (hFromW + underControls <= H - navbar) {
-                previewW = w;
+                previewW = w_card;
                 previewH = hFromW;
                 underStatusBar = previewH + underControls > H - navbar - statusbar;
             } else {
                 underStatusBar = false;
-                previewH = H - underControls - navbar - statusbar;
+                previewH = H - underControls - navbar - statusbar - dp(32);
                 previewW = (int) Math.ceil(previewH * 9f / 16f);
             }
             underControls = Utilities.clamp(H - previewH - (underStatusBar ? 0 : statusbar), dp(68), dp(48));
@@ -1597,9 +1599,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             final int statusbar = insetTop;
             final int underControls = navbarContainer.getMeasuredHeight();
 
-            final int T = underStatusBar ? 0 : statusbar;
-            int l = insetLeft + (W - insetRight - previewW) / 2,
-                r = insetLeft + (W - insetRight + previewW) / 2, t, b;
+            final int T = (underStatusBar ? 0 : statusbar) + dp(12);
+            int l = insetLeft + (W - insetLeft - insetRight - previewW) / 2,
+                r = insetLeft + (W - insetLeft - insetRight + previewW) / 2, t, b;
             if (underStatusBar) {
                 t = T;
                 b = T + previewH + underControls;
@@ -1912,6 +1914,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
     /* PAGE_CAMERA */
     private CollageLayoutView2 collageLayoutView;
+    private CameraHUDView hudView;
     private DualCameraView cameraView;
     private QRScanner qrScanner;
     private ScannedLinkPreview qrLinkView;
@@ -2126,8 +2129,46 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         blurManager = new BlurringShader.BlurManager(previewContainer);
         videoTextureHolder = new PreviewView.TextureViewHolder();
-        containerView.addView(actionBarContainer = new FrameLayout(context)); // 150dp
-        containerView.addView(controlContainer = new FrameLayout(context)); // 220dp
+        containerView.addView(actionBarContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_IOS28);
+            private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            {
+                borderPaint.setColor(0x25FFFFFF);
+                borderPaint.setStyle(Paint.Style.STROKE);
+                borderPaint.setStrokeWidth(dp(1));
+            }
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                canvas.save();
+                AndroidUtilities.rectTmp.set(dp(12), dp(12), getWidth() - dp(12), getHeight() - dp(12));
+                canvas.clipRect(AndroidUtilities.rectTmp);
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+                canvas.drawColor(0x15000000);
+                canvas.restore();
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), borderPaint);
+                super.dispatchDraw(canvas);
+            }
+        }); // 150dp
+        containerView.addView(controlContainer = new FrameLayout(context) {
+            private final BlurringShader.StoryBlurDrawer blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_IOS28);
+            private final Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            {
+                borderPaint.setColor(0x25FFFFFF);
+                borderPaint.setStyle(Paint.Style.STROKE);
+                borderPaint.setStrokeWidth(dp(1));
+            }
+            @Override
+            protected void dispatchDraw(Canvas canvas) {
+                canvas.save();
+                AndroidUtilities.rectTmp.set(dp(12), dp(12), getWidth() - dp(12), getHeight() - dp(12));
+                canvas.clipRect(AndroidUtilities.rectTmp);
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+                canvas.drawColor(0x15000000);
+                canvas.restore();
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), borderPaint);
+                super.dispatchDraw(canvas);
+            }
+        }); // 220dp
         containerView.addView(captionContainer = new FrameLayout(context) {
             @Override
             public void setTranslationY(float translationY) {
@@ -2187,6 +2228,9 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             }
         });
 
+        hudView = new CameraHUDView(context, blurManager);
+        previewContainer.addView(hudView, LayoutHelper.createFrame(160, 32, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 16, 0, 0));
+
 //        cameraViewThumb = new ImageView(context);
 //        cameraViewThumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        cameraViewThumb.setOnClickListener(v -> {
@@ -2202,7 +2246,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             previewContainer.setOutlineProvider(new ViewOutlineProvider() {
                 @Override
                 public void getOutline(View view, Outline outline) {
-                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(12));
+                    outline.setRoundRect(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight(), dp(32));
                 }
             });
             previewContainer.setClipToOutline(true);
@@ -2676,6 +2720,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         backButton.setImageResource(R.drawable.msg_photo_back);
         backButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
         backButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
+        backButton.setScaleX(0.85f);
+        backButton.setScaleY(0.85f);
         backButton.setOnClickListener(e -> {
             if (awaitingPlayer) {
                 return;
@@ -2727,6 +2773,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         actionBarContainer.addView(muteHint, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.TOP, 0, 52, 0, 0));
 
         muteButton = new RLottieImageView(context);
+        muteButton.setScaleX(0.85f);
+        muteButton.setScaleY(0.85f);
         muteButton.setScaleType(ImageView.ScaleType.CENTER);
         muteButton.setImageResource(outputEntry != null && outputEntry.muted ? R.drawable.media_unmute : R.drawable.media_mute);
         muteButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
@@ -2759,6 +2807,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         muteButton.setAlpha(0f);
 
         playButton = new PlayPauseButton(context);
+        playButton.setScaleX(0.85f);
+        playButton.setScaleY(0.85f);
         playButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
         playButton.setVisibility(View.GONE);
         playButton.setAlpha(0f);
@@ -2770,9 +2820,13 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
 
         actionBarButtons.addView(playButton, LayoutHelper.createLinear(46, 56, Gravity.TOP | Gravity.RIGHT));
         actionBarButtons.addView(muteButton, LayoutHelper.createLinear(46, 56, Gravity.TOP | Gravity.RIGHT));
+        downloadButton.setScaleX(0.85f);
+        downloadButton.setScaleY(0.85f);
         actionBarButtons.addView(downloadButton, LayoutHelper.createFrame(46, 56, Gravity.TOP | Gravity.RIGHT));
 
         flashButton = new ToggleButton2(context);
+        flashButton.setScaleX(0.85f);
+        flashButton.setScaleY(0.85f);
         flashButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
         flashButton.setOnClickListener(e -> {
             if (cameraView == null || awaitingPlayer) {
@@ -2829,6 +2883,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         actionBarContainer.addView(flashButton, LayoutHelper.createFrame(56, 56, Gravity.TOP | Gravity.RIGHT));
 
         dualButton = new ToggleButton(context, R.drawable.media_dual_camera2_shadow, R.drawable.media_dual_camera2);
+        dualButton.setScaleX(0.85f);
+        dualButton.setScaleY(0.85f);
         dualButton.setOnClickListener(v -> {
             if (cameraView == null || currentPage != PAGE_CAMERA) {
                 return;
@@ -2850,6 +2906,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         actionBarContainer.addView(dualButton, LayoutHelper.createFrame(56, 56, Gravity.TOP | Gravity.RIGHT));
 
         collageButton = new CollageLayoutButton(context);
+        collageButton.setScaleX(0.85f);
+        collageButton.setScaleY(0.85f);
         collageButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
         if (lastCollageLayout == null) {
             lastCollageLayout = CollageLayout.getLayouts().get(6);
@@ -2984,6 +3042,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         controlContainer.addView(cameraHint, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.BOTTOM, 0, 0, 0, 100));
 
         zoomControlView = new ZoomControlView(context);
+        zoomControlView.setScaleX(0.85f);
+        zoomControlView.setScaleY(0.85f);
         zoomControlView.enabledTouch = false;
         zoomControlView.setAlpha(0.0f);
         controlContainer.addView(zoomControlView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 50, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 100 + 8));
@@ -4757,6 +4817,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 return super.dispatchTouchEvent(ev);
             }
         };
+        modeSwitcherView.setScaleX(0.85f);
+        modeSwitcherView.setScaleY(0.85f);
         galleryListView.allowSearch(false);
         galleryListView.setMultipleOnClick(collageLayoutView.hasLayout());
         galleryListView.setMaxCount(Math.min(StoryEntry.MAX_ENTRIES, CollageLayout.getMaxCount() - collageLayoutView.getFilledCount()));
@@ -6896,6 +6958,14 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
         }
         cameraView = new DualCameraView(getContext(), getCameraFace(), false) {
             @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+                super.onSurfaceTextureUpdated(surface);
+                if (hudView != null) {
+                    hudView.updateMetadata(getCameraSession());
+                }
+            }
+
+            @Override
             public void onEntityDraggedTop(boolean value) {
                 previewHighlight.show(true, value, actionBarContainer);
             }
@@ -7699,6 +7769,8 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
             themeButtonDrawable.setLayerColor("Path 5.**", color);
             themeButtonDrawable.commitApplyLayerColors();
             themeButton = new ImageView(getContext());
+            themeButton.setScaleX(0.85f);
+            themeButton.setScaleY(0.85f);
             themeButton.setScaleType(ImageView.ScaleType.CENTER);
             themeButton.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
             themeButton.setBackground(Theme.createSelectorDrawable(0x20ffffff));
@@ -7889,6 +7961,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     }
 
     private void updateActionBarButtons(boolean animated) {
+        AndroidUtilities.updateViewShow(hudView, currentPage == PAGE_CAMERA && !collageListView.isVisible() && !inCheck(), true, animated);
         showVideoTimer(currentPage == PAGE_CAMERA && mode == MODE_VIDEO && !collageListView.isVisible() && !inCheck(), animated);
         collageButton.setSelected(collageLayoutView.hasLayout());
         setActionBarButtonVisible(backButton, collageListView == null || !collageListView.isVisible(), animated);
