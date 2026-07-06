@@ -381,6 +381,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         isActive = true;
+        AndroidUtilities.runOnUIThread(() -> {
+            org.telegram.ui.Stories.recorder.StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
         if (BuildVars.DEBUG_VERSION) {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
                 .detectLeakedClosableObjects()
