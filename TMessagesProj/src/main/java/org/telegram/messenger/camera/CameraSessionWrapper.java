@@ -98,6 +98,13 @@ public class CameraSessionWrapper {
         return null;
     }
 
+    public Camera getCamera() {
+        if (camera1Session != null && camera1Session.cameraInfo != null) {
+            return camera1Session.cameraInfo.getCamera();
+        }
+        return null;
+    }
+
     public String getNextFlashMode() {
         if (camera2Session != null) {
             // TODO

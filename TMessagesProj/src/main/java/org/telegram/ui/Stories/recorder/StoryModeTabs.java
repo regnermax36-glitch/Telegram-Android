@@ -9,7 +9,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -25,6 +27,7 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.BlurringShader;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.ScaleStateListAnimator;
@@ -32,6 +35,7 @@ import org.telegram.ui.Components.ScaleStateListAnimator;
 public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable {
 
     private final LinearLayout layout;
+    private final BlurringShader.StoryBlurDrawer blurDrawer;
 
     private final FrameLayout liveLayout;
     private final TextView live;
@@ -42,23 +46,30 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
     private float invert;
 
-    public StoryModeTabs(Context context) {
+    public StoryModeTabs(Context context, BlurringShader.BlurManager blurManager) {
         super(context);
+
+        blurDrawer = new BlurringShader.StoryBlurDrawer(blurManager, this, BlurringShader.StoryBlurDrawer.BLUR_TYPE_IOS28);
 
         layout = new LinearLayout(context) {
             private final RectF a = new RectF(), b = new RectF(), c = new RectF();
-            private final Paint backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            private final Path path = new Path();
             private void setRect(int mode, RectF rect) {
                 View view = mode <= -1 ? liveLayout : mode >= 1 ? videoLayout : photoLayout;
-                rect.set(view.getLeft(), view.getBottom() - dp(30), view.getRight(), view.getBottom());
+                rect.set(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
             }
             @Override
             protected void dispatchDraw(@NonNull Canvas canvas) {
                 setRect((int) Math.floor(mode), a);
                 setRect((int) Math.ceil(mode), b);
                 lerp(a, b, mode - (float) Math.floor(mode), c);
-                backgroundPaint.setColor(Theme.multAlpha(ColorUtils.blendARGB(Color.WHITE, Color.BLACK, invert), 0.15f));
-                canvas.drawRoundRect(c, c.height() / 2f, c.height() / 2f, backgroundPaint);
+
+                canvas.save();
+                path.rewind();
+                path.addRoundRect(c, c.height() / 2f, c.height() / 2f, Path.Direction.CW);
+                canvas.clipPath(path);
+                blurDrawer.drawRect(canvas, 0, 0, 1.0f, false);
+                canvas.restore();
 
                 super.dispatchDraw(canvas);
             }
@@ -67,33 +78,42 @@ public class StoryModeTabs extends FrameLayout implements FlashViews.Invertable 
 
         liveLayout = new FrameLayout(context);
         live = new TextView(context);
-        live.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        live.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         live.setTypeface(AndroidUtilities.bold());
+        if (Build.VERSION.SDK_INT >= 21) {
+            live.setLetterSpacing(0.05f);
+        }
         live.setTextColor(0xFFFFFFFF);
         live.setText(getString(R.string.StoryLive));
-        liveLayout.addView(live, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
+        liveLayout.addView(live, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 16, 0, 16, 0));
         layout.addView(liveLayout, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.FILL_VERTICAL, 0, 0, 6.66f, 0));
         liveLayout.setOnClickListener(v -> switchModeInternal(-1));
         ScaleStateListAnimator.apply(liveLayout);
 
         photoLayout = new FrameLayout(context);
         photo = new TextView(context);
-        photo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        photo.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         photo.setTypeface(AndroidUtilities.bold());
+        if (Build.VERSION.SDK_INT >= 21) {
+            photo.setLetterSpacing(0.05f);
+        }
         photo.setTextColor(0xFFFFFFFF);
         photo.setText(getString(R.string.StoryPhoto));
-        photoLayout.addView(photo, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
+        photoLayout.addView(photo, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 16, 0, 16, 0));
         layout.addView(photoLayout, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.FILL_VERTICAL, 0, 0, 6.66f, 0));
         photoLayout.setOnClickListener(v -> switchModeInternal(0));
         ScaleStateListAnimator.apply(photoLayout);
 
         videoLayout = new FrameLayout(context);
         video = new TextView(context);
-        video.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        video.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         video.setTypeface(AndroidUtilities.bold());
+        if (Build.VERSION.SDK_INT >= 21) {
+            video.setLetterSpacing(0.05f);
+        }
         video.setTextColor(0xFFFFFFFF);
         video.setText(getString(R.string.StoryVideo));
-        videoLayout.addView(video, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 16, 0, 16, 7));
+        videoLayout.addView(video, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER, 16, 0, 16, 0));
         layout.addView(videoLayout, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.FILL_VERTICAL, 0, 0, 0, 0));
         videoLayout.setOnClickListener(v -> switchModeInternal(1));
         ScaleStateListAnimator.apply(videoLayout);
