@@ -179,6 +179,10 @@ public class CameraSession {
         return currentFlashMode;
     }
 
+    public Camera getCamera() {
+        return cameraInfo.camera;
+    }
+
     public String getNextFlashMode() {
         ArrayList<String> modes = availableFlashModes;
         for (int a = 0; a < modes.size(); a++) {

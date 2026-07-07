@@ -117,6 +117,8 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final Paint checkPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Matrix redMatrix =         new Matrix();
     private RadialGradient redGradient;
+    private android.graphics.LinearGradient glossGradient;
+    private final Paint glossPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private final ButtonBounce recordButton =  new ButtonBounce(this);
     private final ButtonBounce flipButton =    new ButtonBounce(this);
@@ -140,9 +142,12 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(32), new int[] {RED, RED, 0x00FFFFFF}, new float[] {0, .7f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
+
+        glossPaint.setStyle(Paint.Style.FILL);
+
         outlinePaint.setColor(WHITE);
         outlinePaint.setStyle(Paint.Style.STROKE);
         outlinePaint.setStrokeCap(Paint.Cap.ROUND);
@@ -276,6 +281,9 @@ public class RecordControl extends View implements FlashViews.Invertable {
         redMatrix.reset();
         redMatrix.postTranslate(cx, cy);
         redGradient.setLocalMatrix(redMatrix);
+
+        glossGradient = new android.graphics.LinearGradient(cx, cy - dp(24), cx, cy + dp(24), new int[] {0x40FFFFFF, 0x00FFFFFF}, null, Shader.TileMode.CLAMP);
+        glossPaint.setShader(glossGradient);
 
         setMeasuredDimension(width, height);
     }
@@ -415,8 +423,17 @@ public class RecordControl extends View implements FlashViews.Invertable {
             canvas.save();
         }
         canvas.scale(scale, scale, cx, cy);
-        mainPaint.setAlpha(0xFF);
-        canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+
+        if (isVideo > 0 && check <= 0) {
+            redPaint.setAlpha(0xFF);
+            canvas.drawCircle(acx, cy, r * 1.1f, redPaint);
+            glossPaint.setAlpha((int) (0.5f * 255));
+            canvas.drawCircle(acx, cy, r * 0.9f, glossPaint);
+        } else {
+            mainPaint.setAlpha(0xFF);
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+        }
+
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();
