@@ -421,6 +421,11 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         flagSecureReason.attach();
 
         super.onCreate(savedInstanceState);
+
+        AndroidUtilities.runOnUIThread(() -> {
+            StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
+
         if (Build.VERSION.SDK_INT >= 24) {
             AndroidUtilities.isInMultiwindow = isInMultiWindowMode();
         }

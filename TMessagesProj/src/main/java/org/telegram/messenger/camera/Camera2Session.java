@@ -59,6 +59,16 @@ public class Camera2Session {
     public final String cameraId;
     private CameraCharacteristics cameraCharacteristics;
 
+    private CaptureResult lastCaptureResult;
+
+    public CaptureResult getLastCaptureResult() {
+        return lastCaptureResult;
+    }
+
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
     private HandlerThread thread;
     private Handler handler;
 
@@ -509,7 +519,12 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.addTarget(surface);
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    lastCaptureResult = result;
+                }
+            }, handler);
         } catch (Exception e) {
             FileLog.e("Camera2Sessions setRepeatingRequest error in updateCaptureRequest", e);
         }
