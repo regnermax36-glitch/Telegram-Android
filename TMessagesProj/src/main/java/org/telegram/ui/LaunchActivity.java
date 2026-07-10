@@ -816,6 +816,10 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         //    refreshRateController = new RefreshRateController(this);
         //}
         checkFrameMetrics();
+
+        AndroidUtilities.runOnUIThread(() -> {
+            StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
     }
 
     public void checkFrameMetrics() {
