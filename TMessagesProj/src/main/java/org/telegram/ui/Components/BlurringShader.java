@@ -745,6 +745,7 @@ public class BlurringShader {
         public static final int BLUR_TYPE_REPLY_BACKGROUND = 8;
         public static final int BLUR_TYPE_REPLY_TEXT_XFER = 9;
         public static final int BLUR_TYPE_ACTION_BACKGROUND = 10;
+        public static final int BLUR_TYPE_IOS28 = 11;
 
         private final BlurManager manager;
         private final View view;
@@ -817,6 +818,9 @@ public class BlurringShader {
                 colorMatrix.setSaturation(1.6f);
                 AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, wasDark ? .97f : .92f);
                 AndroidUtilities.adjustBrightnessColorMatrix(colorMatrix, wasDark ? +.12f : -.06f);
+            } else if (type == BLUR_TYPE_IOS28) {
+                AndroidUtilities.adjustSaturationColorMatrix(colorMatrix, +.6f);
+                AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, 1.15f);
             }
             paint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
             oldPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
@@ -845,6 +849,12 @@ public class BlurringShader {
         private int getBackgroundColor() {
             if (bgColor != null) return bgColor;
             return manager.renderNodeBackgroundColor;
+        }
+
+        private float roundRadius = -1;
+
+        public void setRoundRadius(float radius) {
+            roundRadius = radius;
         }
 
         private final Path clipPath = new Path();
@@ -886,7 +896,8 @@ public class BlurringShader {
                                 if (clipPathWidth != node.getWidth() || clipPathHeight != node.getHeight()) {
                                     clipPath.rewind();
                                     AndroidUtilities.rectTmp.set(0, 0, clipPathWidth = node.getWidth(), clipPathHeight = node.getHeight());
-                                    clipPath.addRoundRect(AndroidUtilities.rectTmp, dp(12), dp(12), Path.Direction.CW);
+                                    float r = roundRadius >= 0 ? roundRadius : dp(12);
+                                    clipPath.addRoundRect(AndroidUtilities.rectTmp, r, r, Path.Direction.CW);
                                 }
                                 canvas.clipPath(clipPath);
                             }
