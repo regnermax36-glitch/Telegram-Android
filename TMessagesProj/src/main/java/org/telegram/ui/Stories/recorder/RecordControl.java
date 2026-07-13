@@ -15,6 +15,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.LinearGradient;
 import android.graphics.RadialGradient;
 import android.graphics.Shader;
 import android.graphics.SurfaceTexture;
@@ -112,6 +113,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
     private final Paint buttonPaint =        new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint buttonPaintWhite =   new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint redPaint =           new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint glossPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint hintLinePaintWhite = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint hintLinePaintBlack = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint checkPaint =         new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -140,7 +142,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
 
         setWillNotDraw(false);
 
-        redGradient = new RadialGradient(0, 0, dp(30 + 18), new int[] {RED, RED, WHITE}, new float[] {0, .64f, 1f}, Shader.TileMode.CLAMP);
+        redGradient = new RadialGradient(0, 0, dp(32), new int[] {0xFFFF4B4B, RED, 0x00FFFFFF}, new float[] {0, .7f, 1f}, Shader.TileMode.CLAMP);
         redGradient.setLocalMatrix(redMatrix);
         redPaint.setShader(redGradient);
         outlinePaint.setColor(WHITE);
@@ -403,10 +405,11 @@ public class RecordControl extends View implements FlashViews.Invertable {
         float rad = lerp(lerp(dp(32), dp(7), recordingT), dp(32), touchIsCenterT);
         scale = lerp(recordButton.getScale(startModeIsVideo ? 0 : .2f), 1 + .2f * animatedAmplitude.set(amplitude), recordingT);
         AndroidUtilities.rectTmp.set(acx - r, cy - r, acx + r, cy + r);
-        mainPaint.setColor(ColorUtils.blendARGB(WHITE, RED, isVideo * (1.0f - check)));
+
         if (check > 0) {
             canvas.save();
             canvas.scale(scale, scale, cx, cy);
+            mainPaint.setColor(WHITE);
             mainPaint.setAlpha((int) (0xFF * (1.0f - check)));
             canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
             canvas.restore();
@@ -415,8 +418,24 @@ public class RecordControl extends View implements FlashViews.Invertable {
             canvas.save();
         }
         canvas.scale(scale, scale, cx, cy);
-        mainPaint.setAlpha(0xFF);
-        canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+
+        if (isVideo > 0 && check <= 0) {
+            redMatrix.reset();
+            redMatrix.postScale(r / dp(32), r / dp(32));
+            redMatrix.postTranslate(acx, cy);
+            redGradient.setLocalMatrix(redMatrix);
+            redPaint.setAlpha(0xFF);
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, redPaint);
+
+            // Draw 3D gloss highlight
+            glossPaint.setShader(new LinearGradient(acx, cy - r, acx, cy, new int[]{0x80FFFFFF, 0x00FFFFFF}, null, Shader.TileMode.CLAMP));
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, glossPaint);
+        } else {
+            mainPaint.setColor(WHITE);
+            mainPaint.setAlpha(0xFF);
+            canvas.drawRoundRect(AndroidUtilities.rectTmp, rad, rad, mainPaint);
+        }
+
         if (check > 0) {
             checkPaint.setStrokeWidth(dp(4));
             checkPath.rewind();
@@ -432,7 +451,7 @@ public class RecordControl extends View implements FlashViews.Invertable {
         scale = Math.max(scale, 1);
         canvas.scale(scale, scale, cx, cy);
         float or = Math.max(dpf2(33.5f), r + lerp(dpf2(4.5f), dp(9), touchIsCenterT) + dp(5) * collage * (1.0f - touchIsCenterT));
-        final float strokeWidth = lerp(dp(3), dp(4), collage);
+        final float strokeWidth = lerp(dp(1), dp(2), collage);
         or = lerp(or, r - strokeWidth - dp(4), check);
         AndroidUtilities.rectTmp.set(cx - or, cy - or, cx + or, cy + or);
         outlinePaint.setStrokeWidth(strokeWidth);
