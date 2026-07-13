@@ -812,6 +812,9 @@ public class CameraView extends FrameLayout implements TextureView.SurfaceTextur
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+        if (onSurfaceTextureUpdatedListener != null) {
+            onSurfaceTextureUpdatedListener.run();
+        }
         if (!(!inited && cameraSession[0] != null && cameraSession[0].isInitiated()) && !(renderNode != null && !((RenderNode) renderNode).hasDisplayList())) {
             return;
         }
@@ -820,6 +823,11 @@ public class CameraView extends FrameLayout implements TextureView.SurfaceTextur
         } else {
             onSurfaceTextureUpdatedInternal();
         }
+    }
+
+    private Runnable onSurfaceTextureUpdatedListener;
+    public void setOnSurfaceTextureUpdatedListener(Runnable listener) {
+        onSurfaceTextureUpdatedListener = listener;
     }
 
     private void onSurfaceTextureUpdatedInternal() {
