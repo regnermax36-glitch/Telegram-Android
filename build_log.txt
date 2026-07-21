@@ -1,0 +1,1330 @@
+
+> Configure project :TMessagesProj
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+To keep using this feature, add the following to your module-level build.gradle files:
+    android.buildFeatures.buildConfig = true
+or from Android Studio, click: `Refactor` > `Migrate BuildConfig to Gradle Build Files`.
+
+> Configure project :TMessagesProj_AppHuawei
+--W- Build Environment: AGConnect plugin version is: 1.9.1.301, Gradle version is: 8.7, Android Plugin version is: 8.6.1
+--I- Using the AGConnect-Config file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+--W- The variant: afatDebug, Use the json file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+--I- Using the AGConnect-Config file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+--W- The variant: afatRelease, Use the json file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+
+> Task :TMessagesProj:checkVisibility
+> Task :TMessagesProj:preBuild
+> Task :TMessagesProj:preDebugBuild
+> Task :TMessagesProj:configureCMakeDebug[arm64-v8a]
+> Task :TMessagesProj:buildCMakeDebug[arm64-v8a]
+> Task :TMessagesProj:configureCMakeDebug[armeabi-v7a]
+> Task :TMessagesProj_AppStandalone:preBuild UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:preAfatDebugBuild UP-TO-DATE
+> Task :TMessagesProj:buildCMakeDebug[armeabi-v7a]
+> Task :TMessagesProj:configureCMakeDebug[x86]
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugJniLibFolders UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugBuildConfig UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:javaPreCompileAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugResValues UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugGoogleServices UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugResources UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:createAfatDebugCompatibleScreenManifests UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:extractDeepLinksAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugShaders UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:compileAfatDebugShaders NO-SOURCE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugAssets UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:l8DexDesugarLibAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugJavaRes NO-SOURCE
+> Task :TMessagesProj_AppStandalone:checkAfatDebugDuplicateClasses UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:desugarAfatDebugFileDependencies UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeExtDexAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:validateSigningAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:writeAfatDebugAppMetadata UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:writeAfatDebugSigningConfigVersions UP-TO-DATE
+> Task :TMessagesProj:buildCMakeDebug[x86]
+C/C++: ninja: Entering directory `/app/TMessagesProj/.cxx/Debug/3r2m1i6t/x86'
+C/C++: /app/TMessagesProj/jni/voip/webrtc/modules/utility/source/jvm_android.cc:82:10: warning: unused variable 'ret' [-Wunused-variable]
+C/C++:     jint ret = jvm->AttachCurrentThread(&env, nullptr);
+C/C++:          ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/modules/utility/source/jvm_android.cc:78:11: warning: unused variable 'jni' [-Wunused-variable]
+C/C++:   JNIEnv* jni = GetEnv(jvm);
+C/C++:           ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/call/call.cc:72:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/call/call.cc:72:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/video_source_sink_controller.cc:40:55: warning: format specifies type 'long' but the argument has type 'rtc::VideoSourceInterface<VideoFrame> *' [-Wformat]
+C/C++:     DEBUG_D("$%d: SetSource(): new source as %ld", a, source_);
+C/C++:                                              ~~~      ^~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/video_source_sink_controller.cc:67:60: warning: format specifies type 'long' but the argument has type 'rtc::VideoSourceInterface<VideoFrame> *' [-Wformat]
+C/C++:     DEBUG_D("$%d: PushSourceSinkSettings(): 2 src=%ld", a, source_);
+C/C++:                                                   ~~~      ^~~~~~~
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_quality_observer2.cc:21:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_quality_observer2.cc:21:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/receive_statistics_proxy.cc:25:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/receive_statistics_proxy.cc:25:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.cc:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.cc:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.cc:11:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.cc:11:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/image.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/image.cpp:920:95: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_getInfo failed with a reason: " + reason);
+C/C++:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+C/C++: /app/TMessagesProj/jni/image.cpp:920:95: note: use array indexing to silence this warning
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_getInfo failed with a reason: " + reason);
+C/C++:                                                                                               ^
+C/C++:                                                &                                              [       ]
+C/C++: /app/TMessagesProj/jni/image.cpp:930:98: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_lockPixels failed with a reason: " + reason);
+C/C++:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+C/C++: /app/TMessagesProj/jni/image.cpp:930:98: note: use array indexing to silence this warning
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_lockPixels failed with a reason: " + reason);
+C/C++:                                                                                                  ^
+C/C++:                                                &                                                 [       ]
+C/C++: /app/TMessagesProj/jni/image.cpp:1012:100: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_unlockPixels failed with a reason: " + reason);
+C/C++:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+C/C++: /app/TMessagesProj/jni/image.cpp:1012:100: note: use array indexing to silence this warning
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_unlockPixels failed with a reason: " + reason);
+C/C++:                                                                                                    ^
+C/C++:                                                &                                                   [       ]
+C/C++: /app/TMessagesProj/jni/image.cpp:1121:38: warning: 'gatherPositions' has C-linkage specified, but returns incomplete type 'std::vector<std::pair<float, float> >' which could be incompatible with C [-Wreturn-type-c-linkage]
+C/C++: std::vector<std::pair<float, float>> gatherPositions(std::vector<std::pair<float, float>> list, int phase) {
+C/C++:                                      ^
+C/C++: 6 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:11:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:47:1: warning: typedef requires a name [-Wmissing-declarations]
+C/C++: typedef struct VideoInfo {
+C/C++: ^~~~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:148:10: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+C/C++:     LOGE(line);
+C/C++:          ^~~~
+C/C++: /app/TMessagesProj/jni/c_utils.h:11:67: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:                                                                   ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:148:10: note: treat the string as an argument to avoid this
+C/C++:     LOGE(line);
+C/C++:          ^
+C/C++:          "%s",
+C/C++: /app/TMessagesProj/jni/c_utils.h:11:67: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:                                                                   ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:157:37: warning: format specifies type 'int' but the argument has type 'const enum AVPixelFormat *' [-Wformat]
+C/C++:         LOGE("available format %d", p);
+C/C++:                                ~~   ^
+C/C++: /app/TMessagesProj/jni/c_utils.h:11:67: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:                                                                   ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:520:5: warning: 'av_init_packet' is deprecated [-Wdeprecated-declarations]
+C/C++:     av_init_packet(&info->pkt);
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:487:1: note: 'av_init_packet' has been explicitly marked deprecated here
+C/C++: attribute_deprecated
+C/C++: ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:555:43: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+C/C++:                 int ticks = video_stream->codec->ticks_per_frame;
+C/C++:                                           ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavformat/avformat.h:887:5: note: 'codec' has been explicitly marked deprecated here
+C/C++:     attribute_deprecated
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:570:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:570:16: warning: implicit conversion of NULL constant to 'long long' [-Wnull-conversion]
+C/C++:     if (ptr == NULL) {
+C/C++:             ~~ ^~~~
+C/C++:                0
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:595:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:595:16: warning: implicit conversion of NULL constant to 'long long' [-Wnull-conversion]
+C/C++:     if (ptr == NULL) {
+C/C++:             ~~ ^~~~
+C/C++:                0
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:603:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:603:16: warning: implicit conversion of NULL constant to 'long long' [-Wnull-conversion]
+C/C++:     if (ptr == NULL) {
+C/C++:             ~~ ^~~~
+C/C++:                0
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:617:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:617:16: warning: implicit conversion of NULL constant to 'long long' [-Wnull-conversion]
+C/C++:     if (ptr == NULL) {
+C/C++:             ~~ ^~~~
+C/C++:                0
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:18:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavformat/avformat.h:312:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/avcodec.h:44:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/bsf.h:30:
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:346:16: warning: 'convergence_duration' is deprecated [-Wdeprecated-declarations]
+C/C++: typedef struct AVPacket {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:639:36: note: in implicit copy assignment operator for 'AVPacket' first required here
+C/C++:                     info->orig_pkt = info->pkt;
+C/C++:                                    ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:397:5: note: 'convergence_duration' has been explicitly marked deprecated here
+C/C++:     attribute_deprecated
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:18:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavformat/avformat.h:312:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/avcodec.h:44:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/bsf.h:30:
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:346:16: warning: 'convergence_duration' is deprecated [-Wdeprecated-declarations]
+C/C++: typedef struct AVPacket {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:397:5: note: 'convergence_duration' has been explicitly marked deprecated here
+C/C++:     attribute_deprecated
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:760:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL || bitmap == nullptr || data == nullptr) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:760:16: warning: implicit conversion of NULL constant to 'long long' [-Wnull-conversion]
+C/C++:     if (ptr == NULL || bitmap == nullptr || data == nullptr) {
+C/C++:             ~~ ^~~~
+C/C++:                0
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:860:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:860:16: warning: implicit conversion of NULL constant to 'long long' [-Wnull-conversion]
+C/C++:     if (ptr == NULL) {
+C/C++:             ~~ ^~~~
+C/C++:                0
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:21:
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/get_bits.h:70:28: warning: function 'show_bits' has internal linkage but is not defined [-Wundefined-internal]
+C/C++: static inline unsigned int show_bits(GetBitContext *s, int n);
+C/C++:                            ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/get_bits.h:666:16: note: used here
+C/C++:         return show_bits(s, n);
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:151:27: warning: unused function 'get_format' [-Wunused-function]
+C/C++: static enum AVPixelFormat get_format(AVCodecContext *ctx,
+C/C++:                           ^
+C/C++: 23 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/lottie.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/lottie.cpp:19:1: warning: typedef requires a name [-Wmissing-declarations]
+C/C++: typedef struct LottieInfo {
+C/C++: ^~~~~~~
+C/C++: 3 warnings generated.
+C/C++: /app/TMessagesProj/jni/exoplayer/ffmpeg_jni.cc:22:9: warning: '__STDC_CONSTANT_MACROS' macro redefined [-Wmacro-redefined]
+C/C++: #define __STDC_CONSTANT_MACROS
+C/C++:         ^
+C/C++: /app/TMessagesProj/.cxx/Debug/3r2m1i6t/x86/<command line>:56:9: note: previous definition is here
+C/C++: #define __STDC_CONSTANT_MACROS 1
+C/C++:         ^
+C/C++: /app/TMessagesProj/jni/exoplayer/ffmpeg_jni.cc:151:3: warning: 'av_init_packet' is deprecated [-Wdeprecated-declarations]
+C/C++:   av_init_packet(&packet);
+C/C++:   ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:487:1: note: 'av_init_packet' has been explicitly marked deprecated here
+C/C++: attribute_deprecated
+C/C++: ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/exoplayer/ffmpeg_jni.cc:341:9: warning: unused variable 'inSampleSize' [-Wunused-variable]
+C/C++:     int inSampleSize = av_get_bytes_per_sample(sampleFormat);
+C/C++:         ^
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/TgNetWrapper.cpp:2:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/ApiScheme.h:14:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/TLObject.h:13:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/TgNetWrapper.cpp:334:7: warning: 'Delegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: class Delegate : public ConnectiosManagerDelegate {
+C/C++:       ^
+C/C++: 3 warnings generated.
+C/C++: /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:321:88: warning: adding 'jint' (aka 'int') to a string does not append to the string [-Wstring-plus-int]
+C/C++:             throwNewJavaIllegalArgumentException(env, "Unknown data saving constant: " + dataSaving);
+C/C++:                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:321:88: note: use array indexing to silence this warning
+C/C++:             throwNewJavaIllegalArgumentException(env, "Unknown data saving constant: " + dataSaving);
+C/C++:                                                                                        ^
+C/C++:                                                       &                                [           ]
+C/C++: /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:1272:39: warning: format specifies type 'int' but the argument has type 'jlong' (aka 'long long') [-Wformat]
+C/C++:     DEBUG_D("setConferenceCallId %d", call_id);
+C/C++:                                  ~~   ^~~~~~~
+C/C++:                                  %lld
+C/C++: In file included from /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:20:
+C/C++: In file included from /app/TMessagesProj/jni/voip/tgcalls/legacy/InstanceImplLegacy.h:6:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 3 warnings generated.
+
+> Task :TMessagesProj:configureCMakeDebug[x86_64]
+C/C++: CMake Warning (dev) in CMakeLists.txt:
+C/C++:   No project() command is present.  The top-level CMakeLists.txt file must
+C/C++:   contain a literal, direct call to the project() command.  Add a line of
+C/C++:   code such as
+C/C++:     project(ProjectName)
+C/C++:   near the top of the file, but after cmake_minimum_required().
+C/C++:   CMake is pretending there is a "project(Project)" command on the first
+C/C++:   line.
+C/C++: This warning is for project developers.  Use -Wno-dev to suppress it.
+
+> Task :TMessagesProj:buildCMakeDebug[x86_64]
+C/C++: ninja: Entering directory `/app/TMessagesProj/.cxx/Debug/3r2m1i6t/x86_64'
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:216:93: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:         if (currentProtocolType != ProtocolTypeDD && currentProtocolType != ProtocolTypeTLS && currentPacketLength % 4 != 0 || currentPacketLength > 2 * 1024 * 1024) {
+C/C++:             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:216:93: note: place parentheses around the '&&' expression to silence this warning
+C/C++:         if (currentProtocolType != ProtocolTypeDD && currentProtocolType != ProtocolTypeTLS && currentPacketLength % 4 != 0 || currentPacketLength > 2 * 1024 * 1024) {
+C/C++:                                                                                             ^
+C/C++:             (                                                                                                              )
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:527:223: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:             if (currentProtocolType == ProtocolTypeTLS || bytes[0] != 0xef && val != 0x44414548 && val != 0x54534f50 && val != 0x20544547 && val != 0x4954504f && val != 0xeeeeeeee && val != 0xdddddddd && val != 0x02010316 && val2 != 0x00000000) {
+C/C++:                                                        ~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:527:223: note: place parentheses around the '&&' expression to silence this warning
+C/C++:             if (currentProtocolType == ProtocolTypeTLS || bytes[0] != 0xef && val != 0x44414548 && val != 0x54534f50 && val != 0x20544547 && val != 0x4954504f && val != 0xeeeeeeee && val != 0xdddddddd && val != 0x02010316 && val2 != 0x00000000) {
+C/C++:                                                                                                                                                                                                                               ^
+C/C++:                                                           (                                                                                                                                                                                        )
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:660:57: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     bool switchToNextPort = reason == 2 && wasConnected && (!hasSomeDataSinceLastConnect || currentDatacenter->isCustomPort(currentAddressFlags)) || forceNextPort;
+C/C++:                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:660:57: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     bool switchToNextPort = reason == 2 && wasConnected && (!hasSomeDataSinceLastConnect || currentDatacenter->isCustomPort(currentAddressFlags)) || forceNextPort;
+C/C++:                                                         ^
+C/C++:                             (                                                                                                                    )
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:715:62: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:             if (connectionType == ConnectionTypeGenericMedia && currentDatacenter->isHandshaking(true) || connectionType == ConnectionTypeGeneric && (currentDatacenter->isHandshaking(false) || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).currentDatacenterId || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).movingToDatacenterId)) {
+C/C++:                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:715:62: note: place parentheses around the '&&' expression to silence this warning
+C/C++:             if (connectionType == ConnectionTypeGenericMedia && currentDatacenter->isHandshaking(true) || connectionType == ConnectionTypeGeneric && (currentDatacenter->isHandshaking(false) || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).currentDatacenterId || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).movingToDatacenterId)) {
+C/C++:                                                              ^
+C/C++:                 (                                                                                     )
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:715:147: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:             if (connectionType == ConnectionTypeGenericMedia && currentDatacenter->isHandshaking(true) || connectionType == ConnectionTypeGeneric && (currentDatacenter->isHandshaking(false) || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).currentDatacenterId || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).movingToDatacenterId)) {
+C/C++:                                                                                                        ~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Connection.cpp:715:147: note: place parentheses around the '&&' expression to silence this warning
+C/C++:             if (connectionType == ConnectionTypeGenericMedia && currentDatacenter->isHandshaking(true) || connectionType == ConnectionTypeGeneric && (currentDatacenter->isHandshaking(false) || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).currentDatacenterId || datacenterId == ConnectionsManager::getInstance(currentDatacenter->instanceNum).movingToDatacenterId)) {
+C/C++:                                                                                                                                                   ^
+C/C++:                                                                                                           (                                                                                                                                                                                                                                                                                                  )
+C/C++: 5 warnings generated.
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionSocket.cpp:1095:29: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     if (proxyAuthState == 0 && (outgoingByteStream->hasData() || !onConnectedSent) || proxyAuthState == 1 || proxyAuthState == 3 || proxyAuthState == 5 || proxyAuthState == 10) {
+C/C++:         ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionSocket.cpp:1095:29: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     if (proxyAuthState == 0 && (outgoingByteStream->hasData() || !onConnectedSent) || proxyAuthState == 1 || proxyAuthState == 3 || proxyAuthState == 5 || proxyAuthState == 10) {
+C/C++:                             ^
+C/C++:         (                                                                         )
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/tgnet/Request.cpp:82:19: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     return !media && datacenter->lastInitVersion != currentVersion || media && datacenter->lastInitMediaVersion != currentVersion;
+C/C++:            ~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+C/C++: /app/TMessagesProj/jni/tgnet/Request.cpp:82:19: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     return !media && datacenter->lastInitVersion != currentVersion || media && datacenter->lastInitMediaVersion != currentVersion;
+C/C++:                   ^
+C/C++:            (                                                      )
+C/C++: /app/TMessagesProj/jni/tgnet/Request.cpp:82:77: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     return !media && datacenter->lastInitVersion != currentVersion || media && datacenter->lastInitMediaVersion != currentVersion;
+C/C++:                                                                    ~~ ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Request.cpp:82:77: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     return !media && datacenter->lastInitVersion != currentVersion || media && datacenter->lastInitMediaVersion != currentVersion;
+C/C++:                                                                             ^
+C/C++:                                                                       (                                                          )
+C/C++: 2 warnings generated.
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:199:62: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                               ~~ ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:199:62: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                                  ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:257:62: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                               ~~ ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:257:62: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                                  ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:377:62: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                               ~~ ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:377:62: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                                  ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:446:62: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                               ~~ ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/tgnet/Datacenter.cpp:446:62: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     if (flags == 0 && (authKeyPerm == nullptr || PFS_ENABLED && authKeyTemp == nullptr) && !addressesIpv4Temp.empty()) {
+C/C++:                                                  ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++: 4 warnings generated.
+C/C++: /app/TMessagesProj/jni/tgnet/NativeByteBuffer.cpp:17:12: warning: unused variable 'buffersCount' [-Wunused-variable]
+C/C++: static int buffersCount = 0;
+C/C++:            ^
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/rlottie/src/lottie/lottiemodel.cpp:211:73: warning: '&&' within '||' [-Wlogical-op-parentheses]
+C/C++:     if (opacityArraySize % 2 != 0 || colorPoints > opacityArraySize / 2 && opacityArraySize < 4) {
+C/C++:                                   ~~ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/rlottie/src/lottie/lottiemodel.cpp:211:73: note: place parentheses around the '&&' expression to silence this warning
+C/C++:     if (opacityArraySize % 2 != 0 || colorPoints > opacityArraySize / 2 && opacityArraySize < 4) {
+C/C++:                                                                         ^
+C/C++:                                      (                                                         )
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/rlottie/src/vector/vraster.cpp:22:
+C/C++: In file included from /app/TMessagesProj/jni/./tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/./tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/./tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/rlottie/src/lottie/lottieparser.cpp:58:
+C/C++: In file included from /app/TMessagesProj/jni/./tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/./tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/./tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/rlottie/src/lottie/lottieparser.cpp:186:60: warning: field 'colorMap' will be initialized after field 'mFitzModifier' [-Wreorder]
+C/C++:         : LookaheadParserHandler(str), mDirPath(dir_path), colorMap(colorReplacement), mFitzModifier(fitzModifier)
+C/C++:                                                            ^
+C/C++: 3 warnings generated.
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:1243:127: warning: format specifies type 'long long' but the argument has type 'int64_t' (aka 'long') [-Wformat]
+C/C++:             if (LOGS_ENABLED) DEBUG_D("message_id %lld connection(%p, account%u, dc%u, type %d) received rpc_result with %s", messageId, connection, instanceNum, datacenter->getDatacenterId(), connection->getConnectionType(), typeid(*object).name());
+C/C++:                                                   ~~~~                                                                        ^~~~~~~~~
+C/C++:                                                   %ld
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:1247:132: warning: format specifies type 'long long' but the argument has type 'int64_t' (aka 'long') [-Wformat]
+C/C++:             if (LOGS_ENABLED) DEBUG_E("message_id %lld req_msg_id %lld connection(%p, account%u, dc%u, type %d) rpc error %d: %s", messageId, resultMid, connection, instanceNum, datacenter->getDatacenterId(), connection->getConnectionType(), error->error_code, error->error_message.c_str());
+C/C++:                                                   ~~~~                                                                             ^~~~~~~~~
+C/C++:                                                   %ld
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:1247:143: warning: format specifies type 'long long' but the argument has type 'int64_t' (aka 'long') [-Wformat]
+C/C++:             if (LOGS_ENABLED) DEBUG_E("message_id %lld req_msg_id %lld connection(%p, account%u, dc%u, type %d) rpc error %d: %s", messageId, resultMid, connection, instanceNum, datacenter->getDatacenterId(), connection->getConnectionType(), error->error_code, error->error_message.c_str());
+C/C++:                                                                   ~~~~                                                                        ^~~~~~~~~
+C/C++:                                                                   %ld
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:1952:101: warning: expression with side effects will be evaluated despite being used as an operand to 'typeid' [-Wpotentially-evaluated-expression]
+C/C++:         if (LOGS_ENABLED) DEBUG_D("send request wrapped %p - %s", request->rpcRequest.get(), typeid(*(request->rpcRequest.get())).name());
+C/C++:                                                                                                     ^
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:2028:52: warning: format specifies type 'long long' but the argument has type 'int64_t' (aka 'long') [-Wformat]
+C/C++:         if (LOGS_ENABLED) DEBUG_D("set user %lld", userId);
+C/C++:                                             ~~~~   ^~~~~~
+C/C++:                                             %ld
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:2206:5: warning: control may reach end of non-void lambda [-Wreturn-type]
+C/C++:     });
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:3053:155: warning: expression with side effects will be evaluated despite being used as an operand to 'typeid' [-Wpotentially-evaluated-expression]
+C/C++:                             if (LOGS_ENABLED) DEBUG_D("wrap body(%p, %s) to TL_invokeAfterMsg, token = %d, after 0x%" PRIx64, message->body.get(), typeid(*(message->body.get())).name(), networkMessage->requestId, request->msg_id);
+C/C++:                                                                                                                                                           ^
+C/C++: /app/TMessagesProj/jni/tgnet/ConnectionsManager.cpp:3278:43: warning: array subscript is of type 'char' [-Wchar-subscripts]
+C/C++:             auto value = url_char_to_value[base64.c_str()[i++]];
+C/C++:                                           ^~~~~~~~~~~~~~~~~~~~
+C/C++: 8 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/BlockingQueue.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/BlockingQueue.h:12:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioInput.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/../../audio/AudioInput.h:13:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/../../threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioOutput.cpp:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/AudioOutputAndroid.h:20:15: warning: 'Start' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Start();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:24:15: note: overridden virtual function is here
+C/C++:         virtual void Start()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioOutput.cpp:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/AudioOutputAndroid.h:21:15: warning: 'Stop' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Stop();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:25:15: note: overridden virtual function is here
+C/C++:         virtual void Stop()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioOutput.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/../../audio/AudioOutput.h:14:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/logging.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioInputOpenSLES.cpp:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioInputOpenSLES.h:13:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/AudioInput.h:13:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/MediaStreamItf.cpp:8:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPGroupController.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/OpusEncoder.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/OpusEncoder.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/OpusDecoder.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/OpusDecoder.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputOpenSLES.cpp:10:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputOpenSLES.h:13:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioOutput.h:14:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/CongestionControl.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/CongestionControl.h:12:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/JitterBuffer.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/EchoCanceller.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/EchoCanceller.h:10:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.cpp:7:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.h:20:15: warning: 'Start' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Start();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/../MediaStreamItf.h:24:15: note: overridden virtual function is here
+C/C++:         virtual void Start()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.cpp:7:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.h:21:15: warning: 'Stop' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Stop();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/../MediaStreamItf.h:25:15: note: overridden virtual function is here
+C/C++:         virtual void Stop()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/AudioOutput.h:14:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPServerConfig.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPServerConfig.h:13:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioInputAndroid.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioInputAndroid.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/AudioInput.h:13:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/PacketReassembler.cpp:5:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/PacketReassembler.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/NetworkSocket.cpp:14:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/posix/NetworkSocketPosix.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/MessageThread.cpp:15:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/MessageThread.h:8:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/posix/NetworkSocketPosix.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/posix/NetworkSocketPosix.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioIO.cpp:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/AudioOutputAndroid.h:20:15: warning: 'Start' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Start();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:24:15: note: overridden virtual function is here
+C/C++:         virtual void Start()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioIO.cpp:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/AudioOutputAndroid.h:21:15: warning: 'Stop' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Stop();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:25:15: note: overridden virtual function is here
+C/C++:         virtual void Stop()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioIO.cpp:8:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/AudioIO.h:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/../../audio/AudioInput.h:13:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/audio/../MediaStreamItf.h:14:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/audio/../os/android/../../threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoRenderer.cpp:5:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/../os/android/../../video/VideoRenderer.h:9:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.cpp:5:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/../os/android/../../video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/../os/android/../../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/video/ScreamCongestionController.cpp:23:29: warning: unused variable 'BETA_ECN' [-Wunused-const-variable]
+C/C++:         /*static*/ constexpr float BETA_ECN=0.9f;
+C/C++:                                    ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/ScreamCongestionController.cpp:7:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/ScreamCongestionController.h:8:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:17:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.h:20:15: warning: 'Start' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Start();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/MediaStreamItf.h:24:15: note: overridden virtual function is here
+C/C++:         virtual void Start()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:17:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/AudioOutputAndroid.h:21:15: warning: 'Stop' overrides a member function but is not marked 'override' [-Winconsistent-missing-override]
+C/C++:         virtual void Stop();
+C/C++:                      ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/MediaStreamItf.h:25:15: note: overridden virtual function is here
+C/C++:         virtual void Stop()=0;
+C/C++:                      ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:22:
+C/C++: /app/TMessagesProj/jni/voip/../c_utils.h:9:9: warning: 'LOGI' macro redefined [-Wmacro-redefined]
+C/C++: #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+C/C++:         ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:30:9: note: previous definition is here
+C/C++: #define LOGI(...) {__android_log_print(ANDROID_LOG_INFO, TAG, _LOG_WRAP(__VA_ARGS__)); tgvoip_log_file_printf('I', __VA_ARGS__);}
+C/C++:         ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:22:
+C/C++: /app/TMessagesProj/jni/voip/../c_utils.h:10:9: warning: 'LOGD' macro redefined [-Wmacro-redefined]
+C/C++: #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+C/C++:         ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:29:9: note: previous definition is here
+C/C++: #define LOGD(...) {__android_log_print(ANDROID_LOG_DEBUG, TAG, _LOG_WRAP(__VA_ARGS__)); tgvoip_log_file_printf('D', __VA_ARGS__);}
+C/C++:         ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:22:
+C/C++: /app/TMessagesProj/jni/voip/../c_utils.h:11:9: warning: 'LOGE' macro redefined [-Wmacro-redefined]
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:         ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:32:9: note: previous definition is here
+C/C++: #define LOGE(...) {__android_log_print(ANDROID_LOG_ERROR, TAG, _LOG_WRAP(__VA_ARGS__)); tgvoip_log_file_printf('E', __VA_ARGS__);}
+C/C++:         ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:22:
+C/C++: /app/TMessagesProj/jni/voip/../c_utils.h:12:9: warning: 'LOGV' macro redefined [-Wmacro-redefined]
+C/C++: #define LOGV(...) __android_log_print(ANDROID_LOG_VERBOSE, LOG_TAG, __VA_ARGS__)
+C/C++:         ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:28:9: note: previous definition is here
+C/C++: #define LOGV(...) {__android_log_print(ANDROID_LOG_VERBOSE, TAG, _LOG_WRAP(__VA_ARGS__)); tgvoip_log_file_printf('V', __VA_ARGS__);}
+C/C++:         ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/tg_voip_jni.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPServerConfig.h:13:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 7 warnings generated.
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/VideoRendererAndroid.cpp:87:19: warning: moving a temporary object prevents copy elision [-Wpessimizing-move]
+C/C++:                 Request request=std::move(queue.GetBlocking());
+C/C++:                                 ^
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/VideoRendererAndroid.cpp:87:19: note: remove std::move call here
+C/C++:                 Request request=std::move(queue.GetBlocking());
+C/C++:                                 ^~~~~~~~~~                   ~
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/VideoRendererAndroid.cpp:5:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/VideoRendererAndroid.h:8:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../video/VideoRenderer.h:9:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/VideoSourceAndroid.cpp:5:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/VideoSourceAndroid.h:8:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.cpp:2120:81: warning: format specifies type 'unsigned int' but the argument has type 'std::__ndk1::vector<unsigned int, std::__ndk1::allocator<unsigned int> >::size_type' (aka 'unsigned long') [-Wformat]
+C/C++:                                                 LOGE("!!!!!!!!!!!!!!11 VIDEO FRAME LOSS DETECTED [1] %u of %u fragments", sentVideoFrames[0].unacknowledgedPackets.size(), sentVideoFrames[0].fragmentCount);
+C/C++:                                                                                                      ~~                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++:                                                                                                      %lu
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:32:74: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) {__android_log_print(ANDROID_LOG_ERROR, TAG, _LOG_WRAP(__VA_ARGS__)); tgvoip_log_file_printf('E', __VA_ARGS__);}
+C/C++:                                                                          ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:26:24: note: expanded from macro '_LOG_WRAP'
+C/C++: #define _LOG_WRAP(...) __VA_ARGS__
+C/C++:                        ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.cpp:2129:80: warning: format specifies type 'unsigned int' but the argument has type 'std::__ndk1::vector<unsigned int, std::__ndk1::allocator<unsigned int> >::size_type' (aka 'unsigned long') [-Wformat]
+C/C++:                                         LOGE("!!!!!!!!!!!!!!11 VIDEO FRAME LOSS DETECTED [2] %u of %u fragments", f->unacknowledgedPackets.size(), f->fragmentCount);
+C/C++:                                                                                              ~~                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C/C++:                                                                                              %lu
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:32:74: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) {__android_log_print(ANDROID_LOG_ERROR, TAG, _LOG_WRAP(__VA_ARGS__)); tgvoip_log_file_printf('E', __VA_ARGS__);}
+C/C++:                                                                          ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/logging.h:26:24: note: expanded from macro '_LOG_WRAP'
+C/C++: #define _LOG_WRAP(...) __VA_ARGS__
+C/C++:                        ^~~~~~~~~~~
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.cpp:14:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/tgcalls/legacy/InstanceImplLegacy.cpp:1:
+C/C++: In file included from /app/TMessagesProj/jni/voip/tgcalls/legacy/InstanceImplLegacy.h:6:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/voip/tgcalls/VideoCaptureInterfaceImpl.cpp:168:1: warning: field '_platformContext' will be initialized after field '_impl' [-Wreorder]
+C/C++: _platformContext(platformContext),
+C/C++: ^
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/voip/tgcalls/v2/ikcp.cpp:40:15: warning: unused variable 'IKCP_ACK_FAST' [-Wunused-const-variable]
+C/C++: const IUINT32 IKCP_ACK_FAST     = 3;
+C/C++:               ^
+C/C++: 1 warning generated.
+C/C++: /app/TMessagesProj/jni/voip/webrtc/modules/utility/source/jvm_android.cc:82:10: warning: unused variable 'ret' [-Wunused-variable]
+C/C++:     jint ret = jvm->AttachCurrentThread(&env, nullptr);
+C/C++:          ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/modules/utility/source/jvm_android.cc:78:11: warning: unused variable 'jni' [-Wunused-variable]
+C/C++:   JNIEnv* jni = GetEnv(jvm);
+C/C++:           ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/call/call.cc:72:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/call/call.cc:72:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/video_source_sink_controller.cc:40:55: warning: format specifies type 'long' but the argument has type 'rtc::VideoSourceInterface<VideoFrame> *' [-Wformat]
+C/C++:     DEBUG_D("$%d: SetSource(): new source as %ld", a, source_);
+C/C++:                                              ~~~      ^~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/video_source_sink_controller.cc:67:60: warning: format specifies type 'long' but the argument has type 'rtc::VideoSourceInterface<VideoFrame> *' [-Wformat]
+C/C++:     DEBUG_D("$%d: PushSourceSinkSettings(): 2 src=%ld", a, source_);
+C/C++:                                                   ~~~      ^~~~~~~
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_quality_observer2.cc:21:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_quality_observer2.cc:21:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/receive_statistics_proxy.cc:25:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/receive_statistics_proxy.cc:25:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.cc:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.cc:11:
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/video_receive_stream2.h:38:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.cc:11:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: declaration does not declare anything [-Wmissing-declarations]
+C/C++:       RTC_GUARDED_BY(packet_sequence_checker_);
+C/C++:       ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:27: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                           ^
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:23:46: note: expanded from macro 'RTC_THREAD_ANNOTATION_ATTRIBUTE__'
+C/C++: #define RTC_THREAD_ANNOTATION_ATTRIBUTE__(x) __attribute__((x))
+C/C++:                                              ^
+C/C++: In file included from /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.cc:11:
+C/C++: /app/TMessagesProj/jni/voip/webrtc/video/rtp_video_stream_receiver2.h:393:7: warning: attribute guarded_by ignored, because it is not attached to a declaration [-Wignored-attributes]
+C/C++: /app/TMessagesProj/jni/voip/webrtc/rtc_base/thread_annotations.h:31:71: note: expanded from macro 'RTC_GUARDED_BY'
+C/C++: #define RTC_GUARDED_BY(x) RTC_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+C/C++:                                                                       ^
+C/C++: 2 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/image.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/image.cpp:920:95: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_getInfo failed with a reason: " + reason);
+C/C++:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+C/C++: /app/TMessagesProj/jni/image.cpp:920:95: note: use array indexing to silence this warning
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_getInfo failed with a reason: " + reason);
+C/C++:                                                                                               ^
+C/C++:                                                &                                              [       ]
+C/C++: /app/TMessagesProj/jni/image.cpp:930:98: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_lockPixels failed with a reason: " + reason);
+C/C++:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+C/C++: /app/TMessagesProj/jni/image.cpp:930:98: note: use array indexing to silence this warning
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_lockPixels failed with a reason: " + reason);
+C/C++:                                                                                                  ^
+C/C++:                                                &                                                 [       ]
+C/C++: /app/TMessagesProj/jni/image.cpp:1012:100: warning: adding 'int' to a string does not append to the string [-Wstring-plus-int]
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_unlockPixels failed with a reason: " + reason);
+C/C++:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+C/C++: /app/TMessagesProj/jni/image.cpp:1012:100: note: use array indexing to silence this warning
+C/C++:         env->ThrowNew(jclass_RuntimeException, "AndroidBitmap_unlockPixels failed with a reason: " + reason);
+C/C++:                                                                                                    ^
+C/C++:                                                &                                                   [       ]
+C/C++: /app/TMessagesProj/jni/image.cpp:1121:38: warning: 'gatherPositions' has C-linkage specified, but returns incomplete type 'std::vector<std::pair<float, float> >' which could be incompatible with C [-Wreturn-type-c-linkage]
+C/C++: std::vector<std::pair<float, float>> gatherPositions(std::vector<std::pair<float, float>> list, int phase) {
+C/C++:                                      ^
+C/C++: 6 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/lottie.cpp:12:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/lottie.cpp:19:1: warning: typedef requires a name [-Wmissing-declarations]
+C/C++: typedef struct LottieInfo {
+C/C++: ^~~~~~~
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:11:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/FileLog.h:12:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:47:1: warning: typedef requires a name [-Wmissing-declarations]
+C/C++: typedef struct VideoInfo {
+C/C++: ^~~~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:148:10: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+C/C++:     LOGE(line);
+C/C++:          ^~~~
+C/C++: /app/TMessagesProj/jni/c_utils.h:11:67: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:                                                                   ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:148:10: note: treat the string as an argument to avoid this
+C/C++:     LOGE(line);
+C/C++:          ^
+C/C++:          "%s",
+C/C++: /app/TMessagesProj/jni/c_utils.h:11:67: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:                                                                   ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:157:37: warning: format specifies type 'int' but the argument has type 'const enum AVPixelFormat *' [-Wformat]
+C/C++:         LOGE("available format %d", p);
+C/C++:                                ~~   ^
+C/C++: /app/TMessagesProj/jni/c_utils.h:11:67: note: expanded from macro 'LOGE'
+C/C++: #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
+C/C++:                                                                   ^~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:520:5: warning: 'av_init_packet' is deprecated [-Wdeprecated-declarations]
+C/C++:     av_init_packet(&info->pkt);
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:487:1: note: 'av_init_packet' has been explicitly marked deprecated here
+C/C++: attribute_deprecated
+C/C++: ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:555:43: warning: 'codec' is deprecated [-Wdeprecated-declarations]
+C/C++:                 int ticks = video_stream->codec->ticks_per_frame;
+C/C++:                                           ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavformat/avformat.h:887:5: note: 'codec' has been explicitly marked deprecated here
+C/C++:     attribute_deprecated
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:570:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:595:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:603:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:617:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:18:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavformat/avformat.h:312:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/avcodec.h:44:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/bsf.h:30:
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:346:16: warning: 'convergence_duration' is deprecated [-Wdeprecated-declarations]
+C/C++: typedef struct AVPacket {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:639:36: note: in implicit copy assignment operator for 'AVPacket' first required here
+C/C++:                     info->orig_pkt = info->pkt;
+C/C++:                                    ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:397:5: note: 'convergence_duration' has been explicitly marked deprecated here
+C/C++:     attribute_deprecated
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:18:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavformat/avformat.h:312:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/avcodec.h:44:
+C/C++: In file included from /app/TMessagesProj/jni/ffmpeg/include/libavcodec/bsf.h:30:
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:346:16: warning: 'convergence_duration' is deprecated [-Wdeprecated-declarations]
+C/C++: typedef struct AVPacket {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:397:5: note: 'convergence_duration' has been explicitly marked deprecated here
+C/C++:     attribute_deprecated
+C/C++:     ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:760:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL || bitmap == nullptr || data == nullptr) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:860:13: warning: comparison between NULL and non-pointer ('jlong' (aka 'long') and NULL) [-Wnull-arithmetic]
+C/C++:     if (ptr == NULL) {
+C/C++:         ~~~ ^  ~~~~
+C/C++: In file included from /app/TMessagesProj/jni/gifvideo.cpp:21:
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/get_bits.h:70:28: warning: function 'show_bits' has internal linkage but is not defined [-Wundefined-internal]
+C/C++: static inline unsigned int show_bits(GetBitContext *s, int n);
+C/C++:                            ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/get_bits.h:666:16: note: used here
+C/C++:         return show_bits(s, n);
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/gifvideo.cpp:151:27: warning: unused function 'get_format' [-Wunused-function]
+C/C++: static enum AVPixelFormat get_format(AVCodecContext *ctx,
+C/C++:                           ^
+C/C++: 17 warnings generated.
+C/C++: /app/TMessagesProj/jni/exoplayer/ffmpeg_jni.cc:22:9: warning: '__STDC_CONSTANT_MACROS' macro redefined [-Wmacro-redefined]
+C/C++: #define __STDC_CONSTANT_MACROS
+C/C++:         ^
+C/C++: /app/TMessagesProj/.cxx/Debug/3r2m1i6t/x86_64/<command line>:56:9: note: previous definition is here
+C/C++: #define __STDC_CONSTANT_MACROS 1
+C/C++:         ^
+C/C++: /app/TMessagesProj/jni/exoplayer/ffmpeg_jni.cc:151:3: warning: 'av_init_packet' is deprecated [-Wdeprecated-declarations]
+C/C++:   av_init_packet(&packet);
+C/C++:   ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavcodec/packet.h:487:1: note: 'av_init_packet' has been explicitly marked deprecated here
+C/C++: attribute_deprecated
+C/C++: ^
+C/C++: /app/TMessagesProj/jni/ffmpeg/include/libavutil/attributes.h:100:49: note: expanded from macro 'attribute_deprecated'
+C/C++: #    define attribute_deprecated __attribute__((deprecated))
+C/C++:                                                 ^
+C/C++: /app/TMessagesProj/jni/exoplayer/ffmpeg_jni.cc:341:9: warning: unused variable 'inSampleSize' [-Wunused-variable]
+C/C++:     int inSampleSize = av_get_bytes_per_sample(sampleFormat);
+C/C++:         ^
+C/C++: 3 warnings generated.
+C/C++: In file included from /app/TMessagesProj/jni/TgNetWrapper.cpp:2:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/ApiScheme.h:14:
+C/C++: In file included from /app/TMessagesProj/jni/tgnet/TLObject.h:13:
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:142:16: warning: 'ConnectiosManagerDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct ConnectiosManagerDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/tgnet/Defines.h:161:16: warning: 'HandshakeDelegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: typedef struct HandshakeDelegate {
+C/C++:                ^
+C/C++: /app/TMessagesProj/jni/TgNetWrapper.cpp:334:7: warning: 'Delegate' has virtual functions but non-virtual destructor [-Wnon-virtual-dtor]
+C/C++: class Delegate : public ConnectiosManagerDelegate {
+C/C++:       ^
+C/C++: 3 warnings generated.
+C/C++: /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:321:88: warning: adding 'jint' (aka 'int') to a string does not append to the string [-Wstring-plus-int]
+C/C++:             throwNewJavaIllegalArgumentException(env, "Unknown data saving constant: " + dataSaving);
+C/C++:                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+C/C++: /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:321:88: note: use array indexing to silence this warning
+C/C++:             throwNewJavaIllegalArgumentException(env, "Unknown data saving constant: " + dataSaving);
+C/C++:                                                                                        ^
+C/C++:                                                       &                                [           ]
+C/C++: /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:1272:39: warning: format specifies type 'int' but the argument has type 'jlong' (aka 'long') [-Wformat]
+C/C++:     DEBUG_D("setConferenceCallId %d", call_id);
+C/C++:                                  ~~   ^~~~~~~
+C/C++:                                  %ld
+C/C++: In file included from /app/TMessagesProj/jni/voip/org_telegram_messenger_voip_Instance.cpp:20:
+C/C++: In file included from /app/TMessagesProj/jni/voip/tgcalls/legacy/InstanceImplLegacy.h:6:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/VoIPController.h:24:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/video/VideoSource.h:12:
+C/C++: In file included from /app/TMessagesProj/jni/voip/libtgvoip/os/android/../../Buffers.h:19:
+C/C++: /app/TMessagesProj/jni/voip/libtgvoip/threading.h:110:8: warning: private field 'maxPriority' is not used [-Wunused-private-field]
+C/C++:                 bool maxPriority=false;
+C/C++:                      ^
+C/C++: 3 warnings generated.
+
+> Task :TMessagesProj:mergeDebugJniLibFolders
+> Task :TMessagesProj:generateDebugBuildConfig UP-TO-DATE
+> Task :TMessagesProj:generateDebugResValues UP-TO-DATE
+> Task :TMessagesProj:generateDebugResources UP-TO-DATE
+> Task :TMessagesProj:processDebugGoogleServices UP-TO-DATE
+> Task :TMessagesProj:packageDebugResources UP-TO-DATE
+> Task :TMessagesProj:parseDebugLocalResources UP-TO-DATE
+> Task :TMessagesProj:generateDebugRFile UP-TO-DATE
+> Task :TMessagesProj:javaPreCompileDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mapAfatDebugSourceSetPaths
+> Task :TMessagesProj:compileDebugJavaWithJavac UP-TO-DATE
+
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugResources
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3915:4: Multiple substitutions specified in non-positional format of string resource string/Gift2ActiveAuctionsActiveBidActive. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3918:4: Multiple substitutions specified in non-positional format of string resource string/Gift2ActiveAuctionsActiveRound. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3967:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionInfo2_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3968:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionInfo2_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3971:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionInfoLearnMore2_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3972:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionInfoLearnMore2_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3973:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionInfo_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:3974:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionInfo_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4019:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AuctionsChangeRecipient2. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4029:4: Multiple substitutions specified in non-positional format of string resource string/Gift2AveragePriceHint. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4147:4: Multiple substitutions specified in non-positional format of string resource string/Gift2InfoOutConverted_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4148:4: Multiple substitutions specified in non-positional format of string resource string/Gift2InfoOutConverted_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4421:4: Multiple substitutions specified in non-positional format of string resource string/GiftAuctionInfo1Text_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4422:4: Multiple substitutions specified in non-positional format of string resource string/GiftAuctionInfo1Text_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:4521:4: Multiple substitutions specified in non-positional format of string resource string/GiftOfferPayMulti. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:6102:4: Multiple substitutions specified in non-positional format of string resource string/NotificationTopicExceptionsDesctription_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:6103:4: Multiple substitutions specified in non-positional format of string resource string/NotificationTopicExceptionsDesctription_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:8494:4: Multiple substitutions specified in non-positional format of string resource string/StarRatingDescription1. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:8495:4: Multiple substitutions specified in non-positional format of string resource string/StarRatingDescription2. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:8496:4: Multiple substitutions specified in non-positional format of string resource string/StarRatingDescription3. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:8902:4: Multiple substitutions specified in non-positional format of string resource string/StoryAddedToAlbumTitle_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:8903:4: Multiple substitutions specified in non-positional format of string resource string/StoryAddedToAlbumTitle_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9100:4: Multiple substitutions specified in non-positional format of string resource string/StoryRemovedFromAlbumTitle_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9101:4: Multiple substitutions specified in non-positional format of string resource string/StoryRemovedFromAlbumTitle_other. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9171:4: Multiple substitutions specified in non-positional format of string resource string/SuggestAPostBelowSubtitleStarsAndTime. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9225:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin1. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9226:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin1PastSimple. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9228:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin2. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9229:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin3Stars. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9230:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin3TON. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9231:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin4Stars. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9232:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedAdmin4TON. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9233:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedUser1. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9234:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedUser1PastSimple. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9237:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedUser3Stars. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9238:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedUser3TON. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9239:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedUser4Stars. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9240:4: Multiple substitutions specified in non-positional format of string resource string/SuggestionAgreementReachedUser4TON. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9667:4: Multiple substitutions specified in non-positional format of string resource string/UnconfirmedAuthMultipleFrom_one. Did you mean to add the formatted="false" attribute?
+/app/TMessagesProj/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml:9668:4: Multiple substitutions specified in non-positional format of string resource string/UnconfirmedAuthMultipleFrom_other. Did you mean to add the formatted="false" attribute?
+
+> Task :TMessagesProj:compileDebugLibraryResources
+> Task :TMessagesProj:writeDebugAarMetadata
+> Task :TMessagesProj:bundleLibCompileToJarDebug
+> Task :TMessagesProj:extractDeepLinksDebug
+> Task :TMessagesProj:mergeDebugNativeLibs
+> Task :TMessagesProj:mergeDebugShaders
+> Task :TMessagesProj:compileDebugShaders NO-SOURCE
+> Task :TMessagesProj:generateDebugAssets UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:checkAfatDebugAarMetadata
+
+> Task :TMessagesProj:processDebugManifest
+/app/TMessagesProj/src/main/AndroidManifest.xml:83:5-102 Warning:
+	uses-permission#android.permission.WRITE_EXTERNAL_STORAGE was tagged at AndroidManifest.xml:83 to replace another declaration but no other declaration present
+/app/TMessagesProj/src/main/AndroidManifest.xml:97:5-684:19 Warning:
+	application@android:supportsRtl was tagged at AndroidManifest.xml:97 to replace other declarations but no other declaration present
+
+> Task :TMessagesProj:packageDebugAssets
+> Task :TMessagesProj:processDebugJavaRes NO-SOURCE
+> Task :TMessagesProj:copyDebugJniLibsProjectOnly
+
+> Task :TMessagesProj_AppStandalone:processAfatDebugMainManifest
+/app/TMessagesProj/config/release/AndroidManifest_standalone.xml Warning:
+	uses-permission#android.permission.WRITE_EXTERNAL_STORAGE was tagged at AndroidManifest_standalone.xml:0 to replace another declaration but no other declaration present
+/app/TMessagesProj/config/release/AndroidManifest_standalone.xml:141:9-149:20 Warning:
+	receiver#com.google.android.gms.measurement.AppMeasurementReceiver@android:enabled was tagged at AndroidManifest_standalone.xml:141 to replace other declarations but no other declaration present
+/app/TMessagesProj/config/release/AndroidManifest_standalone.xml:157:9-161:40 Warning:
+	service#com.google.android.gms.measurement.AppMeasurementService@android:enabled was tagged at AndroidManifest_standalone.xml:157 to replace other declarations but no other declaration present
+
+> Task :TMessagesProj:bundleLibRuntimeToJarDebug
+> Task :TMessagesProj_AppStandalone:processAfatDebugManifest
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugAssets
+> Task :TMessagesProj_AppStandalone:processAfatDebugManifestForPackage
+> Task :TMessagesProj_AppStandalone:compressAfatDebugAssets
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugNativeLibs
+warn: removing resource org.telegram.messenger.web:string/AddManyMembersAlertNamesText_few without required default value.
+warn: removing resource org.telegram.messenger.web:string/AddManyMembersAlertNamesText_two without required default value.
+warn: removing resource org.telegram.messenger.web:string/AddManyMembersAlertTitle_few without required default value.
+warn: removing resource org.telegram.messenger.web:string/AddManyMembersAlertTitle_many without required default value.
+warn: removing resource org.telegram.messenger.web:string/AddManyMembersAlertTitle_two without required default value.
+warn: removing resource org.telegram.messenger.web:string/EmailPasswordConfirmText3 without required default value.
+warn: removing resource org.telegram.messenger.web:string/Languages_few without required default value.
+warn: removing resource org.telegram.messenger.web:string/Languages_many without required default value.
+warn: removing resource org.telegram.messenger.web:string/Languages_two without required default value.
+warn: removing resource org.telegram.messenger.web:string/Languages_zero without required default value.
+warn: removing resource org.telegram.messenger.web:string/NoContactsYet without required default value.
+warn: removing resource org.telegram.messenger.web:string/NoContactsYetLine1 without required default value.
+warn: removing resource org.telegram.messenger.web:string/NoContactsYetLine2 without required default value.
+warn: removing resource org.telegram.messenger.web:string/NoContactsYetLine3 without required default value.
+warn: removing resource org.telegram.messenger.web:string/PleaseEnterFirstPassword without required default value.
+warn: removing resource org.telegram.messenger.web:string/PleaseEnterPassword without required default value.
+warn: removing resource org.telegram.messenger.web:string/ResetAccountButton without required default value.
+warn: removing resource org.telegram.messenger.web:string/ResetMyAccountText without required default value.
+warn: removing resource org.telegram.messenger.web:string/ShareTelegram without required default value.
+warn: removing resource org.telegram.messenger.web:string/WidgetPasscodeEnable2 without required default value.
+warn: removing resource org.telegram.messenger.web:string/YourEmailCode without required default value.
+warn: removing resource org.telegram.messenger.web:string/YourEmailCodeInfo without required default value.
+warn: removing resource org.telegram.messenger.web:string/YourPasswordSuccessText without required default value.
+warn: removing resource org.telegram.messenger.web:string/formatterMonthName without required default value.
+warn: removing resource org.telegram.messenger.web:string/formatterMonthYear2 without required default value.
+
+> Task :TMessagesProj_AppStandalone:processAfatDebugResources
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugJavaResource
+> Task :TMessagesProj_AppStandalone:stripAfatDebugDebugSymbols
+
+> Task :TMessagesProj_AppStandalone:compileAfatDebugJavaWithJavac
+Java compiler version 21 has deprecated support for compiling with source/target version 8.
+Try one of the following options:
+    1. [Recommended] Use Java toolchain with a lower language version
+    2. Set a higher source/target version
+    3. Use a lower version of the JDK running the build (if you're not using Java toolchain)
+For more details on how to configure these settings, see https://developer.android.com/build/jdks.
+To suppress this warning, set android.javaCompile.suppressSourceTargetDeprecationWarning=true in gradle.properties.
+warning: [options] source value 8 is obsolete and will be removed in a future release
+warning: [options] target value 8 is obsolete and will be removed in a future release
+warning: [options] To suppress warnings about obsolete options, use -Xlint:-options.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /app/TMessagesProj_AppStandalone/src/main/java/org/telegram/ui/SMSStatsActivity.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+3 warnings
+
+> Task :TMessagesProj_AppStandalone:dexBuilderAfatDebug
+> Task :TMessagesProj_AppStandalone:mergeProjectDexAfatDebug
+> Task :TMessagesProj_AppStandalone:extractAfatDebugNativeDebugMetadata
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugNativeDebugMetadata
+> Task :TMessagesProj_AppStandalone:mergeLibDexAfatDebug
+> Task :TMessagesProj_AppStandalone:packageAfatDebug
+> Task :TMessagesProj_AppStandalone:createAfatDebugApkListingFileRedirect
+> Task :TMessagesProj_AppStandalone:assembleAfatDebug
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.7/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 18m 10s
+65 actionable tasks: 40 executed, 25 up-to-date
