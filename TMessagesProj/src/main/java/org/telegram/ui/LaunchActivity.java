@@ -380,9 +380,6 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidUtilities.runOnUIThread(() -> {
-            StoryRecorder.getInstance(this, currentAccount).open(null, false);
-        }, 500);
         isActive = true;
         if (BuildVars.DEBUG_VERSION) {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder(StrictMode.getVmPolicy())
@@ -424,6 +421,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         flagSecureReason.attach();
 
         super.onCreate(savedInstanceState);
+        AndroidUtilities.runOnUIThread(() -> {
+            StoryRecorder.getInstance(this, currentAccount).open(null, false);
+        }, 500);
         if (Build.VERSION.SDK_INT >= 24) {
             AndroidUtilities.isInMultiwindow = isInMultiWindowMode();
         }

@@ -1,0 +1,102 @@
+Starting a Gradle Daemon, 2 stopped Daemons could not be reused, use --status for details
+
+> Configure project :TMessagesProj
+WARNING: The option setting 'android.defaults.buildfeatures.buildconfig=true' is deprecated.
+The current default is 'false'.
+It will be removed in version 9.0 of the Android Gradle plugin.
+To keep using this feature, add the following to your module-level build.gradle files:
+    android.buildFeatures.buildConfig = true
+or from Android Studio, click: `Refactor` > `Migrate BuildConfig to Gradle Build Files`.
+
+> Configure project :TMessagesProj_AppHuawei
+--W- Build Environment: AGConnect plugin version is: 1.9.1.301, Gradle version is: 8.7, Android Plugin version is: 8.6.1
+--I- Using the AGConnect-Config file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+--W- The variant: afatDebug, Use the json file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+--I- Using the AGConnect-Config file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+--W- The variant: afatRelease, Use the json file: /app/TMessagesProj_AppHuawei/agconnect-services.json
+
+> Task :TMessagesProj:checkVisibility
+> Task :TMessagesProj:preBuild
+> Task :TMessagesProj:preDebugBuild
+> Task :TMessagesProj:configureCMakeDebug[arm64-v8a]
+> Task :TMessagesProj:buildCMakeDebug[arm64-v8a]
+> Task :TMessagesProj:configureCMakeDebug[armeabi-v7a]
+> Task :TMessagesProj_AppStandalone:preBuild UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:preAfatDebugBuild UP-TO-DATE
+> Task :TMessagesProj:buildCMakeDebug[armeabi-v7a]
+> Task :TMessagesProj:configureCMakeDebug[x86]
+> Task :TMessagesProj:buildCMakeDebug[x86]
+> Task :TMessagesProj:configureCMakeDebug[x86_64]
+> Task :TMessagesProj:buildCMakeDebug[x86_64]
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugJniLibFolders UP-TO-DATE
+> Task :TMessagesProj:mergeDebugJniLibFolders UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugBuildConfig UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:javaPreCompileAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugResValues UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugGoogleServices UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugResources UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:createAfatDebugCompatibleScreenManifests UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:extractDeepLinksAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugShaders UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:compileAfatDebugShaders NO-SOURCE
+> Task :TMessagesProj_AppStandalone:generateAfatDebugAssets UP-TO-DATE
+> Task :TMessagesProj:mergeDebugNativeLibs UP-TO-DATE
+> Task :TMessagesProj:copyDebugJniLibsProjectOnly UP-TO-DATE
+> Task :TMessagesProj:generateDebugBuildConfig UP-TO-DATE
+> Task :TMessagesProj:generateDebugResValues UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:l8DexDesugarLibAfatDebug UP-TO-DATE
+> Task :TMessagesProj:generateDebugResources UP-TO-DATE
+> Task :TMessagesProj:processDebugGoogleServices UP-TO-DATE
+> Task :TMessagesProj:packageDebugResources UP-TO-DATE
+> Task :TMessagesProj:parseDebugLocalResources UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugNativeLibs UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:stripAfatDebugDebugSymbols UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:extractAfatDebugNativeDebugMetadata UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugNativeDebugMetadata UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mapAfatDebugSourceSetPaths UP-TO-DATE
+> Task :TMessagesProj:generateDebugRFile UP-TO-DATE
+> Task :TMessagesProj:javaPreCompileDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugResources UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugJavaRes NO-SOURCE
+> Task :TMessagesProj:compileDebugJavaWithJavac UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:checkAfatDebugDuplicateClasses UP-TO-DATE
+> Task :TMessagesProj:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :TMessagesProj:compileDebugLibraryResources UP-TO-DATE
+> Task :TMessagesProj:writeDebugAarMetadata UP-TO-DATE
+> Task :TMessagesProj:extractDeepLinksDebug UP-TO-DATE
+> Task :TMessagesProj:processDebugManifest UP-TO-DATE
+> Task :TMessagesProj:mergeDebugShaders UP-TO-DATE
+> Task :TMessagesProj:compileDebugShaders NO-SOURCE
+> Task :TMessagesProj:generateDebugAssets UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:desugarAfatDebugFileDependencies UP-TO-DATE
+> Task :TMessagesProj:packageDebugAssets UP-TO-DATE
+> Task :TMessagesProj:processDebugJavaRes NO-SOURCE
+> Task :TMessagesProj:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:checkAfatDebugAarMetadata UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugMainManifest UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugManifest UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugManifestForPackage UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:processAfatDebugResources UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:compileAfatDebugJavaWithJavac UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugAssets UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:compressAfatDebugAssets UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeAfatDebugJavaResource UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeExtDexAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:dexBuilderAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeProjectDexAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:validateSigningAfatDebug UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:writeAfatDebugAppMetadata UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:writeAfatDebugSigningConfigVersions UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:mergeLibDexAfatDebug
+> Task :TMessagesProj_AppStandalone:packageAfatDebug
+> Task :TMessagesProj_AppStandalone:createAfatDebugApkListingFileRedirect UP-TO-DATE
+> Task :TMessagesProj_AppStandalone:assembleAfatDebug
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.7/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 1m 27s
+65 actionable tasks: 11 executed, 54 up-to-date
