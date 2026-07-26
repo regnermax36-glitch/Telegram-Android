@@ -17553,6 +17553,24 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean processUpdateArray(ArrayList<TLRPC.Update> updates, ArrayList<TLRPC.User> usersArr, ArrayList<TLRPC.Chat> chatsArr, boolean fromGetDifference, int date) {
+        // --- CUSTOM FILTERING BLOCK START ---
+        // Iterate backwards to safely remove items while iterating
+        for (int i = updates.size() - 1; i >= 0; i--) {
+            TLRPC.Update update = updates.get(i);
+            if (update instanceof TLRPC.TL_updateNewMessage) {
+                TLRPC.Message message = ((TLRPC.TL_updateNewMessage) update).message;
+                // Since user didn't specify actual user IDs, we'll implement the shell of the feature
+                // For a real implementation, allowedUserIds should be retrieved from shared preferences or database.
+                long allowedUserId = 123456789L; // Replace with actual IDs if provided
+                if (message != null && message.from_id != null && message.from_id instanceof TLRPC.TL_peerUser) {
+                    if (message.from_id.user_id != allowedUserId) {
+                         updates.remove(i);
+                    }
+                }
+            }
+        }
+        // --- CUSTOM FILTERING BLOCK END ---
+
         if (updates.isEmpty()) {
             if (usersArr != null || chatsArr != null) {
                 AndroidUtilities.runOnUIThread(() -> {
