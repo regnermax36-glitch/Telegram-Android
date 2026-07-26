@@ -9550,8 +9550,17 @@ public class Theme {
     }
 
     public static int getColor(int key, boolean[] isDefault, boolean ignoreAnimation) {
-        if (key == key_windowBackgroundWhite || key == key_chats_menuBackground || key == key_actionBarDefault) {
-            return 0xCCFFFFFF;
+        // Transparent Black for backgrounds
+        if (key == key_windowBackgroundWhite || key == key_windowBackgroundGray || key == key_actionBarDefault || key == key_chats_menuBackground || key == key_dialogBackground || key == key_profile_actionBackground) {
+            return 0x80000000;
+        }
+        // Brown for accents/buttons
+        if (key == key_actionBarDefaultIcon || key == key_chats_actionBackground || key == key_chat_messagePanelSend || key == key_chat_outBubble || key == key_chat_inBubble || key == key_switchTrackChecked || key == key_checkboxSquareBackground) {
+            return 0xFF8B4513;
+        }
+        // Green for text/icons
+        if (key == key_windowBackgroundWhiteBlackText || key == key_chats_name || key == key_chat_messageTextIn || key == key_chat_messageTextOut || key == key_windowBackgroundWhiteGrayText || key == key_actionBarDefaultTitle) {
+            return 0xFF00FF00;
         }
         if (!ignoreAnimation && animatingColors != null) {
             int index = animatingColors.indexOfKey(key);
