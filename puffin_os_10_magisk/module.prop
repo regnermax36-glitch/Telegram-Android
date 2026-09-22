@@ -1,0 +1,6 @@
+id=puffin_os_10_converter
+name=Puffin OS 10 Avatar Converter
+version=v10.0.0
+versionCode=10000
+author=Puffin Cloud Computing
+description=Transforms LineageOS 22.2 (Android 15) into Puffin OS 10 Cloud-First Avatar OS. Offloads app execution and UI rendering to high-performance Puffin Cloud Servers.
