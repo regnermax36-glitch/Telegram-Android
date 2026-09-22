@@ -233,11 +233,15 @@ public class UserConfig extends BaseController {
     }
 
     public boolean isClientActivated() {
-        return true;
+        synchronized (sync) {
+            return currentUser != null;
+        }
     }
 
     public long getClientUserId() {
-        return 12345;
+        synchronized (sync) {
+            return currentUser != null ? currentUser.id : 0;
+        }
     }
 
     public String getClientPhone() {

@@ -38,7 +38,7 @@ public class CameraInfo {
         return cameraId;
     }
 
-    public Camera getCamera() {
+    private Camera getCamera() {
         return camera;
     }
 

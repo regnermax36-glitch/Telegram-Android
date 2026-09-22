@@ -422,18 +422,6 @@ public class BlurringShader {
 
     public static class BlurManager {
 
-        public void updateParents() {
-            parents.clear();
-            View view = this.view;
-            while (view != null) {
-                parents.add(0, view);
-                if (!(view.getParent() instanceof View)) {
-                    break;
-                }
-                view = (View) view.getParent();
-            }
-        }
-
         public int padding;
         private final View view;
         private final ArrayList<View> parents = new ArrayList<>();
@@ -529,6 +517,17 @@ public class BlurringShader {
             return -1;
         }
 
+        private void updateParents() {
+            parents.clear();
+            View view = this.view;
+            while (view != null) {
+                parents.add(0, view);
+                if (!(view.getParent() instanceof View)) {
+                    break;
+                }
+                view = (View) view.getParent();
+            }
+        }
 
         private BlurringShader currentShader;
         public void setShader(BlurringShader shader) {
@@ -746,7 +745,6 @@ public class BlurringShader {
         public static final int BLUR_TYPE_REPLY_BACKGROUND = 8;
         public static final int BLUR_TYPE_REPLY_TEXT_XFER = 9;
         public static final int BLUR_TYPE_ACTION_BACKGROUND = 10;
-        public static final int BLUR_TYPE_IOS28 = 11;
 
         private final BlurManager manager;
         private final View view;
@@ -819,9 +817,6 @@ public class BlurringShader {
                 colorMatrix.setSaturation(1.6f);
                 AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, wasDark ? .97f : .92f);
                 AndroidUtilities.adjustBrightnessColorMatrix(colorMatrix, wasDark ? +.12f : -.06f);
-            } else if (type == BLUR_TYPE_IOS28) {
-                AndroidUtilities.adjustSaturationColorMatrix(colorMatrix, +.6f);
-                AndroidUtilities.multiplyBrightnessColorMatrix(colorMatrix, 1.15f);
             }
             paint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
             oldPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
@@ -861,11 +856,6 @@ public class BlurringShader {
         public void drawRect(Canvas canvas, float tx, float ty, float alpha) {
             drawRect(canvas, tx, ty, alpha, true);
         }
-        private float roundRadius = -1;
-        public void setRoundRadius(float radius) {
-            roundRadius = radius;
-        }
-
         public void drawRect(Canvas canvas, float tx, float ty, float alpha, boolean clip) {
             if (manager.hasRenderNode() && Build.VERSION.SDK_INT >= 31) {
                 if (!canvas.isHardwareAccelerated()) {
@@ -896,8 +886,7 @@ public class BlurringShader {
                                 if (clipPathWidth != node.getWidth() || clipPathHeight != node.getHeight()) {
                                     clipPath.rewind();
                                     AndroidUtilities.rectTmp.set(0, 0, clipPathWidth = node.getWidth(), clipPathHeight = node.getHeight());
-                                    float r = roundRadius >= 0 ? roundRadius : dp(12);
-                                    clipPath.addRoundRect(AndroidUtilities.rectTmp, r, r, Path.Direction.CW);
+                                    clipPath.addRoundRect(AndroidUtilities.rectTmp, dp(12), dp(12), Path.Direction.CW);
                                 }
                                 canvas.clipPath(clipPath);
                             }
@@ -914,7 +903,6 @@ public class BlurringShader {
                 }
             }
         }
-
 
         private boolean customOffset;
         private float customOffsetX, customOffsetY;
