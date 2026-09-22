@@ -1,0 +1,16 @@
+# Puffin OS 10 System Property Overrides
+# LineageOS 22.2 (Android 15) Avatar OS Integration
+
+# System Identity
+ro.puffin.version=10.0.0
+ro.puffin.avatar.enabled=1
+ro.puffin.cloud.rendering=1
+ro.puffin.cloud.server=https://avatar.puffin.cloud/v10
+
+# Performance & Cloud Offloading Tweaks
+ro.sys.fw.bg_apps_limit=32
+dalvik.vm.heapgrowthlimit=256m
+dalvik.vm.heapsize=512m
+
+# Default Launcher Override Hint
+ro.puffin.default_launcher=org.puffin.avatarhub

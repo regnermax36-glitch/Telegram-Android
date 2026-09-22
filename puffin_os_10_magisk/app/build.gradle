@@ -1,0 +1,21 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'org.puffin.avatarhub'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "org.puffin.avatarhub"
+        minSdk 26
+        targetSdk 34
+        versionCode 10000
+        versionName "10.0.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
