@@ -2170,6 +2170,11 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 super.dispatchDraw(canvas);
             }
         }); // 150dp
+        final Paint controlBorderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        controlBorderPaint.setColor(0x25FFFFFF);
+        controlBorderPaint.setStyle(Paint.Style.STROKE);
+        controlBorderPaint.setStrokeWidth(dp(1));
+
         containerView.addView(controlContainer = new FrameLayout(context) {
             @Override
             protected void dispatchDraw(Canvas canvas) {
@@ -2182,12 +2187,7 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
                 AndroidUtilities.rectTmp.set(0, 0, getWidth(), getHeight());
                 canvas.clipRect(AndroidUtilities.rectTmp);
                 controlBlur.drawRect(canvas, 0, 0, 1.0f);
-
-                Paint borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-                borderPaint.setColor(0x25FFFFFF);
-                borderPaint.setStyle(Paint.Style.STROKE);
-                borderPaint.setStrokeWidth(dp(1));
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), borderPaint);
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, dp(32), dp(32), controlBorderPaint);
                 canvas.restore();
                 super.dispatchDraw(canvas);
             }
@@ -7981,20 +7981,20 @@ public class StoryRecorder implements NotificationCenter.NotificationCenterDeleg
     private void updateActionBarButtons(boolean animated) {
         if (currentPage == PAGE_CAMERA && cameraView != null && cameraView.getCameraSession() != null && System.currentTimeMillis() - lastHUDUpdate > 250) {
             lastHUDUpdate = System.currentTimeMillis();
-            Utilities.globalQueue.postRunnable(() -> {
+            try {
                 CameraSessionWrapper session = cameraView.getCameraSession();
-                if (session != null) {
+                if (session != null && cameraHUDView != null) {
                     if (session.isCamera2()) {
                         Camera2Session c2 = session.getCamera2Session();
-                        AndroidUtilities.runOnUIThread(() -> cameraHUDView.updateMetadata(c2.getCameraCharacteristics(), c2.getLastCaptureResult()));
+                        if (c2 != null) {
+                            cameraHUDView.updateMetadata(c2.getCameraCharacteristics(), c2.getLastCaptureResult());
+                        }
                     } else if (session.getCamera1Session() != null && session.getCamera1Session().getCamera() != null) {
-                        try {
-                            Camera.Parameters p = session.getCamera1Session().getCamera().getParameters();
-                            AndroidUtilities.runOnUIThread(() -> cameraHUDView.updateMetadata(p));
-                        } catch (Exception ignore) {}
+                        Camera.Parameters p = session.getCamera1Session().getCamera().getParameters();
+                        cameraHUDView.updateMetadata(p);
                     }
                 }
-            });
+            } catch (Throwable ignore) {}
         }
         AndroidUtilities.updateViewShow(cameraHUDView, currentPage == PAGE_CAMERA && !takingVideo && !takingPhoto, true, animated);
 

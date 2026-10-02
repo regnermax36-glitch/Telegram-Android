@@ -53,21 +53,31 @@ public class CameraHUDView extends View implements SensorEventListener {
         linePaint.setStrokeCap(Paint.Cap.ROUND);
 
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        if (sensorManager != null) {
+            rotationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        } else {
+            rotationSensor = null;
+        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if (rotationSensor != null) {
-            sensorManager.registerListener(this, rotationSensor, SensorManager.SENSOR_DELAY_UI);
+        if (rotationSensor != null && sensorManager != null) {
+            try {
+                sensorManager.registerListener(this, rotationSensor, SensorManager.SENSOR_DELAY_UI);
+            } catch (Throwable ignore) {}
         }
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        sensorManager.unregisterListener(this);
+        if (sensorManager != null) {
+            try {
+                sensorManager.unregisterListener(this);
+            } catch (Throwable ignore) {}
+        }
     }
 
     public void updateMetadata(Camera.Parameters params) {
