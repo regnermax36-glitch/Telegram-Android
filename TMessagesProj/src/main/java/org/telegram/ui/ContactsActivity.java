@@ -990,6 +990,7 @@ public class ContactsActivity extends BaseFragment implements FactorAnimator.Tar
     public ActionBar createActionBar(Context context) {
         ActionBar actionBar = super.createActionBar(context);
         actionBar.setUseContainerForTitles();
+        actionBar.setCastShadows(false);
         actionBar.getTitlesContainer().setTranslationX(dp(4));
         actionBar.setAddToContainer(false);
         actionBar.createAdditionalSubTitleOverlayContainer();

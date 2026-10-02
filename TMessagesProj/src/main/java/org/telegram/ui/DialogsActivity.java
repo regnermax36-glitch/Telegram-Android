@@ -3112,6 +3112,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         };
         actionBar.setAllowOverlayTitle(true);
         actionBar.setUseContainerForTitles();
+        actionBar.setCastShadows(false);
         actionBar.setItemsBackgroundColor(getThemedColor(Theme.key_actionBarDefaultSelector), false);
         actionBar.setItemsBackgroundColor(getThemedColor(Theme.key_actionBarActionModeDefaultSelector), true);
         actionBar.setItemsColor(getThemedColor(Theme.key_actionBarDefaultIcon), false);
