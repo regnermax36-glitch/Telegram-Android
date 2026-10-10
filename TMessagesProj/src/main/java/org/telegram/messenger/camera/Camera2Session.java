@@ -69,6 +69,7 @@ public class Camera2Session {
 
     private final CameraDevice.StateCallback cameraStateCallback;
     private final CameraCaptureSession.StateCallback captureStateCallback;
+    private volatile CaptureResult lastCaptureResult;
     private CaptureRequest.Builder captureRequestBuilder;
     private Rect sensorSize;
     private float maxZoom = 1f;
@@ -340,6 +341,14 @@ public class Camera2Session {
         return getJpegOrientation();
     }
 
+    public CaptureResult getLastCaptureResult() {
+        return lastCaptureResult;
+    }
+
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
     private final Rect cropRegion = new Rect();
     public void setZoom(float value) {
         if (!isInitiated()) return;
@@ -509,7 +518,12 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.addTarget(surface);
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    lastCaptureResult = result;
+                }
+            }, handler);
         } catch (Exception e) {
             FileLog.e("Camera2Sessions setRepeatingRequest error in updateCaptureRequest", e);
         }
