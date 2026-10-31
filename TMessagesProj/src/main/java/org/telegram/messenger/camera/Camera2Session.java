@@ -69,9 +69,11 @@ public class Camera2Session {
 
     private final CameraDevice.StateCallback cameraStateCallback;
     private final CameraCaptureSession.StateCallback captureStateCallback;
+    private CaptureResult lastCaptureResult;
     private CaptureRequest.Builder captureRequestBuilder;
     private Rect sensorSize;
     private float maxZoom = 1f;
+    private int currentEV = 0;
     private float currentZoom = 1f;
 
     private final Size previewSize;
@@ -340,6 +342,14 @@ public class Camera2Session {
         return getJpegOrientation();
     }
 
+    public CaptureResult getLastCaptureResult() {
+        return lastCaptureResult;
+    }
+
+    public CameraCharacteristics getCameraCharacteristics() {
+        return cameraCharacteristics;
+    }
+
     private final Rect cropRegion = new Rect();
     public void setZoom(float value) {
         if (!isInitiated()) return;
@@ -377,6 +387,33 @@ public class Camera2Session {
     public float getMinZoom() {
         // TODO: support wide zoom camera switching
         return 1f;
+    }
+
+    public int getMinEV() {
+        if (cameraCharacteristics == null) return 0;
+        Range<Integer> range = cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
+        return range != null ? range.getLower() : 0;
+    }
+
+    public int getMaxEV() {
+        if (cameraCharacteristics == null) return 0;
+        Range<Integer> range = cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE);
+        return range != null ? range.getUpper() : 0;
+    }
+
+    public float getEVStep() {
+        if (cameraCharacteristics == null) return 0f;
+        android.util.Rational step = cameraCharacteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP);
+        return step != null ? step.floatValue() : 0f;
+    }
+
+    public int getCurrentEV() {
+        return currentEV;
+    }
+
+    public void setEV(int ev) {
+        currentEV = ev;
+        updateCaptureRequest();
     }
 
     public int getPreviewWidth() {
@@ -488,6 +525,7 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.set(CaptureRequest.FLASH_MODE, flashing ? (recordingVideo ? CaptureRequest.FLASH_MODE_TORCH : CaptureRequest.FLASH_MODE_SINGLE) : CaptureRequest.FLASH_MODE_OFF);
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, currentEV);
 
             if (recordingVideo) {
                 captureRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, new Range<Integer>(30, 60));
@@ -509,7 +547,12 @@ public class Camera2Session {
             }
 
             captureRequestBuilder.addTarget(surface);
-            captureSession.setRepeatingRequest(captureRequestBuilder.build(), null, handler);
+            captureSession.setRepeatingRequest(captureRequestBuilder.build(), new CameraCaptureSession.CaptureCallback() {
+                @Override
+                public void onCaptureCompleted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, @NonNull TotalCaptureResult result) {
+                    lastCaptureResult = result;
+                }
+            }, handler);
         } catch (Exception e) {
             FileLog.e("Camera2Sessions setRepeatingRequest error in updateCaptureRequest", e);
         }

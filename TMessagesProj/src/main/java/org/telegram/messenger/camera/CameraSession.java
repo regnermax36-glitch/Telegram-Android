@@ -179,6 +179,48 @@ public class CameraSession {
         return currentFlashMode;
     }
 
+    public int getMinEV() {
+        if (cameraInfo == null || cameraInfo.camera == null) return 0;
+        try {
+            return cameraInfo.camera.getParameters().getMinExposureCompensation();
+        } catch (Exception ignore) {}
+        return 0;
+    }
+
+    public int getMaxEV() {
+        if (cameraInfo == null || cameraInfo.camera == null) return 0;
+        try {
+            return cameraInfo.camera.getParameters().getMaxExposureCompensation();
+        } catch (Exception ignore) {}
+        return 0;
+    }
+
+    public float getEVStep() {
+        if (cameraInfo == null || cameraInfo.camera == null) return 0f;
+        try {
+            return cameraInfo.camera.getParameters().getExposureCompensationStep();
+        } catch (Exception ignore) {}
+        return 0f;
+    }
+
+    public int getCurrentEV() {
+        if (cameraInfo == null || cameraInfo.camera == null) return 0;
+        try {
+            return cameraInfo.camera.getParameters().getExposureCompensation();
+        } catch (Exception ignore) {}
+        return 0;
+    }
+
+    public void setEV(int ev) {
+        if (cameraInfo == null || cameraInfo.camera == null) return;
+        try {
+            Camera camera = cameraInfo.camera;
+            Camera.Parameters p = camera.getParameters();
+            p.setExposureCompensation(ev);
+            camera.setParameters(p);
+        } catch (Exception ignore) {}
+    }
+
     public String getNextFlashMode() {
         ArrayList<String> modes = availableFlashModes;
         for (int a = 0; a < modes.size(); a++) {
@@ -607,5 +649,9 @@ public class CameraSession {
 
     public Camera.Size getCurrentPictureSize() {
         return cameraInfo.camera.getParameters().getPictureSize();
+    }
+
+    public Camera getCamera() {
+        return cameraInfo != null ? cameraInfo.getCamera() : null;
     }
 }

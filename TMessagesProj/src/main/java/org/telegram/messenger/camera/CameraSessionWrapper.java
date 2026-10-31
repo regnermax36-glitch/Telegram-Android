@@ -98,6 +98,25 @@ public class CameraSessionWrapper {
         return null;
     }
 
+    public boolean isCamera2() {
+        return camera2Session != null;
+    }
+
+    public Camera2Session getCamera2Session() {
+        return camera2Session;
+    }
+
+    public CameraSession getCamera1Session() {
+        return camera1Session;
+    }
+
+    public Camera getCamera() {
+        if (camera1Session != null && camera1Session.cameraInfo != null) {
+            return camera1Session.cameraInfo.getCamera();
+        }
+        return null;
+    }
+
     public String getNextFlashMode() {
         if (camera2Session != null) {
             // TODO
@@ -148,6 +167,38 @@ public class CameraSessionWrapper {
             camera2Session.setZoom(AndroidUtilities.lerp(camera2Session.getMinZoom(), camera2Session.getMaxZoom(), zoom));
         } else if (camera1Session != null) {
             camera1Session.setZoom(zoom);
+        }
+    }
+
+    public int getMinEV() {
+        if (camera2Session != null) return camera2Session.getMinEV();
+        if (camera1Session != null) return camera1Session.getMinEV();
+        return 0;
+    }
+
+    public int getMaxEV() {
+        if (camera2Session != null) return camera2Session.getMaxEV();
+        if (camera1Session != null) return camera1Session.getMaxEV();
+        return 0;
+    }
+
+    public float getEVStep() {
+        if (camera2Session != null) return camera2Session.getEVStep();
+        if (camera1Session != null) return camera1Session.getEVStep();
+        return 0f;
+    }
+
+    public int getCurrentEV() {
+        if (camera2Session != null) return camera2Session.getCurrentEV();
+        if (camera1Session != null) return camera1Session.getCurrentEV();
+        return 0;
+    }
+
+    public void setEV(int ev) {
+        if (camera2Session != null) {
+            camera2Session.setEV(ev);
+        } else if (camera1Session != null) {
+            camera1Session.setEV(ev);
         }
     }
 
